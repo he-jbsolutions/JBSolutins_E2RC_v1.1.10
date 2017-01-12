@@ -1,0 +1,39 @@
+﻿.ui-widget-header
+{
+    border: none !important;
+    background: url('../Content/images/bgHeader.png') !important;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-state-default
+{
+    background: url('../Content/images/bgHeader.png') !important;
+    color: White;
+}
+.ui-state-hover, .ui-state-focus
+{
+    background: url('../Content/images/bgHeader.png') !important;
+    color: White !important;
+    border-color: White !important;
+}
+.ui-widget-content
+{
+    background: white !important;
+}
+.ui-widget-header .ui-icon
+{
+    background-image: url('../Content/images/ui-icons_ffffff_256x240.png') !important;
+}
+.ui-dialog-titlebar-close
+{
+    background: url('../Content/images/closed-whiite.png') no-repeat !important;
+    height: 15px !important;
+    width: 15px !important;
+}
+.ui-dialog-buttonset
+{
+    float: none !important;
+    text-align: center !important;
+}
+.ui-dialog-buttonpane
+{
+    padding: 0% !important;
+}
