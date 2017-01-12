@@ -1,0 +1,591 @@
+﻿@model e2rc.Models.ReviewerModel
+@{
+    ViewBag.Title = "Edit Reviewer";
+}
+<script src="~/Scripts/multiple-select.js"></script>
+<link href="~/Content/css/multiple-select.css" rel="stylesheet" />
+<script>
+    $(function () {
+        $("#lstLocation_ID").multipleSelect({
+            placeholder: "Select Project Name",
+            filter: true
+        });
+        @*$("#lstLocation_ID").multipleSelect("setSelects", [@Model.slstLocationID]);*@
+        $(".ms-parent").css("width", "276.66px");
+
+        var client_IDs = [];
+        client_IDs = $("#hfSelectedClients").val();
+        var event1 = "";
+        client_IDs = client_IDs.split(",");
+
+        bindProjectDropDownlist(client_IDs, event1);
+
+        /*Bind Project by Selected Company*/
+        $("#Client_IDs").change(function () {
+            var client_IDs = [];
+            client_IDs = $('#Client_IDs').val();
+            event1 = "change";
+            bindProjectDropDownlist(client_IDs, event1);
+            @*$("#lstLocation_ID").empty();
+            $("#lstLocation_ID").multipleSelect("refresh");
+
+            var AssignedProject = [];
+            AssignedProject = [@Model.slstLocationID];
+
+            var options = $('#hiddenDropDown option');
+
+            var values = $.map(options, function (option) {
+                return (option.value);
+            });
+            var client_IDs = [];
+            client_IDs = $('#Client_IDs').val();
+            var location = [];
+
+            location = $("#lstLocation_ID").val();
+            $("#lstLocation_ID").empty();
+            for (var i = 0; i < client_IDs.length ; i++) {
+                for (var j = 0 ; j < values.length ; j++) {
+                    if (client_IDs[i] == values[j]) {
+
+                        var selectedText = $('#hiddenDropDown option').eq(j).text();
+                        var lstLocation_IDName = selectedText.split(",,");
+                        var $select = $("#lstLocation_ID");
+                        var $opt = $("<option />", {
+                            value: lstLocation_IDName[0],
+                            text: lstLocation_IDName[1],
+                        });
+
+                        console.log(AssignedProject);
+                        $select.append($opt).multipleSelect("refresh");
+                        $select.multipleSelect("setSelects", AssignedProject);
+                      //  $select.multipleSelect("uncheckAll");
+                    }
+                }
+            }*@
+        });
+    });
+
+    function bindProjectDropDownlist(client_IDs, event1) {
+        var lstLocation_ID = null;
+        lstLocation_ID = [];
+
+        $('input:checkbox:checked').each(function () {
+            lstLocation_ID.push($(this).attr('value'));
+        });
+        //console.log(event1);
+        if (event1 == "change") {
+            $("#lstLocation_ID").empty();
+            $("#lstLocation_ID").multipleSelect("refresh");
+        }
+
+        var AssignedProject = [];
+        AssignedProject = [@Model.slstLocationID];
+
+        var options = $('#hiddenDropDown option');
+
+        var values = $.map(options, function (option) {
+            return (option.value);
+        });
+
+        for (var i = 0; i < client_IDs.length ; i++) {
+            for (var j = 0 ; j < values.length ; j++) {
+                if (client_IDs[i] == values[j]) {
+                    // console.log("client_Id " + client_IDs[i] + " value " + values[j]);
+                    var selectedText = $('#hiddenDropDown option').eq(j).text();
+                    var lstLocation_IDName = selectedText.split(",,");
+                    var $select = $("#lstLocation_ID");
+
+                    if ($("#lstLocation_ID option[value='" + lstLocation_IDName[0] + "']").length == 0) {
+
+                        // alert("option doesn't exist!");
+                        var $opt = $("<option />", {
+                            value: lstLocation_IDName[0],
+                            text: lstLocation_IDName[1],
+                        });
+
+                        //console.log(AssignedProject);
+
+                        // $("#lstLocation_ID").multipleSelect("setSelects", [@Model.slstLocationID]);
+                    }
+                    $select.append($opt).multipleSelect("refresh");
+                    // 
+                }
+            }
+        }
+        /*for (var k = 0; k <= AssignedProject.length ; k++)
+        {
+
+        }*/
+        console.log(AssignedProject);
+        $("#lstLocation_ID").multipleSelect("uncheckAll");
+        $("#lstLocation_ID").multipleSelect("setSelects", AssignedProject);
+        console.log([@Model.slstLocationID]);
+        @*$("#lstLocation_ID").multipleSelect("setSelects", [@Model.slstLocationID]);*@
+    }
+
+</script>
+<style type="text/css">
+    select.input-validation-error {
+        border: 1px solid #FF0034;
+    }
+</style>
+@if (TempData["IsReviewerEdited"] != null && TempData["Reviewername"] != null)
+{
+    ViewBag.IsReviewerEdited = TempData["IsReviewerEdited"];
+    ViewBag.Reviewername = TempData["Reviewername"];
+}
+
+<script src="../../Scripts/select2.js" type="text/javascript"></script>
+<link href="../../Content/css/select2.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(function () {
+        $("#Client_IDs").select2().select2("val", $("#hfSelectedClients").val().split(',')); //.select2("data", $("#hfSelectedLocations").val().split(','));
+
+        $("#PhoneNumber").on("keyup", function (e) {
+            if ($(this).val().length == 3) {
+
+                $(this).val($(this).val() + "-");
+
+            } else if ($(this).val().length == 7) {
+
+                $(this).val($(this).val() + "-");
+
+            }
+        });
+
+        $("#MobileNumber").on("keyup", function (e) {
+            if ($(this).val().length == 3) {
+
+                $(this).val($(this).val() + "-");
+
+            } else if ($(this).val().length == 7) {
+
+                $(this).val($(this).val() + "-");
+
+            }
+        });
+        //         $("#location_Location_ID").select2();
+
+        //             $("#btnSubmit").click(function () {
+        //                        if ($("#location_Location_ID").val() ==null) {
+        //                            $(".select2-choices").css("border", "1pt solid red");
+        //                            $(document.forms[1]).valid();
+        //                            return false;
+        //                        }
+        //                    });
+
+        //            $(document).on("select2-opening", function (arg) {
+        //            $(".select2-choices").css("border", "");
+
+        //        });
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $(".date").bind("change", function (e) {
+            var date1 = document.getElementById("Date").value.split("/");
+            var month = parseInt(date1[0]);
+            var day = parseInt(date1[1]);
+            var year = parseInt(date1[2]);
+            var ListofDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            if (month == 1 || month > 2) {
+                if (day > ListofDays[month - 1]) {
+                    alert('Invalid date format!');
+                    return false;
+                }
+            }
+            if (month == 2) {
+                var lyear = false;
+                if ((!(year % 4) && year % 100) || !(year % 400)) {
+                    lyear = true;
+                }
+                if ((lyear == false) && (day >= 29)) {
+                    alert('Invalid date format!');
+                    return false;
+                }
+                if ((lyear == true) && (day > 29)) {
+                    alert('Invalid date format!');
+                    return false;
+                }
+            }
+
+            if (month > 12 && day > 12) {
+                alert('Invalid date format!');
+                return false;
+            }
+            if (year < 100) {
+                year = "20" + year;
+            }
+            if (month < 10) {
+                month = "0" + month;
+            }
+            if (day < 10) {
+                day = "0" + day;
+            }
+
+            if (month > 12) {
+                $(this).val(day + "/" + month + "/" + year);
+            }
+            else {
+                $(this).val(month + "/" + day + "/" + year);
+            }
+        });
+        $("#Date").on("change",
+              function () {
+                  if ($(this).val() == "NaN/NaN/NaN")
+                      $(this).val("MM/DD/YYYY");
+              });
+    });
+
+</script>
+<script type="text/javascript">
+    var IsFormFilled = false;
+    $(function () {
+        $(".btnbk").click(function () {
+            var result = '@ViewBag.IsReviewerEdited';
+            @*var result = '@TempData["IsReviewerEdited"]';*@
+            if (result == false) {
+                $("input:text:not(.date)").each(function () {
+
+                    if ($(this).val().trim() != "" && $(this).val().trim().length > 0) {
+                        IsFormFilled = true;
+                    }
+
+                });
+                if (IsFormFilled) {
+                    if (confirm("The account information is incomplete or has not been saved.Select 'OK' to proceed or 'Cancel' to complete and save the account information")) {
+                        window.history.back();
+                    }
+                    else {
+                        IsFormFilled = false;
+                    }
+                } else {
+                    window.location = "@Url.Action("Index", "Reviewer")";
+                }
+            }
+            else {
+                window.location = "@Url.Action("Index", "Reviewer")";
+            }
+        });
+    });
+    $(document).ready(function () {
+        $('#IsAssignAllProject').change(function () {
+            if ($(this).prop('checked')) {
+                alert("This will assign Reviewer to all the Project of the current franchise !"); //checked
+            }
+            else {
+                alert("This will unassign Reviewer to all the Project of the current franchise !"); //unchecked
+            }
+        });
+    });
+</script>
+<style>
+    .assign-company-tags .form-control {
+        height: auto;
+    }
+
+    .assign-company-tags .select2-container-multi .select2-choices {
+        max-height: 94px;
+        overflow-y: auto;
+    }
+</style>
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+                <div class="btn btn-black btn-custom btnbk" style="width: 100%;">
+                    Back
+                </div>
+            </div>
+            <div class="col-sm-1">
+            </div>
+            @*<div class="col-sm-4">
+                    @Html.ActionLink("View Project Manager", "Index", "ProjectManager", null, new { @class = "btn btn-black btn-custom", style = "padding:6px 13px;" })
+                </div>*@
+        </div>
+        <div class="col-md-6" style="padding-top: 12px;">
+            @if (ViewBag.IsReviewerEdited ?? false)
+            {
+                <font style="color: #468847;">The Reviewer @ViewBag.Reviewername details has been updated successfully.</font>
+            }
+            else if (!(ViewBag.IsProjectManagerEdited ?? true))
+            {
+                <font style="color: #468847;">Unable to update Reviewer @ViewBag.Reviewername details.</font>
+            }
+        </div>
+    </div>
+</div>
+<div class="panel-head">
+    Edit Reviewer Account
+</div>
+@using (Html.BeginForm("Edit", "Reviewer", FormMethod.Post))
+{
+
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.hfSelectedClients, new { id = "hfSelectedClients" })
+    <script>
+        $(function () {
+            $("#Client_IDs").select2().select2("val", $("#hfSelectedClients").val().split(','));
+        });
+    </script>
+    <div id="accordion" class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <b>Reviewer Details</b>
+                </div>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse  in" style="overflow: inherit;">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                @Html.LabelFor(model => model.FirstName)
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.FirstName, new { @class = "form-control sp-15bottom", placeholder = "Enter First Name" })
+                                @Html.ValidationMessageFor(model => model.FirstName)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                @Html.LabelFor(model => model.LastName)
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.LastName, new { @class = "form-control sp-15bottom", placeholder = "Enter Last Name" })
+                                @Html.ValidationMessageFor(model => model.LastName)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                @Html.LabelFor(model => model.Date)
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Date, new { @class = "form-control sp-15bottom" })
+                                @Html.ValidationMessageFor(model => model.Date)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                @Html.LabelFor(model => model.UserName)
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.UserName, new { @class = "form-control sp-15bottom", placeholder = "Enter Username" })
+                                @Html.ValidationMessageFor(model => model.UserName)
+                                @Html.HiddenFor(model => model.User_ID)
+                                @* @Html.HiddenFor(Model => Model.Inspector_ID)*@
+                                @Html.HiddenFor(model => model.Reviewer_ID)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                Password
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Password, new { @class = "form-control sp-15bottom padding-none", placeholder = "******" })
+                                @Html.ValidationMessageFor(model => model.Password)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                Confirm Password
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.ConfirmPassword, new { @class = "form-control sp-15bottom padding-none", placeholder = "******" })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                @Html.LabelFor(model => model.Email)
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Email, new { @class = "form-control sp-15bottom", placeholder = "example@gmail.com" })
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                Role
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.Role.Role_ID, new SelectList(new e2rc.Models.ReviewerModel().Roles, "Role_ID", "Description"), "Select Role", new { @class = "form-control sp-15bottom", @disabled = "disabled" })
+                                @Html.HiddenFor(model => model.Role.Role_ID)
+                                @Html.ValidationMessageFor(model => model.Role.Role_ID)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                @Html.LabelFor(model => model.Qualification)
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Qualification, new { @class = "form-control sp-15bottom", placeholder = "Enter Qualification" })
+                                @Html.ValidationMessageFor(model => model.Qualification)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                @Html.LabelFor(model => model.PhoneNumber)
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.PhoneNumber, new { @class = "form-control sp-15bottom", placeholder = "999-999-9999" })
+                                @Html.ValidationMessageFor(model => model.PhoneNumber)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                @Html.LabelFor(model => model.MobileNumber)
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.MobileNumber, new { @class = "form-control sp-15bottom", placeholder = "999-999-9999" })
+                                @Html.ValidationMessageFor(model => model.MobileNumber)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-sm-4 sp-15bottom">
+                                <label class="checkbox-inline">
+                                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-inline " })Reviewer Active
+                                </label>
+                            </div>
+                            <div class="col-sm-7 sp-15bottom">
+                                <label class="checkbox-inline">
+                                    @Html.CheckBoxFor(model => model.IsAllowToCloseWorkOrder, new { @class = "checkbox-inline " })Allowed to Close Work Orders
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                Title
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.ReviewerTitle, new { @class = "form-control sp-15bottom", placeholder = "Enter Reviewer Title" })
+                                @*   @Html.ValidationMessageFor(model => model.InspectorTitle)*@
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <b> Assign Company</b>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>
+                            Assign Company
+                        </label>
+                    </div>
+                    <div class="col-md-10" style="padding-left: 31px;">
+                        <div class="assign-company-tags">
+
+                            @Html.DropDownListFor(m => m.Client_IDs, new MultiSelectList(Model.ReviewerClientDetails((long)User.User_ID), "Client_ID", "CompanyName"), "Select Company", new { @class = "form-control sp-15bottom", multiple = "multiple" })
+                            @*  @Html.DropDownListFor(m => m.LocationIDs, new MultiSelectList(new e2rc.Models.LocationAssignModel().Locations, "Location_ID", "Name"), "Select Project Name", new { @class = "form-control sp-15bottom", multiple = "multiple", data_val = true })*@
+                            @* @Html.DropDownListFor(m => m.LocationID, (MultiSelectList)ViewBag.Locations, "Select project Name", new { @class = "form-control sp-15bottom" })*@
+                            @Html.ValidationMessageFor(model => model.Client_IDs)
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:20px;">
+
+                    <div class="col-md-2">
+                        <label>
+                            Assign Projects
+                        </label>
+                    </div>
+                    <div class="col-md-10" style="padding-left: 31px;">
+                        <div class="assign-company-tags">
+                            @Html.DropDownListFor(m => m.lstLocation_ID, Enumerable.Empty<SelectListItem>(), new { @class = "", multiple = "multiple" })
+                            @*@Html.DropDownListFor(m => m.lstLocation_ID, new MultiSelectList(new e2rc.Models.FranchiseAssignLocationToInspectorModel().FranchiseLocations((long)User.User_ID), "Location_ID", "Name"), new { @class = "", multiple = "multiple" })*@
+                            @Html.DropDownList("hiddenDropDown", new SelectList(new e2rc.Models.FranchiseAssignLocationToInspectorModel().FranchiseLocations((long)User.User_ID), "Client_ID", "NameLocation_ID"), new { @style = "display:none;" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <b> Address </b>
+            </div>
+        </div>
+        <div id="collapseAddress">
+            <div class="panel-body">
+                <div class="">
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                Mailing Address
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Address.MailingAddress, new { @class = "form-control sp-15bottom" })
+                                @Html.ValidationMessageFor(model => model.Address.MailingAddress)
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                City
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Address.City, new { @class = "form-control sp-15bottom", placeholder = "Enter City" })
+                                @Html.ValidationMessageFor(model => model.Address.City)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                State
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.Address.State.State_ID, new SelectList(new e2rc.Models.AddressModel().States, "State_ID", "Name"), "Select State", new { @class = "form-control sp-15bottom" })
+                                @Html.ValidationMessageFor(model => model.Address.State.State_ID)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                Zip Code
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Address.ZipCode, new { @class = "form-control sp-15bottom", placeholder = "Enter Zip Code" })
+                                @Html.ValidationMessageFor(model => model.Address.ZipCode)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button id="btnSubmit" class="btn  btn-primary" value="Submit">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @Html.ValidationSummary(true)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

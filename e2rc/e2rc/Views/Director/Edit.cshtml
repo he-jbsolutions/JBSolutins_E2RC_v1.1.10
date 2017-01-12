@@ -1,0 +1,324 @@
+﻿@model e2rc.Models.DirectorModel
+@{
+    ViewBag.Title = "Edit Director";
+}
+<script type="text/javascript">
+
+    $(function () {
+        $(".date").bind("change", function (e) {
+            var date1 = document.getElementById("Date").value.split("/");
+            var month = parseInt(date1[0]);
+            var day = parseInt(date1[1]);
+            var year = parseInt(date1[2]);
+            var ListofDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            if (month == 1 || month > 2) {
+                if (day > ListofDays[month - 1]) {
+                    alert('Invalid date format!');
+                    return false;
+                }
+            }
+            if (month == 2) {
+                var lyear = false;
+                if ((!(year % 4) && year % 100) || !(year % 400)) {
+                    lyear = true;
+                }
+                if ((lyear == false) && (day >= 29)) {
+                    alert('Invalid date format!');
+                    return false;
+                }
+                if ((lyear == true) && (day > 29)) {
+                    alert('Invalid date format!');
+                    return false;
+                }
+            }
+            if (year < 100) {
+                year = "20" + year;
+            }
+            if (month < 10) {
+                month = "0" + month;
+            }
+            if (day < 10) {
+                day = "0" + day;
+            }
+
+            if (month > 12 && day < 12) {
+                $(this).val(day + "/" + month + "/" + year);
+            }
+            else {
+                $(this).val(month + "/" + day + "/" + year);
+            }
+        });
+        $("#Date").on("change",
+              function () {
+                  if ($(this).val() == "NaN/NaN/NaN")
+                      $(this).val("MM/DD/YYYY");
+              });
+    });
+
+</script>
+<script type="text/javascript">
+var IsFormFilled=false;
+    $(function () {
+        $(".cbtnbk").click(function () {
+         var result= '@ViewBag.IsDirectorEdited';      
+         if(result== false)
+        {
+
+        $("input:text:not(.date),select").each(function () {
+                if ($(this).val().trim() != "" && $(this).val().trim().length > 0) {
+                    IsFormFilled = true;
+                }
+
+            });
+            if (IsFormFilled) {
+                if (confirm("The Account is incomplete or has not been saved. Select 'OK' to proceed or 'Cancel' to complete and save form")) {
+                    window.location = "@Url.Action("Index", "Director")";
+                }
+                else {
+                    IsFormFilled = false;
+                }
+            } else {
+                window.location = "@Url.Action("Index", "Director")";
+            }
+            }
+            else
+            {
+             window.location = "@Url.Action("Index", "Director")";
+            }
+        });
+        $("#PhoneNumber").on("keyup", function (e) {
+            if ($(this).val().length == 3) {
+
+                $(this).val($(this).val() + "-");
+
+            } else if ($(this).val().length == 7) {
+
+                $(this).val($(this).val() + "-");
+
+            }
+        });           
+        $("#MobileNumber").on("keyup", function (e) {
+            if ($(this).val().length == 3) {
+
+                $(this).val($(this).val() + "-");
+
+            } else if ($(this).val().length == 7) {
+
+                $(this).val($(this).val() + "-");
+
+            }
+        }); 
+              
+    });
+</script>
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+                <div class="btn btn-black btn-custom cbtnbk" style="width: 100%;">
+                    Back</div>
+            </div>
+            <div class="col-sm-1">
+            </div>
+           @* <div class="col-sm-4">
+                @Html.ActionLink("View Client", "Index", "Client", null, new { @class = "btn btn-black btn-custom" })
+                <div class="btn btn-black btn-custom cbtnbk" style="width: 100%;">
+                    View Owner</div>
+            </div>*@
+        </div>
+        <div class="col-md-6">
+            @if (ViewBag.IsDirectorEdited ?? false)
+            {
+                <font style="color: #468847;">The Owner @ViewBag.directorname details has been updated successfully.</font>
+            }
+            else if (!(ViewBag.IsDirectorEdited ?? true))
+            {
+                <font style="color: #468847;">Unable to update Director @ViewBag.directorname details.</font>
+            }
+        </div>
+    </div>
+</div>
+<div class="panel-head">
+    Edit Owner Account
+</div>
+@using (Html.BeginForm("Edit", "Director", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()      
+    <div id="accordion" class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <b>Owner Details</b>
+                </div>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse  in">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                @Html.LabelFor(model => model.FirstName)<span style="color: Red">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.FirstName, new { @class = "form-control sp-15bottom", placeholder = "Enter First Name" })
+                                @Html.ValidationMessageFor(model => model.FirstName)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                @Html.LabelFor(model => model.LastName)<span style="color: Red">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.LastName, new { @class = "form-control sp-15bottom", placeholder = "Enter Last Name" })
+                                @Html.ValidationMessageFor(model => model.LastName)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                @Html.LabelFor(model => model.Date)<span style="color: Red">*</span>(mm/dd/yyyy)</label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.Date, new { @class = "form-control sp-15bottom" })
+                                @Html.ValidationMessageFor(model => model.Date)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                @Html.LabelFor(model => model.UserName)<span style="color: Red">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.UserName, new { @class = "form-control sp-15bottom", placeholder = "Enter Username" })
+                                @Html.ValidationMessageFor(model => model.UserName)
+                                @Html.HiddenFor(Model => Model.User_ID)
+                                @Html.HiddenFor(Model => Model.Director_ID)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                Password <span style="color: Red">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.Password, new { @class = "form-control sp-15bottom padding-none", placeholder = "******" })
+                                @Html.ValidationMessageFor(model => model.Password)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                Confirm Password <span style="color: Red">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.ConfirmPassword, new { @class = "form-control sp-15bottom padding-none", placeholder = "******" })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                @Html.LabelFor(model => model.Email) <span style="color: Red">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.Email, new { @class = "form-control sp-15bottom", placeholder = "example@gmail.com" })
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                Role <span style="color: Red">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.DropDownListFor(model => model.Role.Role_ID, new SelectList(new e2rc.Models.DirectorModel().Roles, "Role_ID", "Description"), "Select Role", new { @class = "form-control sp-15bottom", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.Role.Role_ID)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                @Html.LabelFor(model => model.PhoneNumber)<span style="color: Red">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.PhoneNumber, new { @class = "form-control sp-15bottom", placeholder = "999-999-9999" })
+                                @Html.ValidationMessageFor(model => model.PhoneNumber)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                @Html.LabelFor(model => model.MobileNumber)<span style="color: Red">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.MobileNumber, new { @class = "form-control sp-15bottom", placeholder = "999-999-9999" })
+                                @Html.ValidationMessageFor(model => model.MobileNumber)
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                    <div class="row">
+                         <div class="col-md-6">
+                                <div class="col-sm-5 sp-15bottom">
+                                    <label class="checkbox-inline" >
+                                        @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-inline " })Owner Active 
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <b>Address</b>
+                </div>
+            </div>
+            <div id="collapseAddress">
+                <div class="panel-body">
+                    <div class="">
+                        <div class="row">
+                        <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Street Address <span style="color: Red">*</span></label>
+                                <div class="col-sm-7">
+                                    @Html.EditorFor(model => model.Address.MailingAddress, new { @class = "form-control sp-15bottom" })
+                                    @Html.ValidationMessageFor(model => model.Address.MailingAddress)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    City <span style="color: Red">*</span></label>
+                                <div class="col-sm-7">
+                                    @Html.EditorFor(model => model.Address.City, new { @class = "form-control sp-15bottom", placeholder = "Enter City" })
+                                    @Html.ValidationMessageFor(model => model.Address.City)
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    State <span style="color: Red">*</span></label>
+                                <div class="col-sm-7">
+                                    @Html.DropDownListFor(model => model.Address.State.State_ID, new SelectList(new e2rc.Models.AddressModel().States, "State_ID", "Name"), "Select State", new { @class = "form-control sp-15bottom" })
+                                    @Html.ValidationMessageFor(model => model.Address.State.State_ID)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Zip Code <span style="color: Red">*</span></label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.Address.ZipCode, new { @class = "form-control sp-15bottom zip-code", placeholder = "Enter Zip Code" })
+                                    @Html.ValidationMessageFor(model => model.Address.ZipCode)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <input type="submit" id="btnSubmit" class="btn  btn-primary" value="Save" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            @Html.ValidationSummary(true)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

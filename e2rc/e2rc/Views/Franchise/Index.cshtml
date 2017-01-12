@@ -1,0 +1,256 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<e2rc.Models.FranchiseModel>
+@{
+    ViewBag.Title = "Franchises";
+}
+<link href="../../Content/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript">
+    // auto search by franchise name
+    $(function () {
+        $("#txtSearch").autocomplete({
+            source: '@Url.Action("GetFranchiseName")'
+        });
+    });
+</script>
+
+<style>
+    .status
+    {
+        font-size:13px!important;
+        font-weight:normal!important;
+        float:right!important;
+    }
+    .container 
+    {
+        padding-left:0px!important;
+        padding-right:0px!important;
+    }
+    .table th {
+   text-align: center !important;
+}
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        ($('#Activate').attr('checked', true));
+    });
+
+
+</script>
+<script type="text/javascript">
+
+    $(function () {
+        $('#Activate').click(function () {           
+            if ($(this).is(':checked')) {
+                $(".rowstatus").each(function () {
+                    $(this).prop("checked", true);
+                });
+            }
+            else {
+                $(".rowstatus").each(function () {
+                    $(this).prop("checked", false);
+                });
+            }
+
+        });
+    });
+    </script>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $(".Update").click(function () {
+            var chkFranchise_IDs = [], unchkFranchise_IDs = [];
+            $(".rowstatus").each(function () {
+                if ($(this).is(':checked')) {
+                    var UpdateTR = $(this).parent().parent();
+                    chkFranchise_IDs.push(parseInt($(UpdateTR).find("input[type=hidden]:first").val()));
+                }
+                else {
+                    var UpdateTR = $(this).parent().parent();
+                    unchkFranchise_IDs.push(parseInt($(UpdateTR).find("input[type=hidden]:first").val()));
+                }
+            });
+            
+            $.ajax({
+                url: '/Franchise/UpdateFranchiseStatus/',
+                type: 'POST',
+                data: JSON.stringify({ chkedFranchise_ID: chkFranchise_IDs, unchkFranchise_ID: unchkFranchise_IDs }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    alert("Franchise Updated Sucessfully ")
+                    window.location.reload(true);
+                },
+                error: function (data) {
+                    alert(data)
+                }
+            });
+           
+
+        });
+    });
+</script>
+
+<div class="navbar" style="margin-bottom: 0% !important;">
+<div class="container">
+<div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12 paddingLF0">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                @Html.ActionLink("Dashboard", "Index", "Dashboard", null, new { @class = "btn btn-custom btn-black margin-0",tabindex="0" })
+            </div>
+            
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-black btn-custom margin-0" })
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @using (Html.BeginForm("Index", "Franchise", FormMethod.Get))
+            {
+                <div style="float: left; width: 85%;">
+                    @Html.TextBox("search", null, new { id = "txtSearch", @class = "form-control text-search", placeholder = "Search by Company Name", style = "height: 0% !important;" })
+                </div>
+                <div style="float: left; width: 15%;">
+                    <button class="btn btn-black btn-custom margin-0 form-control glyphicon glyphicon-search align-right  btn-search"
+                        style="height: 0% !important;">
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+    
+</div>
+<div class="panel-head">
+<table>
+<tr >
+   <td style="width:83%;">
+    Franchise Company Information 
+    </td>
+    <td>
+   <table class="buttonSpace" style="float:right!important;">
+   <tr>
+   <td>
+        @Html.ActionLink("Active", "Index", "Franchise", new { view = "Active" }, new { @class = "btn btn-custom btn-black margin-0 status" , @style="margin:5px!important;" })
+        </td> 
+    <td>
+         @Html.ActionLink("Inactive", "Index", "Franchise", new { view = "InActive" }, new { @class = "btn btn-custom btn-black margin-0 status" })
+    </td>   
+   </tr>
+   </table>
+   </td>  
+    </tr>
+   </table>
+</div>
+<div id="dialog-confirm">
+</div>
+<div class="panel panel-default" style="margin-bottom: 0% !important;">
+    <div class="panel-body padding-0">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover  margin-0 " id="tblFranchise">
+                <tr class="panel-title">
+                    <th class="header-color col-md-2 col-sm-2 col-xs-2 text-center">
+                        @*@Html.DisplayNameFor(model => model.First().FraCompName)*@
+                         @Html.ActionLink("Company Name", "Index", new { sortOrder = ViewBag.CompanyNameSortParm })    
+                    </th>
+                    <th class="header-color col-md-2 col-sm-2 col-xs-2">
+                       @* @Html.DisplayNameFor(model => model.First().AdminUser.FirstName)*@
+                         @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.FirstNameSortParm })  
+                    </th>
+                    <th class="header-color col-md-2 col-sm-2 col-xs-2">
+                        @*@Html.DisplayNameFor(model => model.First().AdminUser.LastName)*@
+                         @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastNameSortParm })  
+                    </th>
+                    <th class="header-color col-md-2 col-sm-2 col-xs-2">
+                        @*@Html.DisplayNameFor(model => model.First().AdminUser.UserName)*@
+                         @Html.ActionLink("User Name", "Index", new { sortOrder = ViewBag.UserNameSortParm })  
+                    </th>
+                    <th class="header-color col-md-1 col-sm-1 col-xs-1">
+                        @*@Html.DisplayNameFor(model => model.First().Date)*@
+                         @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.DateSortParm })  
+                    </th>
+                    <th class="header-color col-md-1 col-sm-1 col-xs-1" style="color:#199AD6">
+                        View
+                    </th>
+                    <th class="header-color col-md-1 col-sm-1 col-xs-1" style="color:#199AD6">
+                       Status @Html.CheckBox("Activate All", new { @class = "sp-15bottom status", @id = "Activate"})
+                    </th>
+                </tr>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                    <tr >
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FraCompName)
+                            @Html.HiddenFor(modelItem=>item.Franchise_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AdminUser.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AdminUser.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AdminUser.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                     
+                        <td>                         
+                            @Html.ActionLink("View", "Details", "Franchise", new { Franchise_ID = item.Franchise_ID }, null)
+                            @*|<a href="#" onclick="ConfirmDeletion('Are you sure want to delete this Franchise?',
+                                                                 'Confirmation: Delete Franchise ?','/Franchise/Delete',
+                                                                  'Franchise_ID',@item.Franchise_ID,'unable to delete the Franchise.'
+                                                                  ,'Franchise has been deleted successfully.',
+                                                                  '../Franchise/index');">Delete</a>*@
+                        </td>
+                        <td>
+                         @Html.CheckBoxFor(modelItem => item.FranchiseStatus, new { @class = "sp-15bottom rowstatus" }) </td>
+                          @*@{ if(item.FranchiseStatus==false)
+                           {                            
+                            <button id="btnStatus"  style="border: 0px;dispaly:none;" class="UpdateStatus">
+                                Make Active</button>                          
+                            }                            
+                               }*@
+                       
+                                                    
+                        
+                    </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">
+                            No franchise company Found To Display.
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+@if (Model != null)
+{
+    <div class="panel-head padding-0" style="font-size: 13px !important;">
+    <div style="float:right;padding-right:1%;"><button class="Update btn btn-custom btn-black">Update</button></div>
+        @Html.PagedListPager(Model, Page => Url.Action("Index", new
+   {
+       Page,
+       search = Request.QueryString["search"],
+       sortOrder = Request.QueryString["sortOrder"],
+       view = Request.QueryString["view"]
+   }), new PagedListRenderOptions()
+   {
+       Display = PagedListDisplayMode.IfNeeded,
+       DisplayPageCountAndCurrentLocation = true,
+       MaximumPageNumbersToDisplay = 10
+
+   })
+   </div>
+}

@@ -1,0 +1,59 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<e2rc.Models.ActionMaintenanceCompleted>  
+@{
+    ViewBag.Title = "_ActionCompleted";
+}        
+<table class="table table-bordered table-striped table-hover margin-0" style="width:100%;font-size:11px !important;background:white;"> 
+<tr>
+    <th  class=" header-color col-lg-3" style="background:#e2f8ff !important"; >
+        Location Name
+    </th>
+    <th class="header-color col-md-2" style="background:#e2f8ff !important;" >
+      Status
+    </th>
+    
+</tr>
+  @if (Model != null)
+  {
+    foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @item.Name
+        </td>
+        <td>
+          Completed
+        </td>
+        
+    </tr>
+}
+}
+else
+{
+  <tr>
+  <td colspan="3">
+   No Information found to display.
+   </td>
+  </tr>
+}
+</table>
+ @if (Model != null)
+ {
+        <div class="panel-head padding-0" style="font-size: 10px !important;">
+            @Html.PagedListPager(Model, Page => Url.Action("Index", new
+       {
+           Page,
+           search = Request.QueryString["search"],
+           caller="completedProject"
+       }), new PagedListRenderOptions()
+       {
+           Display = PagedListDisplayMode.IfNeeded,
+
+           MaximumPageNumbersToDisplay = 0
+       })
+        </div>
+    }
+    
+
+

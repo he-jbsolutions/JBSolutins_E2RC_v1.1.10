@@ -1,0 +1,117 @@
+﻿@model e2rc.Models.LocationAssignModel
+@{
+    ViewBag.Title = "Assign Location";
+}
+<script type="text/javascript">
+    $(function () {
+        $(".btnbk").click(function () {
+           $("input:text,select").each(function () {
+                if ($(this).val().trim() != "" && $(this).val().trim().length > 0) {
+                    IsFormFilled = true;
+                }
+
+            });
+            if (IsFormFilled) {
+                if (confirm("The information is incomplete or has not been saved.Select 'OK' to proceed or 'Cancel' to complete and save the account information")) {
+                    window.location = "@Url.Action("Index","LocationAssign")";
+                }
+                else {
+                    IsFormFilled = false;
+                }
+            } else {
+                window.location = "@Url.Action("Index","LocationAssign")";
+            }
+        });
+    });  
+</script>
+
+@*<script type="text/javascript">
+    $(function () {
+
+        $.ajax({
+            url: '/LocationAssign/GetInspectorDetails/',
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+               // $('#inspector_Inspector_ID').append($("<option></option>").val("0").html("Select Inspector Name"));
+                $(data).each(function () {
+                    $('#inspector_Inspector_ID').append($("<option></option>").val(this.Inspector_ID).html(this.Name));
+
+                });
+            }
+
+        });
+    });
+
+</script>*@
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+                <div class = "btn btn-black btn-custom margin-0 btnbk " style="width:100%;"> Back</div>
+            </div>
+            <div class="col-sm-1">
+            </div>
+            @*<div class="col-sm-4">
+                @Html.ActionLink("View Assign Location", "Index", "LocationAssign", null, new { @class = "btn btn-custom btn-black margin-0" })
+            </div>*@
+        </div>
+    </div>
+</div>
+<div class="panel-head">
+    Create Location Assigned
+</div>
+@using (Html.BeginForm("create", "LocationAssign", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{    
+    @Html.AntiForgeryToken()     
+    <div id="accordion" class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <b>Assign Location Details</b>
+                </div>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse  in">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                               Inspector Name</label>
+                            <div class="col-sm-8">
+                              @Html.DropDownListFor(m => m.inspector.Inspector_ID, new SelectList(new e2rc.Models.LocationAssignModel().GetInspectorDetails((long)User.User_ID), "Inspector_ID", "Name"),"Select Inspector Name", new { @class = "form-control sp-15bottom " })
+                             @*  @Html.DropDownListFor(m => m.inspector.Inspector_ID, new SelectList(new e2rc.Models.LocationAssignModel().inspectors, "Inspector_ID", "Name"), "Select Inspector's Name", new { @class = "form-control sp-15bottom" })*@
+                                @Html.ValidationMessageFor(model => model.inspector.Inspector_ID)
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                               Project Name</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(m => m.location.Location_ID, new SelectList(new e2rc.Models.LocationAssignModel().PMLocations((long)User.User_ID), "Location_ID", "Name"), "Select Project Name", new { @class = "form-control sp-15bottom" })
+                                @Html.ValidationMessageFor(model => model.location.Location_ID)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                            <div class="col-md-12">
+                                <button id="btnSubmit" class="btn  btn-primary" value="Submit">
+                                    Save</button>
+                                    </div>
+                            </div>
+                      
+                        <div class="row">
+                            @Html.ValidationSummary(true)
+                        </div>     
+                </div>
+            </div>                            
+        </div>
+   </div>      
+                  
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

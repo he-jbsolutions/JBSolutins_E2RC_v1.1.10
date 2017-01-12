@@ -1,0 +1,687 @@
+﻿@model e2rc.Models.LocationModel
+@{
+    ViewBag.Title = "Create Location";
+}
+<script src="~/Scripts/multiple-select.js"></script>
+<link href="~/Content/css/multiple-select.css" rel="stylesheet" />
+<script>
+    $(function () {
+
+        $("#lstInspector_ID").multipleSelect({
+            placeholder: "Select Inspector Name",
+            filter: true
+        });
+        $("#lstReviewer_ID").multipleSelect({
+            placeholder: "Select Reviewer Name",
+            filter: true
+        });
+        $(".ms-parent").css("width", "238.33px");
+        $("#btnSubmit").click(function () {
+            //alert("Selected values: " + $("#lstInspector_ID").multipleSelect("getSelects"));
+            //alert("Selected values Type: " + typeof($("#lstInspector_ID").multipleSelect("getSelects")));
+            //alert("Selected texts: " + $("#lstLocation_ID").multipleSelect("getSelects", "text"));
+            if (($("#lstInspector_ID").multipleSelect("getSelects") != '') && ($("#lstLocation_ID").multipleSelect("getSelects") != '')) {
+                $("#RemoveAccess").val(false);
+                return true;
+            }
+            else {
+                alert('Select Atleast one Inspector and Project Name !');
+                return false;
+            }
+        });
+        $("#btnRemoveAccess").click(function () {
+            if ($("#lstInspector_ID").multipleSelect("getSelects") != '') {
+                $("#RemoveAccess").val(true);
+                return true;
+            }
+        });
+
+        /*Bind Project by Selected Company*/
+        $("#Client_ID").change(function () {
+
+            $("#lstLocation_ID").empty();
+            $("#lstLocation_ID").multipleSelect("refresh");
+            $("#lstLocation_ID").multipleSelect("uncheckAll");
+
+            var options = $('#hiddenDropDown option');
+
+            var values = $.map(options, function (option) {
+                return (option.value);
+            });
+            var client_IDs = [];
+            client_IDs = $('#Client_ID').val();
+            var location = [];
+            location = $("#lstLocation_ID").val();
+
+            for (var i = 0; i < client_IDs.length ; i++) {
+                for (var j = 0 ; j < values.length ; j++) {
+                    if (client_IDs[i] == values[j]) {
+
+                        var selectedText = $('#hiddenDropDown option').eq(j).text();
+                        var lstLocation_IDName = selectedText.split(",,");
+                        var $select = $("#lstLocation_ID");
+                        var $opt = $("<option />", {
+                            value: lstLocation_IDName[0],
+                            text: lstLocation_IDName[1],
+                        });
+                        if ($select.is(":checked")) {
+                            $opt.prop("selected", true);
+                        }
+                        $select.append($opt).multipleSelect("refresh");
+                        $select.multipleSelect("uncheckAll");
+                    }
+                }
+            }
+        });
+    });
+</script>
+<style type="text/css">  
+    select.input-validation-error
+    {    
+    border: 1px solid #FF0034;
+    }
+</style>
+
+<script type="text/javascript">
+    $(function () {
+
+        $.ajax({
+            url: '/Location/GetClientDetails/',
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+              //  $('#Client_ID').append($("<option></option>").val("0").html("Select Customer Name"));
+                $(data).each(function () {
+                    $('#Client_ID').append($("<option></option>").val(this.Client_ID).html(this.Name));
+                });
+            }
+        });
+    });
+</script>
+
+@*<script type="text/javascript">
+    $(function () {
+
+        if (document.getElementById("MaintainAction").value == "Select") {
+            $("#e2rc").show();
+            $("#director").show();
+            $("#Executor").show();
+        }
+        $("#MaintainAction").bind("change", function () { 
+            if (document.getElementById("MaintainAction").value == "Thired Party vendor") {
+                $("#e2rc").hide();
+                $("#director").show();
+                $("#Executor").show();               
+            }
+            else {
+                $("#e2rc").show();
+                $("#director").hide();
+                $("#Executor").hide();
+            }
+        });
+    });
+</script>*@
+
+<script type="text/javascript">
+$(function(){
+var IsFormFilled=false;
+        $(".btnbk").click(function () {
+            $("input:text,select").each(function () {
+              
+                if ($(this).val() != null && $(this).val().trim() != "" && $(this).val().trim().length > 0) {
+                    IsFormFilled = true;
+                }
+
+            });
+            if (IsFormFilled) {
+                if (confirm("The project information is incomplete or has not been saved.Select 'OK' to proceed or 'Cancel' to complete and save the account information")) {
+                    window.location = "@Url.Action("Index","Location")";
+                }
+                else {
+                    IsFormFilled = false;
+                }
+            } else {
+                window.location = "@Url.Action("Index","Location")";
+            }
+        });
+
+        //
+
+        $(".btnDashboardbk").click(function () {
+       
+            $("input:text,select").each(function () {
+                if ($(this).val() != null &&  $(this).val().trim() != "" && $(this).val().trim().length > 0) {
+                    IsFormFilled = true;
+                }
+
+            });
+            if (IsFormFilled) {
+                if (confirm("The project information is incomplete or has not been saved.Select 'OK' to proceed or 'Cancel' to complete and save the account information")) {
+                    window.location = "@Url.Action("Index","Dashboard")";
+                }
+                else {
+                    IsFormFilled = false;
+                }
+            } else {
+                window.location = "@Url.Action("Index","Dashboard")";
+            }
+        });
+
+
+        });
+
+
+        </script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".chknonStation").attr("checked", false);
+        $(".chkStation").attr("checked", false);
+//        $("#director").hide();
+//        $("#Executor").hide();
+
+    });   
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".chknonStation").click(function () {
+            if (document.getElementById('nonStation').checked == true) {
+                document.getElementById("F1ID").style.display = 'block';
+               // document.getElementById('F2').style.display = 'none';
+            }
+            else {
+                document.getElementById('F2').style.display = 'block';              
+            }
+        });
+
+        $(".chkStation").click(function () {
+            if (document.getElementById('Station').checked == true) {
+                document.getElementById("F2").style.display = 'block';
+                document.getElementById("btnAdd").style.visibility = 'visible';
+                document.getElementById("tblstation").style.visibility = 'visible';
+                 document.getElementById("F2ID").style.display = 'block';
+                 document.getElementById("itemID").style.display = 'block';
+                 document.getElementById("LMRID").style.display = 'block';              
+            }
+            else {              
+                document.getElementById("F1").style.display = 'block';
+            }
+        });
+    });   
+</script>
+
+<script type="text/javascript">
+
+    $(function () {
+        $(".check").click(function () {
+            $(".check").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one            
+        });
+    });
+
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+
+        $(".removerow").click(function () {
+            if ($("#tblstation tr:gt(0)").length >1) {
+                var tr = $(this).parent().parent();
+                $(this).parent().parent().remove();
+            }
+            else {
+                alert("you can not delete this record.");
+            }
+
+        });
+    });
+ </script>
+
+<script type="text/javascript">
+    var cnt = 1;
+    function AddStationRow() {
+        var tr = $('<tr>' +
+                  '<td data-title="txtStation"><input type="text" id="txtstation' + cnt + '" class = "text form-control sp-15bottom stationids" name="txt' + cnt + '" data_val ="true" placeholder = "F2(Station Based)" /></td>' +
+                  '<td><select  class = "form-control sp-15bottom itemids" id="itemID' + cnt + '"  name="itemID' + cnt + '" data_val="true"></select></td>' +
+                  '<td><select  class = "form-control sp-15bottom lmrids" id="LMRID' + cnt + '"  name="LMRID' + cnt + '" data_val="true"></select></td>' +
+                  '<td><span id="deletestation" class="glyphicon glyphicon-minus-sign removerow" style="cursor: pointer;"></span></td>' +
+                   '</tr>');       
+        $("#itemID").children().each(function () {
+            $(tr).find('#itemID' + cnt).append($("<option></option>").attr("value", $(this).val()).text($(this).text()));
+        });
+
+        $("#LMRID").children().each(function () {
+            $(tr).find('#LMRID' + cnt).append($("<option></option>").attr("value", $(this).val()).text($(this).text()));
+        });
+
+        $("#tblstation").append(tr);
+        cnt++;
+
+        $(tr).find("#deletestation").bind("click", function () {
+            var tr = $(this).parent().parent();
+            $(this).parent().parent().remove();
+            cnt--;
+
+        });
+
+
+    }   
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {
+            var stationIDs = ''; var itemids = ""; var lmrids = ""; IsAllDataValide = true;
+
+
+            //            if ($('#nonStation').is(':checked')) {
+            //                if ($('#F1ID').val() == "") {
+            //                    IsAllDataValide = false;
+            //                    $('#F1ID').css("border", "1px solid red");
+            //                }
+            //                $('#F1ID').keydown(function () {
+            //                    if ($('#F1ID').val() != "")
+            //                        $('#F1ID').css("border", "1px solid gray");
+            //                    IsAllDataValide = true;
+            //                });
+            //            }
+
+            if ($('#Station').is(':checked')) {
+
+                $("#tblstation tr").each(function () {
+
+                    if (($(this).find("input:text").val() == "")) {
+                        $(this).find("input:text").css("border", "1px solid red");
+                        $(this).find("input:text").focusout(function () {
+                            if ($(this).val() != "")
+                                IsAllDataValide = true;
+                            $(this).css("border", "1px solid gray");
+                        });
+                        IsAllDataValide = false;
+                    }
+
+                    if ($(this).find(":selected:eq(0)").text() == "Select Item") {
+                        $(this).find("select:eq(0)").css("border", "1px solid red");
+                        $(this).find("select:eq(0)").bind("change", function () {
+                            if ($(this).val() != "Select Item")
+                                IsAllDataValide = true;
+                            $(this).css("border", "1px solid gray");
+                        });
+                        IsAllDataValide = false;
+                    }
+
+                    if ($(this).find(":selected:eq(1)").text() == "Select") {
+                        $(this).find("select:eq(1)").css("border", "1px solid red");
+                        $(this).find("select:eq(1)").bind("change", function () {
+                            if ($(this).val() != "Select")
+                                IsAllDataValide = true;
+                            $(this).css("border", "1px solid gray");
+                        });
+
+                        IsAllDataValide = false;
+                    }
+                    stationIDs += $(this).find("input:text").val() + "," + $(this).find("select:eq(0)").val() + "," + $(this).find("select:eq(1)").val() + " ";
+                   
+                });
+            }
+            //            stationIDs = stationIDs.trim().replace(/ /g, "`");
+            //            $("#hfStationIDs").val(stationIDs);
+
+            if (IsAllDataValide) {
+                stationIDs = stationIDs.trim().replace(/ /g, "`");
+                $("#hfStationIDs").val(stationIDs);
+                return true;
+            } else {
+                alert("Please fill all red marked fields.");
+                $(document.forms[1]).valid();
+                return false;
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('#IsAssignInspector').change(function () {
+            if ($(this).prop('checked')) {
+                alert("This will assign project to all the Inspectors of the current franchise !"); //checked
+            }
+        });
+        $('#IsAssignReviewer').change(function () {
+            if ($(this).prop('checked')) {
+                alert("This will assign project to all the Reviewer of the current franchise !"); //unchecked
+            }
+        });
+    });
+</script>
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+            @if (ViewBag.view == "Dashboard")
+            {
+                <div class="btn btn-black btn-custom btnDashboardbk" style="width: 100%;">
+                 Back</div>
+            }
+            else
+            {
+                <div class="btn btn-black btn-custom btnbk" style="width: 100%;">
+                 Back</div>
+            }
+            </div>
+            <div class="col-sm-1">
+            </div>
+            @*<div class="col-sm-4">
+                @Html.ActionLink("View Locations", "Index", "Location", null, new { @class = "btn btn-custom btn-black " })
+            </div>*@
+        </div>
+    </div>
+</div>
+<div class="panel-head">
+    Create Project Profile
+</div>
+@using (Html.BeginForm())
+{         
+    @Html.AntiForgeryToken()    
+    @Html.Hidden("hfStationIDs")  
+    <div id="accordion" class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title" style="font-weight: bold;">
+                    Project Details
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo" style="overflow: inherit;">
+                <div class="panel-body">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    @Html.LabelFor(Model => Model.Name)
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control sp-15bottom", placeholder = "Project Name" })
+                                    @Html.ValidationMessageFor(model => model.Name)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Address Line 1
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.MailingAddress, new { @class = "form-control sp-15bottom", placeholder = "Enter Address Line 1" })
+                                    @Html.ValidationMessageFor(model => model.MailingAddress)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Address Line 2
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.MailingAddress2, new { @class = "form-control sp-15bottom", placeholder = "Enter Address Line 2" })
+                                    @Html.ValidationMessageFor(model => model.MailingAddress2)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    City
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.City, new { @class = "form-control sp-15bottom", placeholder = "Enter City" })
+                                    @Html.ValidationMessageFor(model => model.City)
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    State
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.DropDownListFor(m => m.State.State_ID, new SelectList(new e2rc.Models.LocationModel().States, "State_ID", "Name"), "Select State", new { @class = "form-control sp-15bottom" })
+                                    @Html.ValidationMessageFor(model => model.State.State_ID)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Zip Code
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.ZipCode, new { @class = "form-control sp-15bottom", placeholder = "Enter Zip Code" })
+                                    @Html.ValidationMessageFor(model => model.ZipCode)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Project Type
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.DropDownListFor(model => model.ProjectType_ID, new SelectList(new e2rc.Models.LocationModel().ProjectTypes, "ProjectType_ID", "ProjectType"), "Select Project Type", new { @class = "form-control sp-15bottom" })
+                                    @Html.ValidationMessageFor(model => model.ProjectType_ID)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Inspection Frequency
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.DropDownListFor(model => model.InspectionFreq, new SelectList(new e2rc.Models.LocationModel().InspectionFrequency, "Value", "Text"), "Select Inspection Frequency", new { @class = "form-control sp-15bottom" })
+                                    @Html.ValidationMessageFor(model => model.InspectionFreq)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    NPDES Tracking Number
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.TrackingNumber, new { @class = "form-control sp-15bottom", placeholder = "Enter NPDES Tracking Number" })
+                                    @Html.ValidationMessageFor(model => model.TrackingNumber)
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Maintenance/Corrective Action by
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.DropDownListFor(model => model.MaintainAction, new SelectList(new e2rc.Models.LocationModel().Maintenance, "Value", "Text"), "Select", new { @class = "form-control sp-15bottom" })
+                                    @Html.ValidationMessageFor(model => model.MaintainAction)
+                                </div>
+                            </div>
+                        </div>
+                        @* <div class="row" id="e2rc">
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                Email-1</label>
+                            <div class="col-sm-7">
+                               @Html.TextBoxFor(model => model.Email_1, new { @class = "form-control sp-15bottom", placeholder = "example@gmail.com" })
+                                @Html.ValidationMessageFor(model => model.Email_1)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                Email-2</label>
+                            <div class="col-sm-7">
+                               @Html.TextBoxFor(model => model.Email_2, new { @class = "form-control sp-15bottom", placeholder = "example@gmail.com" })
+                                @Html.ValidationMessageFor(model => model.Email_2)
+                            </div>
+                        </div>
+                    </div>*@
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Inspection Report Recipient
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.InspectionReportEmails, new { @class = "form-control sp-15bottom", placeholder = "example@gmail.com" })
+                                    @Html.ValidationMessageFor(model => model.InspectionReportEmails)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Work Order Recipient
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.WorkOrdersEmails, new { @class = "form-control sp-15bottom", placeholder = "example@gmail.com" })
+                                    @Html.ValidationMessageFor(model => model.WorkOrdersEmails)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="Executor">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    3-Day Notice Recipient
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.Threedaynoticeemails, new { @class = "form-control sp-15bottom", placeholder = "example@gmail.com" })
+                                    @Html.ValidationMessageFor(model => model.Threedaynoticeemails)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    5-Day Notice Recipient
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.Fivedaynoticeemails, new { @class = "form-control sp-15bottom", placeholder = "example@gmail.com" })
+                                    @Html.ValidationMessageFor(model => model.Fivedaynoticeemails)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    7-Day Notice Recipient
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.Sevendaynoticeemails, new { @class = "form-control sp-15bottom", placeholder = "example@gmail.com" })
+                                    @Html.ValidationMessageFor(model => model.Sevendaynoticeemails)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Company Name
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.DropDownListFor(model => model.Client_ID, new SelectList(new List<dynamic> { new { Client_ID = "", Name = "Select Company Name" } }, "Client_ID", "Name"), new { @class = "form-control sp-15bottom " })
+                                    @* @Html.DropDownListFor(model => model.Client_ID, new SelectList(new e2rc.Models.GeneralInspectionModel().clients, "Client_ID", "Name"), "Select Company Name", new { @class = "form-control sp-15bottom" })*@
+                                    @*   @Html.DropDownListFor(model => model.MaintainAction, new SelectList(new e2rc.Models.LocationModel().Maintenance, "Value", "Text"), "Select", new { @class = "form-control sp-15bottom" })*@
+                                    @Html.ValidationMessageFor(model => model.Client_ID)
+                                </div>
+                            </div>
+                        </div>
+                        <!--Assign Inspector and Reviewer Row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Assign Inspector
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.DropDownListFor(m => m.lstInspector_ID, new MultiSelectList(new e2rc.Models.FranchiseAssignLocationToInspectorModel().GetInspectorDetails((long)User.User_ID), "Inspector_ID", "Name"), new { @class = "", multiple = "multiple" })
+                                    @*@Html.DropDownListFor(m => m.Inspector_ID, new MultiSelectList(new e2rc.Models.FranchiseAssignLocationToInspectorModel().GetInspectorDetails((long)User.User_ID), "Inspector_ID", "Name"),"Select Inspector Name", new { @class = "form-control sp-15bottom " })*@
+                                    @*@Html.DropDownListFor(m => m.inspector.Inspector_ID, new SelectList(new e2rc.Models.LocationAssignModel().inspectors, "Inspector_ID", "Name"), "Select Inspector's Name", new { @class = "form-control sp-15bottom" })*@
+                                    @*@Html.ValidationMessageFor(model => model.inspector.Inspector_ID)*@
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Assign Reviewer
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.DropDownListFor(m => m.lstReviewer_ID, new MultiSelectList(new e2rc.Models.FranchiseAssignLocationToClientModel().GetReviewerDetails((long)User.User_ID), "Reviewer_ID", "Name"), new { multiple = "multiple" })
+                                    @* @Html.DropDownListFor(model => model.Client_ID, new SelectList(new e2rc.Models.GeneralInspectionModel().clients, "Client_ID", "Name"), "Select Company Name", new { @class = "form-control sp-15bottom" })*@
+                                    @*   @Html.DropDownListFor(model => model.MaintainAction, new SelectList(new e2rc.Models.LocationModel().Maintenance, "Value", "Text"), "Select", new { @class = "form-control sp-15bottom" })*@
+                                    @Html.ValidationMessageFor(model => model.Client_ID)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+
+                            <div class="col-md-6">
+                                <div class="col-sm-6 sp-15bottom">
+                                    <label class="checkbox-inline">
+                                        @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-inline " })Project Active
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6" style="display:none;">
+                                <div class="col-sm-5 sp-15bottom">
+                                    <label class="checkbox-inline">
+                                        @Html.CheckBoxFor(model => model.IsRequired, new { @class = "checkbox-inline " })IsRequired
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div id="F1">
+                                    <div class="col-sm-5 sp-15bottom checkbox-inline">
+                                        @Html.CheckBox("F1 (Non Station Based)", new { @class = "sp-15bottom chknonStation check", @id = "nonStation" })
+                                        SWPPP Inspection
+                                    </div>
+                                    @* <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.F1_ID, new { @class = "form-control sp-15bottom", placeholder = "F1(Non Station Based)", @id = "F1ID", @Style = "display:none", data_val = false, value = false })
+                                </div>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="F2">
+                                    <div class="col-sm-3 sp-15bottom checkbox-inline F2">
+                                        @Html.CheckBox("F2 (Station Based)", new { @class = "col-sm-3 sp-15bottom chkStation check", @id = "Station" })Station – Based Inspection
+                                    </div>
+                                    <div class="col-md-6 col-sm-5">
+                                        <div>
+                                            <table id="tblstation" class="table table-bordered" style="visibility: hidden">
+                                                <tr>
+                                                    <td class=" col-md-4 active center">
+                                                        @Html.TextBoxFor(model => model.F2_ID, new { @class = "form-control sp-15bottom stationids", placeholder = "F2(Station Based)", @id = "F2ID", @Style = "display:none", data_val = false, value = false })
+                                                    </td>
+                                                    <td class=" col-md-3 active center">
+                                                        @Html.DropDownListFor(model => model.Item_ID, new SelectList(new e2rc.Models.UploadDataModel().C1items, "Item_ID", "Name"), "Select Item", new { @class = "form-control itemids", data_val = false, value = false, @Style = "display:none", @id = "itemID" })
+                                                    </td>
+                                                    <td class="col-md-3 active center">
+                                                        @Html.DropDownListFor(model => model.LMR, new SelectList(new e2rc.Models.LocationModel().LMRs, "Value", "Text"), "Select", new { @class = "form-control lmrids", data_val = false, value = false, @Style = "display:none", @id = "LMRID" })
+                                                    </td>
+                                                    <td>
+                                                        <span id="deletestation" class="col-sm-1 glyphicon glyphicon-minus-sign removerow"
+                                                              style="cursor: pointer;"></span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 sp-15bottom">
+                                        <input type="button" id="btnAdd" class="btn  btn-primary" value="Add Station ID"
+                                               onclick="javascript:AddStationRow()" style="visibility: hidden" />
+                                    </div>
+                                    <div class="col-lg-12 sp-15bottom " id="holder" style="max-height: 140px; overflow-y: auto">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <button id="btnSubmit" class="btn  btn-primary" value="Submit">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

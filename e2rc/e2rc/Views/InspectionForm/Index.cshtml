@@ -1,0 +1,184 @@
+﻿@model IEnumerable<e2rc.Models.InspectionFormModel>
+@{
+    ViewBag.Title = "Inspection Forms";
+}
+<style type="text/css">
+    .textAreaDisplay
+    {
+        border: 0 none !important;
+        height: 30px !important;
+    }
+    .table th {
+   text-align: center !important;
+}
+</style>
+<script type="text/javascript">
+    // auto search by franchise name
+    $(function () {
+        $("#txtSearch").autocomplete({
+            source: '@Url.Action("GetFormName")'
+        });
+    });
+</script>
+<script type="text/javascript">
+
+    $(function () {
+
+        $(".updateForm").click(function () {
+
+            var UpdateTR = $(this).parent().parent();
+
+            var datatoUpdate = {
+                Form_ID: parseInt($(UpdateTR).find("input[type=hidden]:first").val()),
+                Description: $(UpdateTR).find("input[type=text]:first").val(),
+                IsActive: $(UpdateTR).find("input[type=checkbox]:first").is(":checked")
+            };
+
+            $.ajax({
+                url: '/InspectionForm/Edit/',
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(datatoUpdate), //"{Form:" + JSON.stringify(datatoUpdate) + "}",
+                success: function (data) {
+                    alert(data)
+                },
+                error: function (data) {
+                    alert(data)
+                }
+            });
+            return false;
+
+        });
+
+    });
+</script>
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+                @Html.ActionLink("Dashboard", "Index", "Dashboard", null, new { @class = "btn btn-custom btn-black margin-0" })
+            </div>
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-4">
+                @*   @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-black btn-custom margin-0" })*@
+            </div>
+        </div>
+        <div class="col-md-6">
+            @using (Html.BeginForm("Index", "InspectionForm", FormMethod.Get))
+            {
+                <div style="float: left; width: 85%;">
+                    @Html.TextBox("search", null, new { id = "txtSearch", @class = "form-control text-search", placeholder = "Search by Form Name", style = "height: 0% !important;" })
+                </div>
+                <div style="float: left; width: 15%;">
+                    <button class="btn btn-black btn-custom margin-0 form-control glyphicon glyphicon-search align-right btn-search"
+                        style="height: 0% !important;">
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="panel-head">
+    Inspection Forms
+</div>
+<div class="panel panel-default" style="margin-bottom: 0% !important;">
+    <div class="panel-body padding-0">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover  margin-0 ">
+                <tr class="panel-title">
+                    <th class="header-color col-md-3 text-center">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th class="header-color col-md-4">
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>                   
+                        <th class="header-color col-md-1" style="display:none;">
+                            @Html.DisplayNameFor(model => model.IsActive)
+                        </th>                   
+                    <th class="header-color col-md-1">
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>  
+                                     
+                        <th class="header-color col-md-3">
+                            Action
+                        </th>
+                   
+                </tr>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {               
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                              @Html.HiddenFor(modelItem => item.Form_ID)
+                        </td>
+                        <td>
+                         @Html.TextBoxFor(modelItem => item.Description, new { @class = "textAreaDisplay", @readonly = "true" }) 
+                        </td>
+                        @* @if (ViewBag.role == "Super Admin")
+                        {
+                         <td>
+                            @Html.TextBoxFor(modelItem => item.Description, new { @class = "textAreaDisplay", @readonly = "true" })                           
+                         </td>                       
+                            <td style="text-align: center;">
+                                @Html.EditorFor(modelItem => item.IsActive)
+                            </td>
+                        }
+                         else
+                         {
+                             <td>
+                            @Html.TextBoxFor(modelItem => item.Description, new { @class = "textAreaDisplay", @readonly = "true" })                           
+                             </td>   
+                             <td style="text-align: center;display:none;" >
+                                @Html.DisplayFor(modelItem => item.IsActive, new { @readonly = "true" })
+                            </td>
+                         }*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+
+                        <td>
+                         @Html.ActionLink("New Inspection", "create", item.Path)
+                        </td>
+                         @if (ViewBag.role == "Super Admin")
+                         {
+                        <td style="display:none;">
+                            <button id="btnUpdateFrom"  style="border: 0px;dispaly:none;" class="updateForm">
+                                Update</button>
+                            @* @Html.ActionLink("Update", "Edit", "InspectionForm", new { Form_ID = item.Form_ID, Description = item.Description, IsActive = item.IsActive }) *@
+                            @Html.ActionLink("New Inspection", "create", item.Path)
+                        </td>
+                         }
+                         else
+                         {
+                              <td style="display:none;">      
+                             @if (item.IsActive == true)
+                             {
+                                                   
+                            @* @Html.ActionLink("Update", "Edit", "InspectionForm", new { Form_ID = item.Form_ID, Description = item.Description, IsActive = item.IsActive }) *@
+                            @Html.ActionLink("New Inspection", "create", item.Path)
+                           
+                         }
+                             else
+                             {                                                       
+                              @Html.ActionLink("New Inspection", "create", item.Path, new { onclick = "javascript:return false;" })                              
+                             }
+                              </td>
+                         }
+                    </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">
+                            No form information found to display.
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

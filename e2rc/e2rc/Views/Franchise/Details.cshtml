@@ -1,0 +1,210 @@
+﻿@model e2rc.Models.FranchiseModel
+@{
+    ViewBag.Title = "Franchise Details";
+}
+<script type="text/javascript">
+    $(function () {
+        $(".btnbk").click(function () {
+            window.history.back()
+        });
+    });
+</script>
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+               <div class = "btn btn-black btn-custom  btnbk" style="width:100%;"> Back</div>
+            </div>
+            <div class="col-sm-1">
+            </div>
+            @if (User.Role == "Super Admin" || User.Role == "Franchise Admin")
+            {
+            <div class="col-sm-4">
+                @Html.ActionLink("Edit", "Edit", "Franchise", new { Franchise_ID = Model.Franchise_ID }, new { @class = "btn btn-black btn-custom" })
+            </div>
+             }
+        </div>
+    </div>
+</div>
+<div class="panel-head">
+    Profile Details
+</div>
+<div id="accordion" class="panel-group" aria-multiselectable="true" role="tablist">
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                    aria-controls="collapseOne" style="text-align: none;">Company Details</a> 
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body" style="margin-left: 3%;">
+                <div class="">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-sm-6">
+                                <label class="col-sm-4 sp-15bottom res1">
+                                    <b>Company Name :</b></label>
+                                <div class="col-sm-8 sp-15bottom res2">
+                                    @Html.DisplayFor(model => model.FraCompName)
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="col-sm-4  sp-15bottom res1">
+                                    <b>Date :</b></label>
+                                <div class="col-sm-8 sp-15bottom res2">
+                                    @Html.DisplayFor(model => model.Date)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="HeadingTwo">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true"
+                    aria-controls="collapseTwo">Address</a>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="panel-body" style="margin-left: 3%;">
+                <div class="">
+                    <div class="row">
+                        <div class="col-md-12">
+                        <div class="col-sm-6">
+                                <label class="col-sm-4 sp-15bottom res1">
+                                    <b> Street Address :</b></label>
+                                <div class="col-sm-8 sp-15bottom res2">
+                                    @Html.DisplayFor(model => model.Address.MailingAddress)
+                                </div>
+                            </div>
+                             <div class="col-sm-6">
+                                <label class="col-sm-4 sp-15bottom res1">
+                                    <b>City :</b></label>
+                                <div class="col-sm-8 sp-15bottom res2">
+                                    @Html.DisplayFor(model => model.Address.City)
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                           <div class="col-sm-6">
+                                <label class="col-sm-4 sp-15bottom res1">
+                                    <b>State :</b></label>
+                                <div class="col-sm-8 sp-15bottom res2">
+                                    @Html.DisplayFor(model => model.Address.State.Name)
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="col-sm-4 sp-15bottom res1">
+                                    <b>Zip Code :</b></label>
+                                <div class="col-sm-8 sp-15bottom res2">
+                                    @Html.DisplayFor(model => model.Address.ZipCode)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="HeadingThree">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true"
+                    aria-controls="collapseThree">Administrator Details</a>
+            </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+            <div class="panel-body" style="margin-left: 3%;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-sm-6">
+                            <label class="col-sm-4 sp-15bottom res1">
+                                <b>First Name :</b></label>
+                            <div class="col-sm-8 sp-15bottom res2">
+                                @Html.DisplayFor(model => model.AdminUser.FirstName)
+                            </div>
+                        </div> 
+                        <div class="col-sm-6">
+                            <label class="col-sm-4 sp-15bottom res1">
+                                <b>Last Name :</b></label>
+                            <div class="col-sm-8 sp-15bottom res2">
+                                @Html.DisplayFor(model => model.AdminUser.LastName)
+                            </div>
+                        </div>  
+                         </div>                      
+                    </div>  
+                 <div class="row">
+                 <div class="col-md-12">
+                    <div class="col-sm-6">
+                                <label class="col-sm-4 sp-15bottom res1">
+                                    <b>Username :</b></label>
+                                <div class="col-sm-8 sp-15bottom res2">
+                                    @Html.DisplayFor(model => model.UserName)
+                                    @Html.HiddenFor(m => m.User_ID)
+                                </div>
+                      </div>
+                       <div class="col-sm-6">
+                            <label class="col-sm-4 sp-15bottom res1">
+                                <b>Email :</b></label>
+                            <div class="col-sm-8 sp-15bottom res2">
+                                @Html.DisplayFor(model => model.AdminUser.Email)
+                            </div>
+                        </div>
+
+                      </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                       
+                        <div class="col-sm-6">
+                            <label class="col-sm-4 sp-15bottom res1">
+                                <b>Role :</b></label>
+                            <div class="col-sm-8 sp-15bottom res2">
+                                @Html.DisplayFor(model => model.AdminUser.Role.Description)
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label class="col-sm-4 sp-15bottom res1">
+                                <b>Office Phone :</b></label>
+                            <div class="col-sm-8 sp-15bottom res2">
+                                @Html.DisplayFor(model => model.AdminUser.PhoneNumber)
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">                        
+                        <div class="col-sm-6">
+                            <label class="col-sm-4 sp-15bottom res1">
+                                <b>Mobile Phone :</b></label>
+                            <div class="col-sm-8 sp-15bottom res2">
+                                @Html.DisplayFor(model => model.AdminUser.MobileNumber)
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                                <div class="col-sm-4 sp-15bottom">
+                                    <label class="checkbox-inline" >
+                                        @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-inline", @disabled = "disabled" })Company Active
+                                    </label>
+                                </div>
+                            </div>
+                        @Html.HiddenFor(model => model.AdminUser.CompanyName, new { value = "e2rc" })
+                    </div>
+                </div>                 
+                <div class="row">
+                 @*<div class="col-md-12 ">
+                          @Html.ActionLink("Edit", "Edit", "Franchise", new { Franchise_ID = Model.Franchise_ID }, new { @class = "btn btn-primary" })
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,651 @@
+﻿@model e2rc.Models.InspectorModel
+@{
+    ViewBag.Title = "Edit Inspector";
+}
+<script src="~/Scripts/multiple-select.js"></script>
+<link href="~/Content/css/multiple-select.css" rel="stylesheet" />
+<script>
+    $(function () {
+        $("#lstLocation_ID").multipleSelect({
+            placeholder: "Select Project Name",
+            filter: true
+        });
+        $("#lstLocation_ID").multipleSelect("setSelects", [@Model.slstLocationID]);
+        $(".ms-parent").css("width", "238.33px");
+        /*$("#btnSubmit").click(function () {
+            //alert("Selected values: " + $("#lstInspector_ID").multipleSelect("getSelects"));
+            //alert("Selected values Type: " + typeof($("#lstInspector_ID").multipleSelect("getSelects")));
+            //alert("Selected texts: " + $("#lstLocation_ID").multipleSelect("getSelects", "text"));
+            if (($("#lstInspector_ID").multipleSelect("getSelects") != '') && ($("#lstLocation_ID").multipleSelect("getSelects") != '')) {
+                $("#RemoveAccess").val(false);
+                return true;
+            }
+            else {
+                alert('Select Atleast one Inspector and Project Name !');
+                return false;
+            }
+        }); */
+    });
+</script>
+<style type="text/css">
+@*css for dropdown validation border color*@
+select.input-validation-error
+{    
+    border: 1px solid #FF0034;
+}
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        if (document.getElementById("Role_Role_ID").value == 3) {
+            $(".Qualification").hide();
+            $(".sign").hide();
+        }
+        else {
+            $(".Qualification").show();
+            $(".sign").show();
+        }
+   });
+</script>
+
+<script type="text/javascript">
+
+    $(function () {
+        $(".date").bind("change", function (e) {
+            var date1 = document.getElementById("Date").value.split("/");
+            var month = parseInt(date1[0]);
+            var day = parseInt(date1[1]);
+            var year = parseInt(date1[2]);
+            var ListofDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            if (month == 1 || month > 2) {
+                if (day > ListofDays[month - 1]) {
+                    alert('Invalid date format!');
+                    return false;
+                }
+            }
+            if (month == 2) {
+                var lyear = false;
+                if ((!(year % 4) && year % 100) || !(year % 400)) {
+                    lyear = true;
+                }
+                if ((lyear == false) && (day >= 29)) {
+                    alert('Invalid date format!');
+                    return false;
+                }
+                if ((lyear == true) && (day > 29)) {
+                    alert('Invalid date format!');
+                    return false;
+                }
+            }
+            if (month > 12 && day > 12) {
+                alert('Invalid date format!');
+                return false;
+            }
+            if (year < 100) {
+                year = "20" + year;
+            }
+            if (month < 10) {
+                month = "0" + month;
+            }
+            if (day < 10) {
+                day = "0" + day;
+            }
+
+            if (month > 12) {
+                $(this).val(day + "/" + month + "/" + year);
+            }
+            else {
+                $(this).val(month + "/" + day + "/" + year);
+            }
+        });
+        $("#Date").on("change",
+              function () {
+                  if ($(this).val() == "NaN/NaN/NaN")
+                      $(this).val("MM/DD/YYYY");
+              });
+    });
+
+</script>
+<script type="text/javascript">
+    var IsFormFilled = false;
+    $(function () {
+        $(".btnbk").click(function () {
+            var result = '@ViewBag.IsInspectorEdited';
+
+        if (result == false) {
+                $("input:text:not(.date)").each(function () {
+
+                    if ($(this).val().trim() != "" && $(this).val().trim().length > 0) {
+                        IsFormFilled = true;
+                    }
+
+                });
+                if (IsFormFilled) {
+                    if (confirm("The account information is incomplete or has not been saved.Select 'OK' to proceed or 'Cancel' to complete and save the account information")) {
+                        window.history.back();
+                    }
+                    else {
+                        IsFormFilled = false;
+                    }
+                } else {
+                    window.location = "@Url.Action("Index", "Inspector")";
+                }
+            }
+            else {
+                window.location = "@Url.Action("Index", "Inspector")";
+            }
+
+        });
+
+
+        $("#PhoneNumber").on("keyup", function (e) {
+            if ($(this).val().length == 3) {
+
+                $(this).val($(this).val() + "-");
+
+            } else if ($(this).val().length == 7) {
+
+                $(this).val($(this).val() + "-");
+
+            }
+        });
+         $("#MobileNumber").on("keyup", function (e) {
+            if ($(this).val().length == 3) {
+
+                $(this).val($(this).val() + "-");
+
+            } else if ($(this).val().length == 7) {
+
+                $(this).val($(this).val() + "-");
+
+            }
+        });
+
+        $(".cbtnbk").click(function () {
+         var result= '@ViewBag.IsClientEdited';
+            if(result== false)
+            {
+                $("input:text:not(.date),select").each(function () {
+                    if ($(this).val().trim() != "" && $(this).val().trim().length > 0) {
+                        IsFormFilled = true;
+                    }
+
+                });
+                if (IsFormFilled) {
+                    if (confirm("The account information is incomplete or has not been saved.Select 'OK' to proceed or 'Cancel' to complete and save the account information")) {
+                        window.location = "@Url.Action("Index", "Client")";
+                    }
+                    else {
+                        IsFormFilled = false;
+                    }
+                } else {
+                    window.location = "@Url.Action("Index", "Client")";
+                }
+            }
+            else{
+                window.location = "@Url.Action("Index", "Client")";
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#btshow").click(function () {
+            //if (document.getElementById("PostedFile1").style.visibility == 'visible') {
+            //    alert(document.getElementById('PostedFile1').files[0].size);
+            //}
+            document.getElementById("PostedFile1").style.visibility = 'visible';
+            return false;
+        });
+        $("#btnSubmit").click(function () {
+            //if (document.getElementById("PostedFile1").style.visibility == 'visible') {
+            //    if (document.getElementById("Role_Role_ID").value == 3) {
+            //        if (document.getElementById('PostedFile1').files[0].size > 10000) {
+            //            alert('Please upload logo with maximum size 10kb.');
+            //            return false;
+            //        }
+            //    }
+            //}            
+            //return true;
+        });        
+    });
+    $(document).ready(function () {
+        $('#IsAssignAllProject').change(function () {
+            if ($(this).prop('checked')) {
+                alert("This will assign Inspectors to all the Project of the current franchise !"); //checked
+            }
+            else {
+                alert("This will unassign Inspectors to all the Project of the current franchise !"); //unchecked
+            }
+        });
+    });
+</script>
+<div class="navbar" style="margin-bottom: 0% !important;">
+@if (ViewBag.view == "Client")
+{
+   <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+                <div class="btn btn-black btn-custom cbtnbk" style="width: 100%;">
+                    Back</div>
+            </div>
+            <div class="col-sm-1">
+            </div>
+           @* <div class="col-sm-4">
+                @Html.ActionLink("View Client", "Index", "Client", null, new { @class = "btn btn-black btn-custom" })
+                <div class="btn btn-black btn-custom cbtnbk" style="width: 100%;">
+                    View Client</div>
+            </div>*@
+        </div>
+        <div class="col-md-6">
+            @if (ViewBag.IsClientEdited ?? false)
+            {
+                <font style="color: #468847;">The Client @ViewBag.ClientName details has been updated successfully.</font>
+            }
+            else if (!(ViewBag.IsClientEdited ?? true))
+            {
+                <font style="color: #468847;">Unable to update Client details.</font>
+            }
+        </div>
+    </div>
+}
+else
+{ 
+     <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+                <div class="btn btn-black btn-custom btnbk" style="width: 100%;">
+                    Back</div>
+            </div>
+            <div class="col-sm-1">
+            </div>
+           @* <div class="col-sm-4">
+               @Html.ActionLink("View Inspector", "Index", "Inspector", null, new { @class = "btn btn-black btn-custom" })
+             <div class="btn btn-black btn-custom btnbk" style="width: 100%;">
+                    View Inspector</div>
+            </div>*@
+        </div>
+        <div class="col-md-6">
+            @if (ViewBag.IsInspectorEdited ?? false)
+            {
+                <font style="color: #468847;">The Inspector @ViewBag.InspectorName details has been updated successfully.</font>
+            }
+            else if (!(ViewBag.IsInspectorEdited ?? true))
+            {
+                <font style="color: #468847;">Unable to update Inspector details.</font>
+            }
+        </div>
+    </div>
+    
+}
+
+</div>
+
+@if (ViewBag.view == "Client")
+{
+    <div class="panel-head">
+    Edit Company Account
+</div>
+}
+else
+{
+    <div class="panel-head">
+    Edit Inspector Account
+</div>
+}
+@using (Html.BeginForm("Edit", "Inspector", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()      
+    <div id="accordion" class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            @if (ViewBag.view == "Client")
+            {
+                <div class="panel-title">
+                    <b>Company Account Details</b>
+                </div>
+            }
+            else
+            {
+                  <div class="panel-title">
+                    <b>Inspector Account Details</b>
+                </div>
+            }
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse  in" style="overflow: inherit;">
+                <div class="panel-body">
+                    @if (ViewBag.view == "Client")
+                    {
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    @Html.LabelFor(model => model.CompanyName)<span style="color: Red">*</span>
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control sp-15bottom", placeholder = "Enter Company Name" })
+                                    @Html.ValidationMessageFor(model => model.CompanyName)
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                @Html.LabelFor(model => model.FirstName) <span style="color:Red">*</span>
+                            </label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.FirstName, new { @class = "form-control sp-15bottom", placeholder = "Enter First Name" })
+                                @Html.ValidationMessageFor(model => model.FirstName)
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                @Html.LabelFor(model => model.LastName) <span style="color:Red">*</span>
+                            </label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.LastName, new { @class = "form-control sp-15bottom", placeholder = "Enter Last Name" })
+                                @Html.ValidationMessageFor(model => model.LastName)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                @Html.LabelFor(model => model.Date) <span style="color:Red">*</span>
+                            </label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.Date, new { @class = "form-control sp-15bottom" })
+                                @Html.ValidationMessageFor(model => model.Date)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                @Html.LabelFor(model => model.UserName) <span style="color:Red">*</span>
+                            </label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.UserName, new { @class = "form-control sp-15bottom", placeholder = "Enter Username" })
+                                @Html.ValidationMessageFor(model => model.UserName)
+                                @Html.HiddenFor(model => model.User_ID)
+                                @Html.HiddenFor(model => model.Inspector_ID)
+                                @Html.HiddenFor(model => model.Client_ID)
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                Password <span style="color:Red">*</span>
+                            </label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.Password, new { @class = "form-control sp-15bottom padding-none", placeholder = "******" })
+                                @Html.ValidationMessageFor(model => model.Password)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                Confirm Password <span style="color:Red">*</span>
+                            </label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.ConfirmPassword, new { @class = "form-control sp-15bottom padding-none", placeholder = "******" })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                @Html.LabelFor(model => model.Email) <span style="color:Red">*</span>
+                            </label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.Email, new { @class = "form-control sp-15bottom", placeholder = "example@gmail.com" })
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                        </div>
+                        @if (ViewBag.view == "Client")
+                        {
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Role <span style="color: Red">*</span>
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.DropDownListFor(model => model.Role.Role_ID, new SelectList(new e2rc.Models.ClientModel().Roles, "Role_ID", "Description"), new { @class = "form-control sp-15bottom", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.Role.Role_ID)
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Role <span style="color: Red">*</span>
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.DropDownListFor(model => model.Role.Role_ID, new SelectList(new e2rc.Models.InspectorModel().Roles, "Role_ID", "Description"), new { @class = "form-control sp-15bottom", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.Role.Role_ID)
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                @Html.LabelFor(model => model.PhoneNumber) <span style="color:Red">*</span>
+                            </label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.PhoneNumber, new { @class = "form-control sp-15bottom", placeholder = "999-999-9999" })
+                                @Html.ValidationMessageFor(model => model.PhoneNumber)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-5 sp-15bottom">
+                                @Html.LabelFor(model => model.MobileNumber) <span style="color:Red">*</span>
+                            </label>
+                            <div class="col-sm-7">
+                                @Html.EditorFor(model => model.MobileNumber, new { @class = "form-control sp-15bottom", placeholder = "999-999-9999" })
+                                @Html.ValidationMessageFor(model => model.MobileNumber)
+                            </div>
+                        </div>
+                    </div>
+                    @if (ViewBag.view != "Client")
+                    {
+                        <div class="row Qualification">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    @Html.LabelFor(model => model.Qualification) <span style="color:Red">*</span>
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.EditorFor(model => model.Qualification, new { @class = "form-control sp-15bottom", placeholder = "Enter Qualification" })
+                                    @Html.ValidationMessageFor(model => model.Qualification)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Inspector Title
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.InspectorTitle, new { @class = "form-control sp-15bottom", placeholder = "Enter Inspector Title" })
+                                    @* @Html.ValidationMessageFor(model => model.InspectorTitle)*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Project Name
+                                </label>
+                                <div class="col-sm-7">
+                                    @Html.DropDownListFor(m => m.lstLocation_ID, new MultiSelectList(new e2rc.Models.FranchiseAssignLocationToInspectorModel().FranchiseLocations((long)User.User_ID), "Location_ID", "Name"), new { @class = "", multiple = "multiple" })
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @if (ViewBag.view == "Client")
+                    {
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-sm-4 sp-15bottom">
+                                    <label class="checkbox-inline">
+                                        @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-inline " })Company Active
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-sm-5 sp-15bottom">
+                                    <label class="checkbox-inline">
+                                        @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-inline " })Inspector Active
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-md-6">
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <b>Address</b>
+                </div>
+            </div>
+            <div id="collapseAddress">
+                <div class="panel-body">
+                    <div class="">
+                        <div class="row">                           
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                     Street Address <span style="color:Red">*</span></label>
+                                 <div class="col-sm-7">
+                                    @Html.EditorFor(model => model.Address.MailingAddress, new { @class = "form-control sp-15bottom" })
+                                    @Html.ValidationMessageFor(model => model.Address.MailingAddress)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    City <span style="color:Red">*</span></label>
+                                <div class="col-sm-7">
+                                    @Html.EditorFor(model => model.Address.City, new { @class = "form-control sp-15bottom", placeholder = "Enter City" })
+                                    @Html.ValidationMessageFor(model => model.Address.City)
+                                </div>
+                            </div>
+                             
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    State <span style="color:Red">*</span></label>
+                               <div class="col-sm-7">
+                                    @Html.DropDownListFor(model => model.Address.State.State_ID, new SelectList(new e2rc.Models.AddressModel().States, "State_ID", "Name"), "Select State", new { @class = "form-control sp-15bottom" })
+                                    @Html.ValidationMessageFor(model => model.Address.State.State_ID)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Zip Code <span style="color:Red">*</span></label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.Address.ZipCode, new { @class = "form-control sp-15bottom  zip-code", placeholder = "Enter Zip Code" })
+                                    @Html.ValidationMessageFor(model => model.Address.ZipCode)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        
+        <div class="panel panel-default">
+          @if (ViewBag.view != "Client")
+          {
+            <div class="panel-heading sign">
+                <div class="panel-title sign">
+                    <b>Signature Details</b>
+                </div>
+            </div>
+          }
+          else
+          {
+            <div class="panel-heading sign">
+                <div class="panel-title sign">
+                    <b>Logo Details</b>
+                </div>
+            </div>
+          }
+            <div id="collapsesignature">
+                <div class="panel-body">
+                        <div class="row sign">
+                            <div class="col-md-6">
+                                @if (ViewBag.view != "Client")
+                                { 
+                                    <label class="col-sm-4 sp-15bottom">
+                                        Signature <span style="color:Red">*</span>
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="col-sm-4 sp-15bottom">
+                                        Logo <span style="color:Red"></span>
+                                    </label>
+                                }                             
+                                <div class="col-sm-8">
+                                    @Html.DisplayFor(m => m.SignPath)
+                                    @*@Html.HiddenFor(m => m.UploadSignPath)*@
+                                </div>
+                            </div>
+                            <div class="col-md-6" >
+                            @if (ViewBag.view != "Client")
+                            {
+                                <input type="button" id="btshow" value="New Sign" class="btn btn-primary col-sm-1" />
+                            }
+                            else
+                            {
+                                <input type="button" id="btshow" value="New Logo" class="btn btn-primary col-sm-1" />
+                            }
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(m => m.PostedFile, new { type = "file", @id = "PostedFile1", @Style = "visibility:hidden" })
+                              @*   @Html.ValidationMessageFor(m => m.PostedFile, string.Empty, new { @style = "margin-top:2% !important;" })*@
+                                </div>
+                            </div>
+                        </div>
+ 
+
+
+
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <input type="submit" id="btnSubmit" class="btn  btn-primary" value="Save" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            @Html.ValidationSummary(true)
+                        </div>
+                </div>
+            </div>
+
+
+        </div>
+      
+                       
+   </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

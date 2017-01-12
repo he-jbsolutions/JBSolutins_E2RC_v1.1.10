@@ -1,0 +1,248 @@
+﻿@model e2rc.Models.FranchiseAssignLocationToClientModel
+@{
+    ViewBag.Title = "Franchise Assign Location To Client";
+}
+@*<script type="text/javascript">
+    $(function () {
+
+        $.ajax({
+            url: '/LocationAssign/GetInspectorDetails/',
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+             //   $('#inspector_Inspector_ID').append($("<option></option>").val("0").html("Select Inspector Name"));
+                $(data).each(function () {
+                    $('#inspector_Inspector_ID').append($("<option></option>").val(this.Inspector_ID).html(this.Name));
+
+                });
+            }
+        });
+    });
+
+</script>*@
+
+<script type="text/javascript">
+    $(function () {
+
+
+        $("#Reviewer_ID").change(function () {
+            $.ajax(
+                    {
+                        url: '/FranchiseAssignLocationToClient/GetReviewerClients/',
+                        type: 'POST',
+                        data: JSON.stringify({ Reviewer_ID: $("#Reviewer_ID").val() }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            $('#Client_ID').children().remove();
+                            $('#Client_ID').append($("<option></option>").val("").html("Select Company Name"));
+                            $(data).each(function () {
+                                $('#Client_ID').append($("<option></option>").val(this.Client_ID).html(this.CompanyName));
+
+                            });
+                        }
+                    });
+        });
+
+        $("#Client_ID").change(function () {
+            $.ajax(
+                    {
+                        url: '/FranchiseAssignLocationToClient/GetReviewerClientsLocation/',
+                        type: 'POST',
+                        data: JSON.stringify({ Client_ID: $("#Client_ID").val() }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            $('#Location_ID').children().remove();
+                            $('#Location_ID').append($("<option></option>").val("").html("Select Project Name"));
+                            $(data).each(function () {
+                                $('#Location_ID').append($("<option></option>").val(this.Location_ID).html(this.Name));
+
+                            });
+                        }
+                    });
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {
+            var IsAllDataValide = true;
+
+            if ($('#Reviewer_ID').text().trim() == "Select Reviewer Name") {
+                $('#Reviewer_ID').css("border", "1px solid red");
+                $('#Reviewer_ID').bind("change", function () {
+                    if ($(this).val() != "Select Reviewer Name")
+                        IsAllDataValide = true;
+                    $(this).css("border", "1px solid gray");
+                });
+                IsAllDataValide = false;
+            }
+
+            if ($('#Client_ID').text().trim() == "Select Company Name") {
+                $('#Client_ID').css("border", "1px solid red");
+                $('#Client_ID').bind("change", function () {
+                    if ($(this).val() != "Select Company Name")
+                        IsAllDataValide = true;
+                    $(this).css("border", "1px solid gray");
+                });
+                IsAllDataValide = false;
+            }
+
+            if ($('#Location_ID').text().trim() == "Select Project Name") {
+                $('#Location_ID').css("border", "1px solid red");
+                $('#Location_ID').bind("change", function () {
+                    if ($(this).val() != "Select Project Name")
+                        IsAllDataValide = true;
+                    $(this).css("border", "1px solid gray");
+                });
+                IsAllDataValide = false;
+            }
+
+            if (IsAllDataValide) {
+                return true;
+            } else {
+                alert("Please fill all red marked fields.");
+                $(document.forms[1]).valid();
+                return false;
+            }
+
+        });
+    });
+    </script>
+
+<script type="text/javascript">
+$(function(){
+var IsFormFilled=false;
+        $(".btnbk").click(function () {
+        var result= '@ViewBag.IsFranchiseAssignLocationEdited';      
+        if(result== false)
+        {
+            $("input:text,select").each(function () {
+                if ($(this).val().trim() != "" && $(this).val().trim().length > 0) {
+                    IsFormFilled = true;
+                }
+
+            });
+            if (IsFormFilled) {
+                if (confirm("The information is incomplete or has not been saved.Select 'OK' to proceed or 'Cancel' to complete and save the account information")) {
+                    window.location = "@Url.Action("Index","FranchiseAssignLocationToClient")";
+                }
+                else {
+                    IsFormFilled = false;
+                }
+            } else {
+                window.location = "@Url.Action("Index","FranchiseAssignLocationToClient")";
+            }
+            }
+            else{
+            window.location = "@Url.Action("Index","FranchiseAssignLocationToClient")";
+            }
+        });
+        });
+        </script>
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+                <div class = "btn btn-black btn-custom margin-0 btnbk" style="width:100%;"> Back</div>
+            </div>
+            <div class="col-sm-1">
+            </div>
+           @* <div class="col-sm-5">
+                @Html.ActionLink("View Assigned Location", "Index", "LocationAssign", null, new { @class = "btn btn-custom btn-black margin-0" })
+            </div>*@
+        </div>
+         <div class="col-md-6" style="padding-top: 12px;">
+            @if (ViewBag.IsFranchiseAssignLocationEdited ?? false)
+            {
+                <font style="color: #468847;">Franchise assigned project details has been updated successfully.</font>
+            }
+            else if (!(ViewBag.IsFranchiseAssignLocationEdited ?? true))
+            {
+                <font style="color: #468847;">Unable to update Project details.</font>
+            }
+        </div>
+    </div>
+</div>
+<div class="panel-head">
+    Edit Assign Project to Reviewer
+</div>
+@using (Html.BeginForm("Edit", "FranchiseAssignLocationToClient", FormMethod.Post))
+{    
+    @Html.AntiForgeryToken()     
+    <div id="accordion" class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <b>Assigned Project Details</b>
+                </div>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse  in">
+                <div class="panel-body">
+                    <div class="row">
+
+                     <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                               Reviewer Name</label>
+                            <div class="col-sm-8">
+                              @Html.DropDownListFor(m => m.Reviewer_ID, new SelectList(new e2rc.Models.FranchiseAssignLocationToClientModel().GetReviewerDetails((long)User.User_ID), "Reviewer_ID", "Name"), "Select Reviewer Name", new { @class = "form-control sp-15bottom " })
+                             @*  @Html.DropDownListFor(m => m.inspector.Inspector_ID, new SelectList(new e2rc.Models.LocationAssignModel().inspectors, "Inspector_ID", "Name"), "Select Inspector's Name", new { @class = "form-control sp-15bottom" })*@
+                                @Html.ValidationMessageFor(model => model.Reviewer_ID)  
+                                 @Html.HiddenFor(model => model.Reviewer_ID)                              
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                               Company Name</label>
+                            <div class="col-sm-8">    
+                              @Html.DropDownListFor(m => m.Client_ID, new SelectList(new e2rc.Models.FranchiseAssignLocationToClientModel().GetReviewerClients((long)User.User_ID, (long)Model.Reviewer_ID), "Client_ID", "CompanyName"), "Select Company Name", new { @class = "form-control sp-15bottom " })
+                              @* @Html.DropDownListFor(m => m.inspector.Inspector_ID, new SelectList(new e2rc.Models.LocationAssignModel().inspectors, "Inspector_ID", "Name"), "Select Inspector's Name", new { @class = "form-control sp-15bottom" })*@
+                                @Html.ValidationMessageFor(model => model.Client_ID)
+                                  @Html.HiddenFor(model => model.Client_ID)
+                                 @Html.HiddenFor(model => model.Assign_ID)
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                               Project Name</label>
+                            <div class="col-sm-8">
+                            @* @Html.DropDownListFor(m => m.Location_ID, new SelectList(new List<dynamic> { new { Location_ID = "", Name = "Select Project Name" } }, "Location_ID", "Name"), new { @class = "form-control sp-15bottom ",data_val = true })*@
+                               @Html.DropDownListFor(m => m.Location_ID, new SelectList(Model.ReviewerLocations((long)User.User_ID,(long)Model.Client_ID), "Location_ID", "Name", Model.Location_ID), "Select Project Name", new { @class = "form-control sp-15bottom" })
+       
+                             @*  @Html.DropDownListFor(m => m.Location_ID, new SelectList(new e2rc.Models.FranchiseAssignLocationToClientModel().FranchiseLocations((long)User.User_ID), "Location_ID", "Name"), "Select Project Name", new { @class = "form-control sp-15bottom" })*@
+                               @* @Html.DropDownListFor(m => m.location.Location_ID, new SelectList(new e2rc.Models.LocationAssignModel().Locations, "Location_ID", "Name"), "Select project Name", new { @class = "form-control sp-15bottom" })*@
+                                @Html.ValidationMessageFor(model => model.location.Location_ID)
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="row">
+                    <div class="col-md-12">
+                      <button id="btnSubmit" class="btn  btn-primary" value="Submit">
+                       Save</button>
+                    </div>
+            </div>          
+            <div class="row">
+                @Html.ValidationSummary(true)
+            </div>    
+                </div>
+            </div>
+
+                             
+           </div>        
+    </div> 
+                          
+             
+         
+       
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

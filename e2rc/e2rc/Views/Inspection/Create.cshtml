@@ -1,0 +1,3086 @@
+﻿@model e2rc.Models.InspectionModel
+@{
+    ViewBag.Title = "Create Inspection";
+}
+@{
+    Layout = "~/Views/Shared/_FullContainerLayout.cshtml";
+}
+<style type="text/css">
+    select.input-validation-error {
+        border: 1px solid #FF0034;
+    }
+
+    .ui-dialog-title {
+        background-image: none !important;
+    }
+
+    .ui-dialog-titlebar-close {
+    background: none !important;
+    }
+
+    @* .ui-widget-header .ui-icon {
+        background-image: none !important;
+    }
+
+    .ui-icon {
+        background-image: none !important;
+    }
+
+    *@
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(document).on('keydown', '#generalInspectionModel_Date', function (e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode == 9) {
+                e.preventDefault();
+                $("#generalInspectionModel_StartTime").focus();
+            }
+        });
+
+        $(document).on('keydown', '#generalInspectionModel_StartTime_AmPm', function (e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode == 9) {
+                e.preventDefault();
+                $("#generalInspectionModel_EndTime").focus();
+            }
+        });
+
+        $(document).on('keydown', '#generalInspectionModel_EndTime_AmPm', function (e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode == 9) {
+                e.preventDefault();
+                $("#generalInspectionModel_PhaseClear").focus();
+            }
+        });
+
+        $(document).on('keydown', '#UploadData1_PPPLength', function (e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode == 9) {
+                e.preventDefault();
+                $("#UploadData1_UOM").focus();
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#weatherInspectionModel_InspectionOccuringYesValue").change(function () {
+            if (document.getElementById('weatherInspectionModel_InspectionOccuringYesValue').value != "") {
+                document.getElementById('weatherInspectionModel_InspectionOccuringYesValue').style.borderColor = "gray";
+            }
+        });
+
+        $("#weatherInspectionModel_UnsafeInspectionValue").change(function () {
+            if (document.getElementById('weatherInspectionModel_UnsafeInspectionValue').value != "") {
+                document.getElementById('weatherInspectionModel_UnsafeInspectionValue').style.borderColor = "gray";
+            }
+        });
+
+
+        $("# weatherInspectionModel_StromEventYes").change(function () {
+            if (document.getElementById('weatherInspectionModel_StromEventYesValue').value != "") {
+                document.getElementById('weatherInspectionModel_StromEventYesValue').style.borderColor = "gray";
+            }
+        });
+
+
+        $("#SiteInspection1_Notes").change(function () {
+            if (document.getElementById('SiteInspection1_Notes').value != "") {
+                document.getElementById('SiteInspection1_Notes').style.borderColor = "gray";
+            }
+        });
+        $("#SiteInspection2_Notes").change(function () {
+            if (document.getElementById('SiteInspection2_Notes').value != "") {
+                document.getElementById('SiteInspection2_Notes').style.borderColor = "gray";
+            }
+        });
+        $("#SiteInspection3_Notes").change(function () {
+            if (document.getElementById('SiteInspection3_Notes').value != "") {
+                document.getElementById('SiteInspection3_Notes').style.borderColor = "gray";
+            }
+        });
+        $("#SiteInspection4_Notes").change(function () {
+            if (document.getElementById('SiteInspection4_Notes').value != "") {
+                document.getElementById('SiteInspection4_Notes').style.borderColor = "gray";
+            }
+        });
+        $("#SiteInspection5_Notes").change(function () {
+            if (document.getElementById('SiteInspection5_Notes').value != "") {
+                document.getElementById('SiteInspection5_Notes').style.borderColor = "gray";
+            }
+        });
+        $("#SiteInspection6_Notes").change(function () {
+            if (document.getElementById('SiteInspection6_Notes').value != "") {
+                document.getElementById('SiteInspection6_Notes').style.borderColor = "gray";
+            }
+        });
+        $("#SiteInspection7_Notes").change(function () {
+            if (document.getElementById('SiteInspection7_Notes').value != "") {
+                document.getElementById('SiteInspection7_Notes').style.borderColor = "gray";
+            }
+        });
+        $("#SiteInspection8_Notes").change(function () {
+            if (document.getElementById('SiteInspection8_Notes').value != "") {
+                document.getElementById('SiteInspection8_Notes').style.borderColor = "gray";
+            }
+        });
+        $("#SiteInspection9_Notes").change(function () {
+            if (document.getElementById('SiteInspection9_Notes').value != "") {
+                document.getElementById('SiteInspection9_Notes').style.borderColor = "gray";
+            }
+        });
+        $("#SiteInspection10_Notes").change(function () {
+            if (document.getElementById('SiteInspection10_Notes').value != "") {
+                document.getElementById('SiteInspection10_Notes').style.borderColor = "gray";
+            }
+        });
+        $("#SiteInspection11_Notes").change(function () {
+            if (document.getElementById('SiteInspection11_Notes').value != "") {
+                document.getElementById('SiteInspection11_Notes').style.borderColor = "gray";
+            }
+        });
+        $("#SiteInspection12_Notes").change(function () {
+            if (document.getElementById('SiteInspection12_Notes').value != "") {
+                document.getElementById('SiteInspection12_Notes').style.borderColor = "gray";
+            }
+        });
+        $("#SiteInspection13_Notes").change(function () {
+            if (document.getElementById('SiteInspection13_Notes').value != "") {
+                document.getElementById('SiteInspection13_Notes').style.borderColor = "gray";
+            }
+        });
+        $("#SiteInspection14_Notes").change(function () {
+            if (document.getElementById('SiteInspection14_Notes').value != "") {
+                document.getElementById('SiteInspection14_Notes').style.borderColor = "gray";
+            }
+        });
+        $("#SiteInspection15_Notes").change(function () {
+            if (document.getElementById('SiteInspection15_Notes').value != "") {
+                document.getElementById('SiteInspection15_Notes').style.borderColor = "gray";
+            }
+        });
+        $("#SiteInspection16_Notes").change(function () {
+            if (document.getElementById('SiteInspection16_Notes').value != "") {
+                document.getElementById('SiteInspection16_Notes').style.borderColor = "gray";
+            }
+        });
+        $("#SiteInspection17_Notes").change(function () {
+            if (document.getElementById('SiteInspection17_Notes').value != "") {
+                document.getElementById('SiteInspection17_Notes').style.borderColor = "gray";
+            }
+        });
+
+
+    });
+
+</script>
+<script type="text/javascript">
+    var interval = null;
+    var flag = false;
+    jQuery(function () {
+        interval = setInterval(callFunction, 5000);
+    });
+
+    function callFunction() {
+        flag = true;
+        clearInterval(interval);
+    }
+
+    $(function () {
+        $(".ViewDashboard").click(function () {
+            if (flag) {
+                if (confirm("The Inspection Report is incomplete or has not been saved. All entries will be lost. Select 'OK' to proceed or 'Cancel' to complete and save form.")) {
+                    window.location = "@Url.Action("Index", "Dashboard")";
+                }
+
+            } else {
+                window.location = "@Url.Action("Index", "Dashboard")";
+            }
+            return false;
+        });
+
+        $(".InspectionFormsettime").click(function () {
+            if (flag) {
+                if (confirm("The Inspection Report is incomplete or has not been saved. All entries will be lost. Select 'OK' to proceed or 'Cancel' to complete and save form.")) {
+                    window.location = "@Url.Action("Index", "InspectionForm")";
+                }
+
+            } else {
+                window.location = "@Url.Action("Index", "InspectionForm")";
+            }
+            return false;
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#generalInspectionModel_EndTime_AmPm").change(function (e) {
+            var date = $("#generalInspectionModel_Date").val();
+            var starttime = $("#generalInspectionModel_StartTime").val();
+            var starttimeampm = $("#generalInspectionModel_StartTime_AmPm").val();
+            var endtime = $("#generalInspectionModel_EndTime").val();
+            var endtimeampm = $("#generalInspectionModel_EndTime_AmPm").val();
+            var testEndTime = $("#generalInspectionModel_EndTime").val().split(":");
+            if ((testEndTime[0] == 5 || testEndTime[0] == 05) && (testEndTime[1] == 00) && (endtimeampm == 'AM')) {
+                alert("The Inspection can not end at 5:00 AM");
+            }
+            var time1 = date + ' ' + starttime + starttimeampm;
+            var time2 = date + ' ' + endtime + endtimeampm;
+            if (convertDate2JS(time2) < convertDate2JS(time1)) {
+                alert("End Time must occur after the Start Time");
+            }
+        });
+
+
+        $("#generalInspectionModel_StartTime_AmPm").change(function (e) {
+            var date = $("#generalInspectionModel_Date").val();
+            var starttime = $("#generalInspectionModel_StartTime").val();
+            var starttimeampm = $("#generalInspectionModel_StartTime_AmPm").val();
+            var endtime = $("#generalInspectionModel_EndTime").val();
+            var endtimeampm = $("#generalInspectionModel_EndTime_AmPm").val();
+
+            var testStartTime = $("#generalInspectionModel_StartTime").val().split(":");
+            if ((testStartTime[0] == 4 || testStartTime[0] == 04) && (testStartTime[1] == 30) && (starttimeampm == 'PM')) {
+                alert("The Inspection can not start at 4:30 PM");
+            }
+            var time1 = date + ' ' + starttime + starttimeampm;
+            var time2 = date + ' ' + endtime + endtimeampm;
+            if (endtime != '' && endtimeampm != -1) {
+                if (convertDate2JS(time2) < convertDate2JS(time1)) {
+                    alert("End Time must occur after the Start Time");
+                }
+            }
+        });
+        function convert2JSTime(time) {
+            //No space between AM|Pm and Time
+            time = time.toLowerCase();
+            var hours = parseInt(time.substr(0, 2));
+            if (time.indexOf('am') != -1 && hours == 12) {
+                time = time.replace('12', '0');
+            }
+            if (time.indexOf('pm') != -1 && hours < 12) {
+                time = time.replace(hours, (parseInt(hours) + 12));
+            }
+            time = time.replace(/(am|pm)/, '');
+            if (time.split(':')[0].length === 3) {
+                time = time.substr(1)
+            }
+            return time;
+            //return sHours + ":" + sMinutes ;
+        }
+        function convertDate2JS(datem) {
+            //No space between AM|Pm and Time
+            //datem=datem.replace(' PM','PM');datem=datem.replace(' AM','AM');
+            console.log(datem.split(' ')[0] + ' ' + convert2JSTime(datem.split(' ')[1]))
+            return datem.split(' ')[0] + ' ' + convert2JSTime(datem.split(' ')[1])
+        }
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $(".calhrs").change(function (e) {
+            var duration = $("#StormEvent1_StormDuration").val();
+            var n = duration.indexOf(".");
+            if (n == -1) {
+            }
+            else {
+                var duration = $("#StormEvent1_StormDuration").val().split(".");
+                var hours1 = duration[0];
+                var min1 = duration[1];
+
+                if (min1 > 60) { alert("minutes should be less than 60"); }
+                if (hours1 < 10) {
+                    $(this).val("0" + hours1 + '.' + min1);
+                }
+                else {
+                    $(this).val(hours1 + '.' + min1);
+                }
+            }
+        });
+        $("#generalInspectionModel_EndTime_AmPm").keydown(function (e) {
+            if ($.inArray(e.keyCode, [46, 8]) !== -1 ||
+            // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+            // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+
+        $("#generalInspectionModel_StartTime_AmPm").keydown(function (e) {
+            if ($.inArray(e.keyCode, [46, 8]) !== -1 ||
+            // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+            // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+
+        $(".date,.storm-date").bind("change", function (e) {
+            var date = $(this).val().split("/");
+            var month = parseInt(date[0]);
+            var day = parseInt(date[1]);
+            var year = parseInt(date[2]);
+
+            if (year < 100) {
+                year = "20" + year;
+            }
+            if (month < 10) {
+                month = "0" + month;
+            }
+            if (day < 10) {
+                day = "0" + day;
+            }
+
+            if (month > 12 && day > 12) {
+                alert('Invalid date format!');
+                return false;
+            }
+
+            if (month > 12) {
+                $(this).val(day + "/" + month + "/" + year);
+            }
+            else {
+                $(this).val(month + "/" + day + "/" + year);
+            }
+            if ($(this).val() == "NaN/NaN/NaN")
+                $(this).val("MM/DD/YYYY");
+
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".Num").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8]) !== -1 ||
+            // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+            // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+
+        // Numdot
+        $(".Numdot").keypress(function (e) {
+            var charCode;
+            if (e.keyCode > 0) {
+                charCode = e.which || e.keyCode;
+            }
+            else if (typeof (e.charCode) != "undefined") {
+                charCode = e.which || e.keyCode;
+            }
+            if (charCode == 46)
+                return true
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+
+        });
+
+        $(".Numcolon").keypress(function (e) {
+            var charCode;
+            if (e.keyCode > 0) {
+                charCode = e.which || e.keyCode;
+            }
+            else if (typeof (e.charCode) != "undefined") {
+                charCode = e.which || e.keyCode;
+            }
+            if (charCode == 58)
+                return true
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $(".temperature").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8]) !== -1 ||
+            // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) || (e.e.shiftKey == true && e.keyCode == 107) || (e.e.shiftKey == true && e.keyCode == 109) ||
+            // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    function selectSingleChk(id) {
+
+        var var0 = document.getElementById("generalInspectionModel_PhaseClear");
+        var var1 = document.getElementById("generalInspectionModel_PhaseExcavations");
+        var var2 = document.getElementById("generalInspectionModel_PhaseBuilding");
+        var var3 = document.getElementById("generalInspectionModel_PhaseRoughGrading");
+        var var4 = document.getElementById("generalInspectionModel_PhaseInfrastructure");
+        var var5 = document.getElementById("generalInspectionModel_PhaseFinalGrading");
+        var var6 = document.getElementById("generalInspectionModel_PhaseFinalStabilization");
+
+        if (id.id == "generalInspectionModel_PhaseClear") {
+            if ((var1.checked) || (var2.checked) || (var3.checked) || (var4.checked) || (var5.checked) || (var6.checked)) {
+            }
+            else {
+                (id).checked = true;
+            }
+        }
+        if (id.id == "generalInspectionModel_PhaseExcavations") {
+            if ((var0.checked) || (var2.checked) || (var3.checked) || (var4.checked) || (var5.checked) || (var6.checked)) {
+            }
+            else {
+                (id).checked = true;
+            }
+        }
+        if (id.id == "generalInspectionModel_PhaseBuilding") {
+            if ((var0.checked) || (var1.checked) || (var3.checked) || (var4.checked) || (var5.checked) || (var6.checked)) {
+            }
+            else {
+                (id).checked = true;
+            }
+        }
+        if (id.id == "generalInspectionModel_PhaseRoughGrading") {
+            if ((var0.checked) || (var1.checked) || (var2.checked) || (var4.checked) || (var5.checked) || (var6.checked)) {
+            }
+            else {
+                (id).checked = true;
+            }
+        }
+        if (id.id == "generalInspectionModel_PhaseInfrastructure") {
+            if ((var0.checked) || (var1.checked) || (var2.checked) || (var3.checked) || (var5.checked) || (var6.checked)) {
+            }
+            else {
+                (id).checked = true;
+            }
+        }
+        if (id.id == "generalInspectionModel_PhaseFinalGrading") {
+            if (!((var0.checked) || (var1.checked) || (var2.checked) || (var3.checked) || (var4.checked) || (var6.checked))) {
+                (id).checked = true;
+            }
+
+        }
+        if (id.id == "generalInspectionModel_PhaseFinalStabilization") {
+            if (!((var0.checked) || (var1.checked) || (var2.checked) || (var3.checked) || (var4.checked) || (var5.checked))) {
+                (id).checked = true;
+            }
+
+        }
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //        $("#generalInspectionModel_RainEventOthervalue").attr("readonly", "readonly");
+        $("#weatherInspectionModel_StromEventYes").attr("checked", true);
+        $("#weatherInspectionModel_LastInspectionYes").attr("checked", true);
+        $("#weatherInspectionModel_InspectionOccuringYes").attr("checked", true);
+        $("#weatherInspectionModel_UnsafeInspectionYes").attr("checked", true);
+        $("#chkStormEventYes").attr("checked", true);
+        $("#chkAnyOccuringYes").attr("checked", true);
+        $("#chkunsafeYes").attr("checked", true);
+        $("#chkWeatherLastInspYes").attr("checked", true);
+        $('#generalInspectionModel_PhaseClear').attr("checked", true);
+        $("#RainEventAmount").slideUp();
+        $("#generalInspectionModel_Inspection_Type").change(function () {
+            var str = $("#generalInspectionModel_Inspection_Type").val();
+            if (str == "Rain Event") {
+                $("#RainEventAmount").slideDown();
+            }
+            else {
+                $("#RainEventAmount").slideUp();
+            }
+        });
+        $(".check_phase").click(function () {
+            $(".check_phase").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_RainEvent").click(function () {
+            $(".check_RainEvent").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+            //            if ($('#generalInspectionModel_RainEventOther').is(':checked')) {
+            //                $("#generalInspectionModel_RainEventOthervalue").removeAttr("readonly");
+            //            }
+            //            else {
+            //                $("#generalInspectionModel_RainEventOthervalue").attr("readonly", "readonly"); $("#generalInspectionModel_RainEventOthervalue").val("");
+            //            }
+        });
+        $(".check_stormEvent").click(function () {
+            $(".check_stormEvent").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+            if ($('#weatherInspectionModel_StromEventYes').is(':checked')) {
+                $("#weatherInspectionModel_StromEventYesValue").removeAttr("readonly");
+                $("#stromDetails").slideDown();
+            }
+            else if ($('#weatherInspectionModel_StromEventNo').is(':checked')) {
+                $("#weatherInspectionModel_StromEventYesValue").attr("readonly", "readonly"); $("#weatherInspectionModel_StromEventYesValue").val("");
+                $("#stromDetails").slideUp();
+            }
+        });
+        $(".check_discharges").click(function () {
+            $(".check_discharges").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked oneoccuring
+        });
+
+        $(".check_occuring").click(function () {
+            $(".check_occuring").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+            if ($('#weatherInspectionModel_InspectionOccuringYes').is(':checked')) {
+                $("#weatherInspectionModel_InspectionOccuringYesValue").removeAttr("readonly");
+                $("#InspectionOccuringYes").slideDown();
+            }
+            else {
+                $("#weatherInspectionModel_InspectionOccuringYesValue").attr("readonly", "readonly"); $("#weatherInspectionModel_InspectionOccuringYesValue").val("");
+                $("#InspectionOccuringYes").slideUp();
+            }
+        });
+
+        $(".check_unsafe").click(function () {
+            $(".check_unsafe").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+            if ($('#weatherInspectionModel_UnsafeInspectionYes').is(':checked')) {
+                $("#weatherInspectionModel_UnsafeInspectionValue").removeAttr("readonly");
+                $("#UnsafeInspection").slideDown();
+            }
+            else {
+                $("#weatherInspectionModel_UnsafeInspectionValue").attr("readonly", "readonly"); $("#weatherInspectionModel_UnsafeInspectionValue").val("");
+                $("#UnsafeInspection").slideUp();
+            }
+        });
+
+
+
+        $(".check_AreaGroup1").click(function () {
+            $(".check_AreaGroup1").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup1").click(function () {
+            $(".check_ActionGroup1").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup2").click(function () {
+            $(".check_AreaGroup2").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup2").click(function () {
+            $(".check_ActionGroup2").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup3").click(function () {
+            $(".check_AreaGroup3").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup3").click(function () {
+            $(".check_ActionGroup3").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup4").click(function () {
+            $(".check_AreaGroup4").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup4").click(function () {
+            $(".check_ActionGroup4").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup5").click(function () {
+            $(".check_AreaGroup5").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup5").click(function () {
+            $(".check_ActionGroup5").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup6").click(function () {
+            $(".check_AreaGroup6").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup6").click(function () {
+            $(".check_ActionGroup6").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup7").click(function () {
+            $(".check_AreaGroup7").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup7").click(function () {
+            $(".check_ActionGroup7").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup8").click(function () {
+            $(".check_AreaGroup8").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup8").click(function () {
+            $(".check_ActionGroup8").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup9").click(function () {
+            $(".check_AreaGroup9").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup9").click(function () {
+            $(".check_ActionGroup9").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup10").click(function () {
+            $(".check_AreaGroup10").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup10").click(function () {
+            $(".check_ActionGroup10").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup11").click(function () {
+            $(".check_AreaGroup11").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup11").click(function () {
+            $(".check_ActionGroup11").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup12").click(function () {
+            $(".check_AreaGroup12").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup12").click(function () {
+            $(".check_ActionGroup12").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup13").click(function () {
+            $(".check_AreaGroup13").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup13").click(function () {
+            $(".check_ActionGroup13").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup14").click(function () {
+            $(".check_AreaGroup14").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup14").click(function () {
+            $(".check_ActionGroup14").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup15").click(function () {
+            $(".check_AreaGroup15").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup15").click(function () {
+            $(".check_ActionGroup15").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup16").click(function () {
+            $(".check_AreaGroup16").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup16").click(function () {
+            $(".check_ActionGroup16").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup17").click(function () {
+            $(".check_AreaGroup17").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup17").click(function () {
+            $(".check_ActionGroup17").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_AreaGroup18").click(function () {
+            $(".check_AreaGroup18").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+        $(".check_ActionGroup18").click(function () {
+            $(".check_ActionGroup18").attr("checked", false); //uncheck all checkboxes
+            $(this).attr("checked", true);  //check the clicked one
+        });
+
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            url: '/Inspection/GetInpectorDetails/',
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                $("#generalInspectionModel_inspector_Inspector_ID").val(data.Inspector_ID);
+                $("#generalInspectionModel_inspector_Name").val(data.InspectorName);
+                $("#generalInspectionModel_Inspector_Title").val(data.InspectorTitle);
+                $("#generalInspectionModel_Inspector_Contact").val(data.ContactNumber);
+                $("#generalInspectionModel_Inspector_Qualification").val(data.Qualification);
+                $("#generalInspectionModel_InspectorEmail").val(data.InspectorEmail);
+                $("#lblInspectorName").text(data.InspectorName);
+                $('#uploadimg').attr("src", data.UploadSignPath);
+            }
+        });
+
+
+        $.ajax({
+            url: '/Inspection/GetInspectorsClientDetails/',
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                //                $('#generalInspectionModel_Client_Client_ID').append($("<option></option>").val("0").html("Select Customer Name"));
+                $(data).each(function () {
+                    $('#generalInspectionModel_Client_Client_ID').append($("<option></option>").val(this.Client_ID).html(this.Name));
+
+                });
+            }
+
+        });
+
+
+        $("#generalInspectionModel_Client_Client_ID").change(function () {
+            $("#generalInspectionModel_CustomerName").val($("#generalInspectionModel_Client_Client_ID option:selected").text());
+
+            $.ajax(
+                    {
+                        url: '/Inspection/GetClientDetails/',
+                        type: 'POST',
+                        data: JSON.stringify({ Client_ID: $("#generalInspectionModel_Client_Client_ID").val() }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            // $("#generalInspectionModel_ClientEmail").val(data.ClientEmail);
+                            $('#generalInspectionModel_location_Location_ID').children().remove();
+                            $('#generalInspectionModel_location_Location_ID').append($("<option></option>").val("").html("Select Project Name"));
+                            $(data).each(function () {
+                                $('#generalInspectionModel_location_Location_ID').append($("<option></option>").val(this.Location_ID).html(this.Name));
+
+                            });
+                        }
+                    });
+        });
+
+        $("#generalInspectionModel_location_Location_ID").change(function () {
+            $.ajax(
+                            {
+                                url: '/Inspection/GetLocationDetails/',
+                                type: 'POST',
+                                data: JSON.stringify({ Location_ID: $("#generalInspectionModel_location_Location_ID").val() }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (data) {
+                                    $("#generalInspectionModel_locationName").val(data.locationName);
+                                    $("#generalInspectionModel_Tracking_No").val(data.TrackingNumber);
+                                }
+                            });
+        });
+        $("#generalInspectionModel_inspector_Inspector_ID").change(function () {
+            $.ajax(
+                    {
+                        url: '/Inspection/GetInpectorDetails/',
+                        type: 'POST',
+                        data: JSON.stringify({ Inspector_ID: $("#generalInspectionModel_inspector_Inspector_ID").val() }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            $("#generalInspectionModel_Inspector_Title").val(data.InspectorTitle);
+                            $("#generalInspectionModel_Inspector_Contact").val(data.ContactNumber);
+                            $("#generalInspectionModel_Inspector_Qualification").val(data.Qualification);
+                            $("#generalInspectionModel_InspectorEmail").val(data.InspectorEmail);
+                        }
+                    });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#tblAddStromEvents tr:eq(1) td:gt(0):not(:last)").each(function () {
+            var id = $(this).children(":first").attr("id");
+            //newid = id.replace("weatherInspectionModel_", "").replace("_Item_ID", "").replace("_UOM_ID", "");
+            newid = id.replace("weatherInspectionModel_StormDetailsListOne", "StormEvent1");
+            $(this).children(":first").attr("id", newid);
+            $(this).children(":first").attr("Name", newid);
+
+        });
+        var StrmEvRowCount = 2;
+        function AddStormEventRow() {
+
+            var tr = $('<tr id="' + StrmEvRowCount + '"><td></td>' +
+                '<td data-title="Storm Start Date & Time">' +
+                '<input type="text" class = "storm-date form-control" id="StormEvent' + StrmEvRowCount + '_StormDate" name="StormEvent' + StrmEvRowCount + '_StormDate" data_val="true" placeholder = "Select Storm Start Date & Time " /></td>' +
+                '<td data-title="Estimated Storm Duration(hrs)">' +
+                '<input type="text" class="form-control calhrs Numdot"  id="StormEvent' + StrmEvRowCount + '_StormDuration" name="StormEvent' + StrmEvRowCount + '_StormDuration" data_val="true" placeholder = "Enter Estimated Storm Duration(hrs) " /></td>' +
+                '<td data-title="Approximate Amount of Precipitation (in)">' +
+                '<input type="text" class="form-control Numdot" id="StormEvent' + StrmEvRowCount + '_Amount" name="StormEvent' + StrmEvRowCount + '_Amount" data_val="true" placeholder = "Enter Approximate Amount of Precipitation (in) "/></td>' +
+                '<td> <span class="glyphicon glyphicon-plus-sign addstormevent" style="cursor: pointer;"></span>' +
+                 '<span id="Adddeletestormevent" class="glyphicon glyphicon-minus-sign removeStormrow" style="cursor: pointer;"></span></td>' +
+                '</tr>');
+
+            $(tr).find(".Num").bind("keydown", function (e) {
+                // Allow: backspace, delete, tab, escape, enter and .
+                if ($.inArray(e.keyCode, [46, 8]) !== -1 ||
+                // Allow: Ctrl+A
+                    (e.keyCode == 65 && e.ctrlKey === true) ||
+                // Allow: home, end, left, right, down, up
+                    (e.keyCode >= 35 && e.keyCode <= 40)) {
+                    // let it happen, don't do anything
+                    return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
+
+            $(tr).find(".calhrs").bind("change", function (e) {
+                var duration = $(this).val();
+                var n = duration.indexOf(".");
+                if (n == -1) {
+                    //                    //                    var minutes = duration % 60;
+                    //                    //                    var hours = Math.floor(duration / 60);
+                    //                    //                    minutes = (minutes < 10 ? '0' : '') + minutes;
+                    //                    //                    hours = (hours < 10 ? '0' : '') + hours;
+                    //                    //$(this).val(hours + ':' + minutes);
+                    //                    alert("");
+                }
+                else {
+                    var duration = duration.split(".");
+                    var hours1 = duration[0];
+                    var min1 = duration[1];
+                    if (min1 > 60) { alert("minutes should be less than 60"); }
+                    if (hours1 < 10) {
+                        $(this).val("0" + hours1 + '.' + min1);
+                    }
+                    else {
+                        $(this).val(hours1 + '.' + min1);
+                    }
+                }
+            });
+
+            $(tr).find(".Numcolon").bind("change", function (e) {
+                var charCode;
+                if (e.keyCode > 0) {
+                    charCode = e.which || e.keyCode;
+                }
+                else if (typeof (e.charCode) != "undefined") {
+                    charCode = e.which || e.keyCode;
+                }
+                if (charCode == 58)
+                    return true
+                if (charCode > 31 && (charCode < 48 || charCode > 57))
+                    return false;
+                return true;
+            });
+
+            $(tr).find(".Numdot").keypress(function (e) {
+                var charCode;
+                if (e.keyCode > 0) {
+                    charCode = e.which || e.keyCode;
+                }
+                else if (typeof (e.charCode) != "undefined") {
+                    charCode = e.which || e.keyCode;
+                }
+                if (charCode == 46)
+                    return true
+                if (charCode > 31 && (charCode < 48 || charCode > 57))
+                    return false;
+                return true;
+
+            });
+
+
+            $(tr).find(".storm-date").bind("change", function (e) {
+                var date = $(this).val().split("/");
+                var month = parseInt(date[0]);
+                var day = parseInt(date[1]);
+                var year = parseInt(date[2]);
+
+                if (year < 100) {
+                    year = "20" + year;
+                }
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                if (day < 10) {
+                    day = "0" + day;
+                }
+
+                if (month > 12 && day > 12) {
+                    alert('Invalid date format!');
+                    return false;
+                }
+
+                if (month >= 12 && day < 12) {
+                    $(this).val(day + "/" + month + "/" + year);
+                }
+                else {
+                    $(this).val(month + "/" + day + "/" + year);
+                }
+                if ($(this).val() == "NaN/NaN/NaN")
+                    $(this).val("MM/DD/YYYY");
+            });
+
+            $(tr).find("#Adddeletestormevent").bind("click", function () {
+
+                if ($("#tblAddStromEvents  tr:not(:last):gt(0)").length > 1) {
+                    var tr = $(this).parent().parent();
+                    if ($(tr).find(".stchildRow").length == 1) {
+                        $(this).parent().parent().remove();
+                    }
+                    else {
+                        if ($(tr).next().length == 1 && $(tr).next().find(".stchildRow").length == 1) {
+                            alert("please delete child row before this row.");
+                        }
+                        else {
+                            $(this).parent().parent().remove();
+                        }
+                    }
+
+                    var StrmEvRowIndex = 1;
+                    $("#tblAddStromEvents  tr:not(:last):gt(0)").each(function () {
+                        if ($(this).find(".stchildRow").length == 0) {
+                            $(this).find("td:eq(0)").text(StrmEvRowIndex++);
+                        }
+                    });
+                } else {
+                    alert("you can not delete this record.");
+                }
+            });
+
+            if ($(this).parent().parent().has("td:[colspan$=5]").length) {
+                $(this).parent().parent().before(tr);
+            }
+            else {
+                $(tr).find(".addstormevent").addClass("stchildRow");
+                $(this).parent().parent().after(tr);
+            }
+            $(tr).find("input:text.storm-date").datepicker({ maxDate: "0:d" });
+            ++StrmEvRowCount;
+
+            var StrmEvRowIndex = 1;
+            $("#tblAddStromEvents  tr:not(:last):gt(0)").each(function () {
+                if ($(this).find(".stchildRow").length == 0) {
+                    $(this).find("td:eq(0)").text(StrmEvRowIndex++);
+                }
+            });
+        }
+
+        $("#tblAddStromEvents").on("click", ".addstormevent", AddStormEventRow);
+
+    });
+
+
+</script>
+<script type="text/javascript">
+    $(function () {
+
+        $(".removeStormrow").click(function () {
+
+            if ($("#tblAddStromEvents  tr:not(:last):gt(0)").length > 1) {
+                var tr = $(this).parent().parent();
+                if ($(tr).find(".stchildRow").length == 1) {
+                    $(this).parent().parent().remove();
+                }
+                else {
+                    if ($(tr).next().length == 1 && $(tr).next().find(".stchildRow").length == 1) {
+                        alert("please delete child row before this row.");
+                    }
+                    else {
+                        $(this).parent().parent().remove();
+                    }
+                }
+
+                var RowIndex = 1;
+                $("#tblAddStromEvents  tr:not(:last):gt(0)").each(function () {
+                    if ($(this).find(".stchildRow").length == 0) {
+                        $(this).find("td:eq(0)").text(RowIndex++);
+                    }
+                });
+            }
+            else {
+                alert("you can not delete this record.");
+            }
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        var RowCount = 1;
+        function AddUploadDataRow() {
+
+            var tr = $('<tr id="' + RowCount + '"><td></td>' +
+                '<td data-title="S&E/P2 Controls">' +
+                '<select  class = "form-control" id="UploadData' + RowCount + '_Itemc1"  name="UploadData' + RowCount + '_Itemc1" data_val="true"></select></td>' +
+                '<td data-title="Maintenance Needed."><select  class = "form-control" id="UploadData' + RowCount + '_Itemc2"  name="UploadData' + RowCount + '_Itemc2" data_val="true"></select></td>' +
+                '<td data-title="corrective Action."><select  class = "form-control" id="UploadData' + RowCount + '_Itemc3"  name="UploadData' + RowCount + '_Itemc3"  data_val ="true"></select></td>' +
+            //  '<td data-title="Station"><input type="text" id="UploadData' + RowCount + '_Station" class = "form-control margin-tab"  name="UploadData' + RowCount + '_Station" data_val ="true"></input></td>' +
+                '<td data-title="Location"><input type="text" id="UploadData' + RowCount + '_Location" class = "form-control margin-tab " name="UploadData' + RowCount + '_Location" data_val ="true" /></td>' +
+                '<td data-title="Quantity"><input type="text" id="UploadData' + RowCount + '_PPPLength" class = "form-control margin-tab Num"   data_val = false name="UploadData' + RowCount + '_PPPLength" data_val ="true"/></td>' +
+                '<td data-title="Unit of Measure"><select  class = "form-control" id="UploadData' + RowCount + '_UOM" name="UploadData' + RowCount + '_UOM" data_val ="true"></select> </td>' +
+            //                '<td data-title="L/M/R"><input type="text" id="UploadData' + RowCount + '_LtRt" class = "form-control margin-tab" name="UploadData' + RowCount + '_LtRt" data_val ="true" /></td>' +
+                '<td data-title="Photo"><input type="file" id="UploadData' + RowCount + '_fileToUpload" name="UploadData' + RowCount + '_fileToUpload" data_val ="true" /><input type="hidden" name="UploadData' + RowCount + '_FileName"  /></td>' +
+                '<td> <span class="glyphicon glyphicon-plus-sign AddNewUploadData" style="cursor: pointer;"></span>' +
+                 '<span id="AdddeleteUploadData1" class="glyphicon glyphicon-minus-sign removerow" style="cursor: pointer;"></span>  </td>' +
+                '</tr>');
+
+            $(tr).find(".Num").bind("keydown", function (e) {
+                // Allow: backspace, delete, tab, escape, enter and .
+                if ($.inArray(e.keyCode, [46, 8]) !== -1 ||
+                // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+                // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                    // let it happen, don't do anything
+                    return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
+            $(tr).find("#AdddeleteUploadData1").bind("click", function () {
+                if ($("#tblAddNewInfo  tr:not(:last):gt(0)").length > 1) {
+                    var tr = $(this).parent().parent();
+                    if ($(tr).find(".childRow").length == 1) {
+                        $(this).parent().parent().remove();
+                    }
+                    else {
+                        if ($(tr).next().length == 1 && $(tr).next().find(".childRow").length == 1) {
+                            alert("please delete child row before this row.");
+                        }
+                        else {
+                            $(this).parent().parent().remove();
+                        }
+                    }
+
+                    var RowIndex = 1;
+                    $("#tblAddNewInfo  tr:not(:last):gt(0)").each(function () {
+                        if ($(this).find(".childRow").length == 0) {
+                            $(this).find("td:eq(0)").text(RowIndex++);
+                        }
+                    });
+                } else {
+                    alert("you can not delete this record.");
+                }
+            });
+
+            EventsourceTR = $(this).parent().parent();
+            if ($(EventsourceTR).has("td:[colspan$='11']").length) {
+                EventsourceTR = $(EventsourceTR).prev();
+            }
+            $(EventsourceTR).find("select:eq(0)").children().each(function () {
+                $(tr).find('#UploadData' + RowCount + '_Itemc1').append($("<option></option>").attr("value", $(this).val()).text($(this).text()));
+            });
+            $(EventsourceTR).find("select:eq(1)").children().each(function () {
+                $(tr).find('#UploadData' + RowCount + '_Itemc2').append($("<option></option>").attr("value", $(this).val()).text($(this).text()));
+            });
+            $(EventsourceTR).find("select:eq(2)").children().each(function () {
+                $(tr).find('#UploadData' + RowCount + '_Itemc3').append($("<option></option>").attr("value", $(this).val()).text($(this).text()));
+            });
+            $(EventsourceTR).find("select:eq(3)").children().each(function () {
+                $(tr).find('#UploadData' + RowCount + '_UOM').append($("<option></option>").attr("value", $(this).val()).text($(this).text()));
+            });
+
+
+
+            if ($(this).parent().parent().has("td:[colspan$=11]").length) {
+                $(this).parent().parent().before(tr);
+            }
+            else {
+                $(tr).find(".AddNewUploadData").addClass("childRow");
+                $(this).parent().parent().after(tr);
+            }
+
+            ++RowCount;
+
+            var RowIndex = 1;
+            $("#tblAddNewInfo  tr:not(:last):gt(0)").each(function () {
+                if ($(this).find(".childRow").length == 0) {
+                    $(this).find("td:eq(0)").text(RowIndex++);
+                }
+            });
+        }
+        $("#tblAddNewInfo").on("click", ".AddNewUploadData", AddUploadDataRow);
+
+    });
+
+</script>
+<script type="text/javascript">
+    $(function () {
+
+        $(".removerow").click(function () {
+
+            if ($("#tblAddNewInfo  tr:not(:last):gt(0)").length > 1) {
+                var tr = $(this).parent().parent();
+                if ($(tr).find(".childRow").length == 1) {
+                    $(this).parent().parent().remove();
+                }
+                else {
+                    if ($(tr).next().length == 1 && $(tr).next().find(".childRow").length == 1) {
+                        alert("please delete child row before this row.");
+                    }
+                    else {
+                        $(this).parent().parent().remove();
+                    }
+                }
+
+                var RowIndex = 1;
+                $("#tblAddNewInfo  tr:not(:last):gt(0)").each(function () {
+                    if ($(this).find(".childRow").length == 0) {
+                        $(this).find("td:eq(0)").text(RowIndex++);
+                    }
+                });
+            }
+            else {
+                alert("you can not delete this record.");
+            }
+
+        });
+
+
+    });
+
+    $(function () {
+
+        $("#tblAddNewInfo tr:eq(1) td:gt(0):not(:last)").each(function () {
+            var id = $(this).children(":first").attr("id");
+            //            newid = id.replace("weatherInspectionModel_", "").replace("_Item_ID", "").replace("_UOM_ID", "");
+            newid = id.replace("weatherInspectionModel_", "").replace("_Item_ID", "").replace("_UOM_ID", "").replace("_PostedFile", "_fileToUpload");
+            $(this).children(":first").attr("id", newid);
+            $(this).children(":first").attr("Name", newid);
+
+        });
+        $('#btnSaveForNow').click(function () {
+            return fnValidate('btnSaveForNow');
+        });
+
+        $('#btnInspectionFinish1').click(function () {
+            return fnValidate('btnInspectionFinish1');
+        });
+
+
+        //$("#btnSaveForNow,#btnInspectionFinish1").click(function ()
+            function fnValidate(btnClickedName){
+
+                var RowIndex = 0, parentid = 1, rowtext = 1, IsAllDataValide = true;
+            if (btnClickedName == 'btnInspectionFinish1') {
+                $('#generalInspectionModel_IsComplete').val("true");              
+            }
+            else {                
+                $('#generalInspectionModel_IsComplete').val("false");
+            }
+            $("#tblAddNewInfo tr:gt(0):not(:last)").each(function () {
+
+                RowIndex++;
+                var id = '', val = '', tdText = '';
+                if ($(this).find(".childRow").length == 0) {
+
+                    $(this).find("td:eq(0)").text(rowtext++);
+
+                    id = "hfID" + RowIndex;
+                    val = RowIndex.toString();
+                    tdText = val;
+                    parentid = RowIndex;
+                }
+                else {
+                    id = "hfPID" + RowIndex;
+                    val = parentid.toString();
+                }
+
+                $(this).find("td:eq(0)").html(tdText + '<input type="hidden" id="' + id + '" name="' + id + '" value="' + val + '" />');
+                $(this).find("td:gt(0):not(:last)").each(function () {
+                    var tempid = $(this).children(":first").attr("id");
+                    newid = tempid.replace(parseInt(tempid.substr(tempid.indexOf("UploadData") + 10)), (RowIndex));
+                    $(this).children(":first").attr("id", newid);
+                    $(this).children(":first").attr("Name", newid);
+
+                    if (!$(this).children(":first").is("input[type=file]") && $(this).children(":first").val() == "") {
+                        $(this).children(":first").css("border", "1px solid red");
+                        $(this).children(":first").bind("change", function () {
+                            if ($(this).val() != "")
+                                $(this).css("border", "1px solid gray");
+                        });
+                        IsAllDataValide = false;
+                    }
+                });
+            });
+
+
+            if ($('#weatherInspectionModel_StromEventYes').is(':checked')) {
+                RowIndex = 0; parentid = 1; rowtext = 1;
+                $("#tblAddStromEvents tr:gt(0):not(:last)").each(function () {
+                    RowIndex++;
+                    var id = '', val = '', tdText = '';
+                    if ($(this).find(".stchildRow").length == 0) {
+
+                        $(this).find("td:eq(0)").text(rowtext++);
+                        id = "hfstID" + RowIndex;
+                        val = RowIndex.toString();
+                        tdText = val;
+                        parentid = RowIndex;
+                    }
+                    else {
+                        id = "hfstPID" + RowIndex;
+                        val = parentid.toString();
+                    }
+                    $(this).find("td:eq(0)").html(tdText + '<input type="hidden" id="' + id + '" name="' + id + '" value="' + val + '" />');
+                    $(this).find("td:gt(0):not(:last)").each(function () {
+                        var tempid = $(this).children(":first").attr("id");
+                        newid = tempid.replace(parseInt(tempid.substr(tempid.indexOf("StormEvent") + 10)), (RowIndex));
+                        $(this).children(":first").attr("id", newid);
+                        $(this).children(":first").attr("Name", newid);
+
+                        if ($(this).children(":first").val() == "") {
+                            $(this).children(":first").css("border", "1px solid red");
+                            $(this).children(":first").bind("change", function () {
+                                if ($(this).val() != "")
+                                    $(this).css("border", "1px solid gray");
+                            });
+
+                            IsAllDataValide = false;
+                        }
+                    });
+                });
+            }
+
+
+            if (document.getElementById('weatherInspectionModel_InspectionOccuringYes').checked) {
+                if (document.getElementById('weatherInspectionModel_InspectionOccuringYesValue').value == "") {
+                    document.getElementById('weatherInspectionModel_InspectionOccuringYesValue').style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+            };
+
+            if (document.getElementById('weatherInspectionModel_UnsafeInspectionYes').checked) {
+                if (document.getElementById('weatherInspectionModel_UnsafeInspectionValue').value == "") {
+                    document.getElementById("weatherInspectionModel_UnsafeInspectionValue").style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+
+            };
+
+            if (document.getElementById('weatherInspectionModel_StromEventYes').checked) {
+                if (document.getElementById('weatherInspectionModel_StromEventYesValue').value == "") {
+                    document.getElementById("weatherInspectionModel_StromEventYesValue").style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+
+            };
+
+            //            if ((document.getElementById('SiteInspection1_AreaInspectedNo').checked) || (document.getElementById('SiteInspection1_ActionRequiredYes').checked)) {
+            if (document.getElementById('SiteInspection1_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection1_Notes').value == "") {
+                    document.getElementById('SiteInspection1_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+
+                };
+            };
+            if (document.getElementById('SiteInspection2_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection2_Notes').value == "") {
+                    document.getElementById('SiteInspection2_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+
+            };
+            if (document.getElementById('SiteInspection3_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection3_Notes').value == "") {
+                    document.getElementById('SiteInspection3_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+
+            };
+            if (document.getElementById('SiteInspection4_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection4_Notes').value == "") {
+                    document.getElementById('SiteInspection4_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+
+            };
+            if (document.getElementById('SiteInspection5_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection5_Notes').value == "") {
+                    document.getElementById('SiteInspection5_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+
+            };
+            if (document.getElementById('SiteInspection6_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection6_Notes').value == "") {
+                    document.getElementById('SiteInspection6_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+
+            };
+            if (document.getElementById('SiteInspection7_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection7_Notes').value == "") {
+                    document.getElementById('SiteInspection7_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+            };
+            if (document.getElementById('SiteInspection8_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection8_Notes').value == "") {
+                    document.getElementById('SiteInspection8_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+
+            };
+            if (document.getElementById('SiteInspection9_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection9_Notes').value == "") {
+                    document.getElementById('SiteInspection9_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+
+            };
+            if (document.getElementById('SiteInspection10_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection10_Notes').value == "") {
+                    document.getElementById('SiteInspection10_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+
+            };
+            if (document.getElementById('SiteInspection11_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection11_Notes').value == "") {
+                    document.getElementById('SiteInspection11_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+
+            };
+            if (document.getElementById('SiteInspection12_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection12_Notes').value == "") {
+                    document.getElementById('SiteInspection12_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+
+            };
+            if (document.getElementById('SiteInspection13_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection13_Notes').value == "") {
+                    document.getElementById('SiteInspection13_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+
+                };
+
+            };
+            if (document.getElementById('SiteInspection14_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection14_Notes').value == "") {
+                    document.getElementById('SiteInspection14_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+
+            };
+            if (document.getElementById('SiteInspection15_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection15_Notes').value == "") {
+                    document.getElementById('SiteInspection15_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+
+            };
+            if (document.getElementById('SiteInspection16_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection16_Notes').value == "") {
+                    document.getElementById('SiteInspection16_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+
+            };
+            if (document.getElementById('SiteInspection17_ActionRequiredYes').checked) {
+                if (document.getElementById('SiteInspection17_Notes').value == "") {
+                    document.getElementById('SiteInspection17_Notes').style.borderColor = "red";
+                    IsAllDataValide = false;
+                };
+
+            };
+
+            if (document.getElementById('generalInspectionModel_Inspection_Type').value == "") {
+                IsAllDataValide = false;
+            };
+
+            if (document.getElementById('weatherInspectionModel_Weather_Time').value == "") {
+                IsAllDataValide = false;
+            };
+
+            if (btnClickedName == 'btnInspectionFinish1') {
+                if (document.getElementById('SiteClassification').value == "") {
+                    document.getElementById('SiteClassification').style.borderColor = "red";
+                    document.getElementById('spnSiteClassification').style.display = '';
+                    IsAllDataValide = false;
+                }
+            }
+            else if (btnClickedName == 'btnSaveForNow') {
+                document.getElementById('SiteClassification').style.borderColor = "Grey";
+                document.getElementById('spnSiteClassification').style.display = 'none';
+            }
+
+            if ($("#SiteClassification").val() == 1) {
+                var IsNext = 1;
+                if ($("#UploadData" + 1 + "_itemC2").val() != undefined) {
+                    if ($("#UploadData" + 1 + "_itemC2").val() != '') {                        
+                        if ($("#UploadData" + 1 + "_itemC2").val() != 5) {
+                            IsNext = 3;
+                        }
+                    }
+                    if ($("#UploadData" + 1 + "_itemC3").val() != '') {                        
+                        if ($("#UploadData" + 1 + "_itemC3").val() != 4) {
+                            IsNext = 3;
+                        }
+                    }
+                }
+                var count = 2;
+                
+                while (IsNext == 1) {                    
+                    if ($("#UploadData" + count + "_Itemc2").val() != undefined) {                        
+                        if ($("#UploadData" + count + "_Itemc2").val() != '') {                            
+                            if ($("#UploadData" + count + "_Itemc2").val() != 5) {                                
+                                IsNext = 3;
+                            }
+                        }
+
+                        if ($("#UploadData" + count + "_Itemc3").val() != '') {                                                        
+                            if ($("#UploadData" + count + "_Itemc3").val() != 4) {                                
+                                IsNext = 3;
+                            }
+                        }
+                    }
+                    else {
+                        IsNext = 2;
+                    }
+                    count++;
+                }
+
+                if (IsNext == 3) {
+                    IsAllDataValide = false;
+                    alert("Error! You have specified the Site Classification as Passing - Performing per Plan but have also indicated that maintenance or corrective activities are required.\nPlease re-evaluate your data and either change the classification or remove any maintenance or corrective actions.");
+                }
+                
+                if (IsNext != 2 && IsNext != 1) {
+                    return false;
+                }
+            }
+
+            if ($("#SiteClassification").val() == 3) {
+                var IsNext = 1;
+                var IsSTC2C3 = false;
+            
+                if ($("#UploadData" + 1 + "_itemC2").val() != undefined) {
+                    if ($("#UploadData" + 1 + "_itemC2").val() != '' && $("#UploadData" + 1 + "_itemC3").val() != '') {
+                        if ($("#UploadData" + 1 + "_itemC2").val() == 5 && $("#UploadData" + 1 + "_itemC3").val() == 4) {
+                            IsNext = 3;
+                        } else {
+                            IsSTC2C3 = true;
+                        }
+                    }
+                    
+                }
+               
+                if (IsSTC2C3 == false) {
+                    var IsNextTemp = IsNext;
+                    var count = 2;
+                    if ($("#UploadData" + count + "_Itemc2").val() != undefined) { IsNext = 1; }
+                    while (IsNext == 1) {
+                        if ($("#UploadData" + count + "_Itemc2").val() != undefined) {
+                            IsNext = 1;
+                            if ($("#UploadData" + count + "_Itemc2").val() != '' && $("#UploadData" + count + "_Itemc3").val() != '') {
+                                if ($("#UploadData" + count + "_Itemc2").val() == 5 && $("#UploadData" + count + "_Itemc3").val() == 4) {
+                                    IsNext = 3;
+                                    if ($("#UploadData" + (count + 1) + "_Itemc2").val() != undefined) {
+                                        IsNextTemp = IsNext;
+                                        IsNext = 1;
+                                    }
+                                } else {
+                                    IsSTC2C3 = true;
+                                    break;
+                                }
+                            }
+                        }
+                        else {
+                            IsNext = 2;
+                            break;
+                        }
+                        count++;
+                    }
+                    IsNext = (IsNextTemp == 3 && IsSTC2C3 == false) ? IsNextTemp : IsNext
+
+                }
+                if (IsNext == 3) {
+                    IsAllDataValide = false;
+                    alert("Error! You have specified the Site Classification as Failed - Immediate Attention Required but have not included maintenance or corrective activities.\nPlease re-evaluate your data and either change the classification or update any maintenance or corrective activities.");
+                }
+
+                if (IsNext != 2 && IsNext != 1) {
+                    return false;
+                }
+            }
+
+
+            if ($("#SiteClassification").val() == 2) {
+                var IsNext = 1;
+                var IsSTC2C3 = false;
+                if ($("#UploadData" + 1 + "_itemC2").val() != undefined) {
+                    if ($("#UploadData" + 1 + "_itemC2").val() != '' && $("#UploadData" + 1 + "_itemC3").val() != '') {
+                        if ($("#UploadData" + 1 + "_itemC2").val() == 5 && $("#UploadData" + 1 + "_itemC3").val() == 4) {
+                            IsNext = 3;
+                        }
+                        else {
+                            IsSTC2C3 = true;
+                        }
+                    }
+                    
+                }
+                
+                if (IsSTC2C3 == false) {
+                    var IsNextTemp = IsNext;
+                    var count = 2;
+                    if ($("#UploadData" + count + "_Itemc2").val() != undefined) { IsNext = 1; }
+                    while (IsNext == 1) {
+                        if ($("#UploadData" + count + "_Itemc2").val() != undefined) {
+                            IsNext = 1;
+                            if ($("#UploadData" + count + "_Itemc2").val() != '' && $("#UploadData" + count + "_Itemc3").val() != '') {
+                                if ($("#UploadData" + count + "_Itemc2").val() == 5 && $("#UploadData" + count + "_Itemc3").val() == 4) {
+                                    IsNext = 3;
+
+                                    if ($("#UploadData" + (count + 1) + "_Itemc2").val() != undefined) {
+                                        IsNextTemp = IsNext;
+                                        IsNext = 1;
+                                    }
+                                }
+                                else {
+                                    IsSTC2C3 = true;
+                                    break;
+                                }
+                            }
+
+                        }
+                        else {
+                            IsNext = 2;
+                            break;
+                        }
+                        count++;
+                    }
+                    IsNext = (IsNextTemp == 3 && IsSTC2C3 == false) ? IsNextTemp : IsNext
+                }
+                if (IsNext == 3) {
+                    IsAllDataValide = false;
+                    alert("Error! You have specified the Site Classification as Passing - Action Required but have not included any maintenance or corrective activities.\n Please re-evaluate your data and either change the classification or update any maintenance or corrective activities. ");
+                }
+
+                if (IsNext != 2 && IsNext != 1) {
+                    return false;
+                }
+            }
+
+            if (IsAllDataValide) {
+                document.getElementById('loader1').style.display = 'block';
+              
+                return true;
+            } else {
+                alert("Please fill all red marked fields.");
+                $(document.forms[1]).valid();
+                return false;
+            }
+        };
+    });
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#SiteClassification option").each(function (i) {
+
+            var val = $(this).val();
+
+            if (val == 1) {
+                $(this).css("background-color", "#00DA00");
+            }
+            else if (val == 2) {
+                $(this).css("background-color", "#FFC000");
+            }
+            else if (val == 3) {
+                $(this).css("background-color", "#FF2400");
+            }
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#dialog").dialog({
+            autoOpen: false,
+            title: "Non-stormwater discharges properly controlled",
+            width: "60%",
+            height: 500,
+            modal: true,
+            show: {
+                effect: "fadein",
+                duration: 1000
+            },
+            hide: {
+                effect: "newspaper",
+                duration: 1000
+            }
+        });
+        $("#opener").click(function (e) {
+            $("#dialog").dialog("open");
+        });
+
+        $("#phasedialog").dialog({
+            autoOpen: false,
+            title: "Phases of Construction",
+            width: "54%",
+            height: 'auto',
+            modal: true,
+            show: {
+                effect: "fadein",
+                duration: 1000
+            },
+            hide: {
+                effect: "newspaper",
+                duration: 1000
+            }
+        });
+
+        $("#phaseopener").click(function (e) {
+            $("#phasedialog").dialog("open");
+        });
+
+        $("#generalInspectionModel_location_Location_ID").change(function () {
+            $("#generalInspectionModel_location_Name").val($("#generalInspectionModel_location_Location_ID option:selected").text());
+        });
+    });
+
+    $(document).ready(function () {
+        $("input:text.storm-date").datepicker({ maxDate: "0:d" });
+    });
+</script>
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-5">
+                @Html.ActionLink("Dashboard", "Index", "Dashboard", null, new { @class = "btn btn-custom btn-black margin-0 ViewDashboard" })
+            </div>
+            @* <div class="col-sm-1">
+                </div>*@ @*<div class="col-sm-4">
+                    @Html.ActionLink("Inspection Form", "Index", "InspectionForm", null, new { @class = "btn btn-black btn-custom margin-0 InspectionFormsettime" })
+                </div>*@
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm("create", "inspection", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.Hidden("hfDeletedRows")
+
+    <div class="panel-head">
+        INSPECTION FORM
+    </div>
+     <div>
+        @if (@ViewBag.message != null)
+        {
+            @*REPRESNT STRING INTO HTML FORMAT USING BELOW LINE*@
+            <h3> <font style="color: red;"> @Html.Raw(ViewBag.message)</font></h3>
+        }
+    </div>
+    <div id="accordion" class="panel-group" aria-multiselectable="true" role="tablist">
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="General_Info_Heading">
+                <div class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                        aria-controls="collapseOne" style="text-align: none; text-decoration: none;">General
+                        Information </a>
+                    <div class="pull-right">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                            aria-controls="collapseOne"><i id="FirstcollapseArrow" class="glyphicon glyphicon-chevron-up">
+                            </i></a>
+                    </div>
+                </div>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="General_Info_Heading">
+                <div class="panel-body">
+                    <div class="Container">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <label class="col-md-6 col-sm-6 col-xs-12  sp-15bottom">
+                                    Customer Name
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12  ">
+                                    @Html.DropDownListFor(m => m.generalInspectionModel.Client.Client_ID, new SelectList(new List<dynamic> { new { Client_ID = "", Name = "Select Customer Name" } }, "Client_ID", "Name"), new { @class = "form-control sp-15bottom ", tabindex = "1" })
+                                    @Html.ValidationMessageFor(model => model.generalInspectionModel.Client.Client_ID)
+                                    @Html.HiddenFor(model => model.generalInspectionModel.CustomerName)
+                                    @Html.HiddenFor(model => model.generalInspectionModel.ClientEmail)
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 ">
+                                <label class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                    Project Name
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                    @Html.DropDownListFor(m => m.generalInspectionModel.location.Location_ID, new SelectList(Model.Locations((long)User.User_ID), "Location_ID", "Name"), "Select Project Name", new { @class = "form-control sp-15bottom", tabindex = "2" })
+                                    @Html.ValidationMessageFor(model => model.generalInspectionModel.location.Location_ID)
+                                    @Html.HiddenFor(model => model.generalInspectionModel.location.Name)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <label class="col-md-6 col-sm-6 col-xs-12  sp-15bottom">
+                                    CGP/NPDES Tracking No.
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.TextBoxFor(model => model.generalInspectionModel.Tracking_No, new { @class = "form-control", placeholder = "Enter Tracking No", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.generalInspectionModel.Tracking_No)
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <label class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                    Location
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.TextBoxFor(model => model.generalInspectionModel.locationName, new { @class = "form-control", placeholder = "Enter Location", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.generalInspectionModel.locationName)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <label class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                    Date Of Inspection
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-sm-12">
+                                    @Html.EditorFor(model => model.generalInspectionModel.Date, new { @class = "form-control", placeholder = "Enter Date", data_val = true})
+                                    @Html.ValidationMessageFor(model => model.generalInspectionModel.Date)
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <label class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                    Start Time
+                                </label>
+                                <div class="col-md-3 col-sm-3 col-xs-6">
+                                    @Html.TextBoxFor(model => model.generalInspectionModel.StartTime, new { @class = "form-control", placeholder = "Start Time", tabindex = "4" })
+                                    @Html.ValidationMessageFor(model => model.generalInspectionModel.StartTime)
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-6">
+                                    @*  @Html.TextBoxFor(model => model.generalInspectionModel.StartTime_AmPm, new { @class = "form-control", placeholder = "Start Time", @readonly = "readonly" })*@
+                                    @Html.DropDownListFor(m => m.generalInspectionModel.StartTime_AmPm, new SelectList(new e2rc.Models.GeneralInspectionModel().times, "Value", "Text"), "Select", new { @class = "form-control sp-15bottom", tabindex = "5" })
+                                    @*@Html.DropDownListFor(m => m.generalInspectionModel.StartTime_AmPm, new SelectList(new e2rc.Models.GeneralInspectionModel().times, "Value", "Text"), "Select", new { @class = "form-control sp-15bottom", tabindex = "5" })*@
+                                    @Html.ValidationMessageFor(m => m.generalInspectionModel.StartTime_AmPm)
+                                </div>
+                                <label class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                    End Time
+                                </label>
+                                <div class="col-md-3 col-sm-3 col-xs-6">
+                                    @Html.TextBoxFor(model => model.generalInspectionModel.EndTime, new { @class = "form-control Numcolon", placeholder = "End Time", tabindex = "6" })
+                                    @Html.ValidationMessageFor(model => model.generalInspectionModel.EndTime)
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-6">
+                                    @Html.DropDownListFor(m => m.generalInspectionModel.EndTime_AmPm, new SelectList(new e2rc.Models.GeneralInspectionModel().times, "Value", "Text"), "Select", new { @class = "form-control sp-15bottom", tabindex = "7" })
+                                    @Html.ValidationMessageFor(m => m.generalInspectionModel.EndTime_AmPm)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <label class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                    Inspector's Name
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                    @*  @Html.DropDownListFor(m => m.generalInspectionModel.inspector.Inspector_ID, new SelectList(new e2rc.Models.GeneralInspectionModel().inspectors, "Inspector_ID", "Name"), "Select Inspector's Name", new { @class = "form-control sp-15bottom"})
+                                        @disabled = "disabled" })*@
+                                    @Html.TextBoxFor(model => model.generalInspectionModel.inspector.Name, new { @class = "form-control", placeholder = "Enter Inspector's Name", @readonly = "readonly" })
+                                    @Html.HiddenFor(model => model.generalInspectionModel.inspector.Inspector_ID)
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <label class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                    Inspector's Title(s)
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.TextBoxFor(model => model.generalInspectionModel.Inspector_Title, new { @class = "form-control", placeholder = "Enter Inspector's Titles", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.generalInspectionModel.Inspector_Title)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <label class="col-sm-6 sp-15bottom">
+                                    Inspector's Contact Information
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.TextBoxFor(model => model.generalInspectionModel.Inspector_Contact, new { @class = "form-control", placeholder = "Enter Inspector Contact Number", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.generalInspectionModel.Inspector_Contact)
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <label class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                    Inspector's Qualifications
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.TextBoxFor(model => model.generalInspectionModel.Inspector_Qualification, new { @class = "form-control", placeholder = "Enter Inspector's Qualification", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.generalInspectionModel.Inspector_Qualification)
+                                    @Html.HiddenFor(model => model.generalInspectionModel.InspectorEmail)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <label class="col-md-3 col-sm-12 col-xs-12 sp-15bottom">
+                                    Describe Phase Of Construction
+                                    <img id="phaseopener" src="../../Images/Gray-ibutton.gif" height="20px" width="20px"
+                                        alt="image not display" style="cursor: pointer" />
+                                </label>
+                                <div id="phasedialog">
+                                    <p>
+                                        <b>Clearing And Grubbing: </b>The process of removing and disposing of brush and
+                                        trees is described as clearing. Grubbing is described as the removal and disposal
+                                        of stumps and roots. Clearing and grubbing is generally performed concurrently in
+                                        order to ready the site for topsoil stripping and bulk excavation.
+                                        <br />
+                                        <br />
+                                        <b>Excavation:</b> A broad term which includes cut (excavation) and fill (embankment).
+                                        Cut is defined as removing material to lower the elevation of an area. Fill is defined
+                                        as placing material to raise the elevation of an area.
+                                        <br />
+                                        <br />
+                                        <b>Building (Vertical):</b> The ongoing construction of vertical structures includes
+                                        foundation, building pad, framing and completion of structures for use.
+                                        <br />
+                                        <br />
+                                        <b>Rough Grading: </b>Cutting and filling the earth to prepare for construction
+                                        or landscaping. At this stage, the ground is leveled, spaces are backfilled and
+                                        the site is prepared for proper drainage prior to final grading.
+                                        <br />
+                                        <br />
+                                        <b>Infrastructure:</b> These are the items supporting use of a building or road
+                                        structure. For example, excavation, bedding, pipe, utility or dry utility placement
+                                        including backfilling to grade are infrastructure components.
+                                        <br />
+                                        <br />
+                                        <b>Final Grading: </b>Finish preparation of the site in advance of stabilizing activities.
+                                        <br />
+                                        <br />
+                                        <b>Final Stabilization: </b>On areas not covered by permanent structures, either
+                                        (1) vegetation has been established, or for arid or semi-arid areas, will be established
+                                        that provides a uniform (e.g. evenly distributed, without large bare areas) perennial
+                                        vegetative cover with a density of 70 percent of the natural, original background
+                                        vegetative cover, or (2) non-vegetative stabilization methods have been implemented
+                                        to provide effective cover for exposed portions of the site. For example, paving,
+                                        concrete structures or a covering that eliminates sediment transport from an erosive
+                                        mechanism.
+                                    </p>
+                                </div>
+                                <div class="checkbox col-md-9 col-sm-12 col-xs-12 pad ">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.generalInspectionModel.PhaseClear, new { @class = "checkbox-inline ", @onchange = "selectSingleChk(this)", tabindex = "8" })Clear
+                                        and Grub
+                                    </label>
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.generalInspectionModel.PhaseExcavations, new { @class = "checkbox-inline ", @onchange = "selectSingleChk(this)", tabindex = "9" })Excavation
+                                    </label>
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.generalInspectionModel.PhaseBuilding, new { @class = "checkbox-inline ", @onchange = "selectSingleChk(this)", tabindex = "10" })Building
+                                        (vertical)
+                                    </label>
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.generalInspectionModel.PhaseRoughGrading, new { @class = "checkbox-inline ", @onchange = "selectSingleChk(this)", tabindex = "11" })Rough
+                                        Grading
+                                    </label>
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.generalInspectionModel.PhaseInfrastructure, new { @class = "checkbox-inline ", @onchange = "selectSingleChk(this)", tabindex = "12" })Infrastructure
+                                    </label>
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.generalInspectionModel.PhaseFinalGrading, new { @class = "checkbox-inline ", @onchange = "selectSingleChk(this)", tabindex = "13" })Final
+                                        Grading
+                                    </label>
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.generalInspectionModel.PhaseFinalStabilization, new { @class = "checkbox-inline ", @onchange = "selectSingleChk(this)", tabindex = "14" })Final
+                                        Stabilization
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12  sp-15bottom">
+                                    <label>
+                                        Type of Inspection
+                                    </label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                    @Html.DropDownListFor(m => m.generalInspectionModel.Inspection_Type, new SelectList(new e2rc.Models.GeneralInspectionModel().Inspections, "Value", "Text"), "Select a Inspection Type", new { @class = "form-control sp-15bottom ", tabindex = "15" })
+                                    @Html.ValidationMessageFor(m => m.generalInspectionModel.Inspection_Type)
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12  sp-15bottom">
+                                    <label>
+                                        Site classification
+                                    </label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                    @Html.DropDownListFor(m => m.generalInspectionModel.CodeId, new SelectList(new e2rc.Models.GeneralInspectionModel().siteClassifications, "CodeId", "Description"), "(choose)", new { @class = "form-control", @id = "SiteClassification", @onchange = "GetSelectedTextValue()", tabindex = "37" })
+                                    <span id="spnSiteClassification" style="color:red; display:none;">Site Classification is required.</span>
+                                 </div>
+                            </div>
+                        </div>
+                        <div class="row" id="RainEventAmount">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-4 sp-15bottom">
+                                    <label>
+                                        <i>If .25" Rain Event how was rainfall amount determined?</i>
+                                    </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="checkbox col-sm-4">
+                                        <label>
+                                            @Html.CheckBoxFor(model => model.generalInspectionModel.RainEvent, new { @class = "check_RainEvent", @checked = "checked", tabindex = "16" })Rain
+                                            Gauge
+                                        </label>
+                                        <label>
+                                            @Html.CheckBoxFor(model => model.generalInspectionModel.RainEventOther, new { @class = "check_RainEvent", tabindex = "17" })Other
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        @Html.TextBoxFor(model => model.generalInspectionModel.RainEventOthervalue, new { @class = "form-control", placeholder = "Enter Source of Weather Information ", tabindex = "18" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="Weather_Info_Heading">
+                <div class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseWeather" aria-expanded="true"
+                        aria-controls="collapseWeather" style="text-align: none; text-decoration: none;">
+                        Weather Information </a>
+                    <div class="pull-right">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseWeather" aria-expanded="true"
+                            aria-controls="collapseWeather"><i id="SecondcollapseArrow" class="glyphicon glyphicon-chevron-up">
+                            </i></a>
+                    </div>
+                </div>
+            </div>
+            <div id="collapseWeather" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="Weather_Info_Heading">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-5 col-sm-7 col-xs-12">
+                                <label>
+                                    Has a storm event occurred since the last inspection?
+                                </label>
+                            </div>
+                            <div class="col-md-2 col-sm-5 col-xs-12">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.weatherInspectionModel.StromEventYes, new { @class = "check_stormEvent", @checked = "checked", tabindex = "19" })Yes
+                                    </label>
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.weatherInspectionModel.StromEventNo, new { @class = "check_stormEvent", tabindex = "20" })No
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-sm-12 col-xs-12">
+                                <label class="col-md-6 col-sm-6 col-xs-12">
+                                    <b>If yes, provide:</b>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.TextBoxFor(model => model.weatherInspectionModel.StromEventYesValue, new { @class = "form-control ", placeholder = "Enter Type of Storm Event", tabindex = "21" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="stromDetails" class="table-responsive">
+                        <table id="tblAddStromEvents" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                    </th>
+                                    <th class=" col-md-4 active center">
+                                        Storm Start Date & Time
+                                    </th>
+                                    <th class=" col-md-4 active">
+                                        Estimated Storm Duration(hrs)
+                                    </th>
+                                    <th class="col-md-4 active">
+                                        Approximate Amount of Precipitation (in)
+                                    </th>
+                                    <th>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    Int16 cnt = 0;
+                                }
+                                <tr class="trUploaddata">
+                                    <td data-title=@(++cnt) class="activeheader">
+                                        <label class="count-display">
+                                            1<br />
+                                        </label>
+                                        <input type="hidden" id="hfstID1" name="hfstID1" value="1" />
+                                        <br />
+                                    </td>
+                                    <td data-title="Storm Start Date & Time">
+                                        @Html.TextBoxFor(model => model.weatherInspectionModel.StormDetailsListOne.StormDate, new { @class = "form-control storm-date", placeholder = "Select Storm Start Date & Time ", data_val = false, value = false, tabindex = "22" })
+                                    </td>
+                                    <td data-title="Estimated Storm Duration(hrs)">
+                                        @Html.TextBoxFor(model => model.weatherInspectionModel.StormDetailsListOne.StormDuration, new { @class = "form-control margin-tab Numdot calhrs", placeholder = "Enter Estimated Storm Duration(hrs)  ", data_val = false, tabindex = "23" })
+                                    </td>
+                                    <td data-title="Approximate Amount of Precipitation (in)">
+                                        @Html.TextBoxFor(model => model.weatherInspectionModel.StormDetailsListOne.Amount, new { @class = "form-control margin-tab Numdot", placeholder = "Enter Approximate Amount of Precipitation (in) ", data_val = false, tabindex = "24" })
+                                    </td>
+                                    <td>
+                                        <span class="glyphicon glyphicon-plus-sign addstormevent" aria-hidden="true" style="cursor: pointer;">
+                                        </span><span id="Adddeletestormevent" class="glyphicon glyphicon-minus-sign removestormevent"
+                                            style="cursor: pointer;"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">
+                                        <span class="glyphicon glyphicon-plus-sign addstormevent testcenter" aria-hidden="true"
+                                            style="cursor: pointer; float: right;"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <label class="col-sm-4  sp-15bottom">
+                                Weather at time of this inspection?
+                            </label>
+                            <div class="col-sm-5 sp-15bottom">
+                                @Html.DropDownListFor(m => m.weatherInspectionModel.Weather_Time, new SelectList(new e2rc.Models.WeatherInspectionModel().WeatherTimes, "Value", "Text"), "Select a Weather Time", new { @class = "form-control sp-15bottom", tabindex = "25" })
+                                @Html.ValidationMessageFor(m => m.weatherInspectionModel.Weather_Time)
+                            </div>
+                        </div>
+                        <div class="col-md-4 ">
+                            <label class="col-md-5 sp-15bottom">
+                                Temperature <span>(&#8457;)</span> :
+                            </label>
+                            <div class="col-sm-7 sp-15bottom">
+                                @Html.TextBoxFor(model => model.weatherInspectionModel.Temperature, new { @class = "form-control ", placeholder = "Enter Temperature", tabindex = "26" })
+                                @*   @Html.ValidationMessageFor(m => m.weatherInspectionModel.Temperature)*@
+                            </div>
+                            @* <span>&#8457;</span>  <span><img src= "@Url.Content("/Inspection/UploadedImage/degree_icon.png")" alt="IMAGES"  height="20px" width="14px;"/></span>*@
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 sp-15bottom">
+                            <label>
+                                Have any discharges occurred since the last inspection?
+                            </label>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="checkbox">
+                                <label>
+                                    @Html.CheckBoxFor(model => model.weatherInspectionModel.LastInspectionYes, new { @class = "check_discharges", @checked = "checked",tabindex = "27" })Yes
+                                </label>
+                                <label>
+                                    @Html.CheckBoxFor(model => model.weatherInspectionModel.LastInspectionNo, new { @class = "check_discharges", tabindex = "28" })No
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label>
+                                Are any occuring now?
+                            </label>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="checkbox">
+                                <label>
+                                    @Html.CheckBoxFor(model => model.weatherInspectionModel.InspectionOccuringYes, new { @class = "check_occuring", @checked = "checked", tabindex = "29" })Yes
+                                </label>
+                                <label>
+                                    @Html.CheckBoxFor(model => model.weatherInspectionModel.InspectionOccuringNo, new { @class = "check_occuring", tabindex = "30" })No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="InspectionOccuringYes">
+                        <div class="col-md-12">
+                            <label>
+                                If Yes describe:
+                            </label>
+                        </div>
+                        <div class="col-md-12 sp-15bottom">
+                            @Html.TextAreaFor(model => model.weatherInspectionModel.InspectionOccuringYesValue, new { @class = "form-control", tabindex = "31" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 sp-15bottom">
+                            <label class="col-sm-5">
+                                Are any portions of your site unsafe to inspect?
+                            </label>
+                            <div class="col-sm-3">
+                                <div class="checkbox">
+                                    <label class="col-xs-2">
+                                        @Html.CheckBoxFor(model => model.weatherInspectionModel.UnsafeInspectionYes, new { @class = "check_unsafe", @checked = "checked", tabindex = "32" })Yes
+                                    </label>
+                                    <label class="col-xs-2">
+                                        @Html.CheckBoxFor(model => model.weatherInspectionModel.UnsafeInspectionNo, new { @class = "check_unsafe", tabindex = "33" })No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="UnsafeInspection">
+                        <div class="col-md-12">
+                            <label>
+                                If Yes explain:
+                            </label>
+                        </div>
+                        <div class="col-md-12 sp-15bottom">
+                            @Html.TextAreaFor(model => model.weatherInspectionModel.UnsafeInspectionValue, new { @class = "form-control", tabindex = "34" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="Upload_Info_Heading">
+                <div class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseUploadData" aria-expanded="true"
+                        aria-controls="collapseUploadData" style="text-align: none; text-decoration: none;">
+                        Pollution Prevention, Sediment and Erosion Control BMP’s </a>
+                    <div class="pull-right">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseUploadData" aria-expanded="true"
+                            aria-controls="collapseUploadData"><i id="SecondcollapseArrow" class="glyphicon glyphicon-chevron-up">
+                            </i></a>
+                    </div>
+                </div>
+            </div>
+            <div id="collapseUploadData" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="Upload_Info_Heading">
+                <div class="panel-body">
+                    <div class="">
+                        <div id="no-more-tables">
+                            <table id="tblAddNewInfo" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                        </th>
+                                        <th class=" col-md-2 active">
+                                            S&E/P2 Controls
+                                        </th>
+                                        <th class=" col-md-2 active">
+                                            Maintenance Needed
+                                        </th>
+                                        <th class="col-md-2 active">
+                                            Corrective Action
+                                        </th>
+                                        <th class="col-md-1 active">
+                                            Location
+                                        </th>
+                                        <th class="col-md-1 active">
+                                            Quantity
+                                        </th>
+                                        <th class="col-md-2 active">
+                                            Unit of Measure
+                                        </th>
+                                        <th class="col-md-2 active">
+                                            Photo
+                                        </th>
+                                        <th>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+    Int16 count = 0;
+                                    }
+                                    <tr class="trUploaddata">
+                                        <td data-title=@(++count) class="activeheader">
+                                            <label class="count-display">
+                                                1<br />
+                                            </label>
+                                            <input type="hidden" id="hfID1" name="hfID1" value="1" />
+                                            <br />
+                                        </td>
+                                        <td data-title="S&E/P2 Controls">
+                                            @Html.DropDownListFor(model => model.weatherInspectionModel.UploadData1.itemC1.Item_ID, new SelectList(new e2rc.Models.UploadDataModel().C1items, "Item_ID", "Name"), "Select Item", new { @class = "form-control", data_val = true, tabindex = "35" })
+                                        </td>
+                                        <td data-title="List Maintenance or corrective Action required.">
+                                            @Html.DropDownListFor(model => model.weatherInspectionModel.UploadData1.itemC2.Item_ID, new SelectList(new e2rc.Models.UploadDataModel().C2items, "Item_ID", "Name"), "Select Item", new { @class = "form-control", data_val = true, tabindex = "36" })
+                                        </td>
+                                        <td data-title="corrective Action.">
+                                            @Html.DropDownListFor(model => model.weatherInspectionModel.UploadData1.itemC3.Item_ID, new SelectList(new e2rc.Models.UploadDataModel().C3items, "Item_ID", "Name"), "Select Item", new { @class = "form-control", data_val = true, tabindex = "37" })
+                                        </td>
+                                        <td data-title="Location">
+                                            @Html.TextBoxFor(model => model.weatherInspectionModel.UploadData1.Location, new { @class = "form-control margin-tab ", data_val = true, tabindex = "38" })
+                                        </td>
+                                        <td data-title="Quantity">
+                                            @Html.TextBoxFor(model => model.weatherInspectionModel.UploadData1.PPPLength, new { @class = "form-control margin-tab Num", data_val = true, tabindex = "39" })
+                                        </td>
+                                        <td data-title="Unit of Measure">
+                                            @Html.DropDownListFor(model => model.weatherInspectionModel.UploadData1.UOM.UOM_ID, new SelectList(new e2rc.Models.UploadDataModel().uoms, "UOM_ID", "UOM"), "Select", new { @class = "form-control", data_val = true, tabindex = "40" })
+                                        </td>
+                                        <td data-title="Photo">
+                                            @Html.TextBoxFor(m => m.weatherInspectionModel.UploadData1.PostedFile, new { type = "file", data_val = true, tabindex = "41" })
+                                            @Html.ValidationMessageFor(m => m.weatherInspectionModel.UploadData1.FileName)
+                                        </td>
+                                        <td data-title="">
+                                            <span class="glyphicon glyphicon-plus-sign AddNewUploadData" aria-hidden="true" style="cursor: pointer;">
+                                            </span><span id="AdddeleteUploadData1" class="glyphicon glyphicon-minus-sign removerow"
+                                                style="cursor: pointer;"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="11">
+                                            <span class="glyphicon glyphicon-plus-sign AddNewUploadData testcenter" aria-hidden="true"
+                                                style="cursor: pointer; float: right;"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div id="headingGeneralInsp" class="panel-heading" role="tab">
+                <div class="panel-title">
+                    <a class="" aria-controls="collapseGeneralInsp" aria-expanded="false" href="#collapseGeneralInsp"
+                        data-parent="#accordion" data-toggle="collapse" style="text-decoration: none;">General
+                        Site Inspection Items </a>
+                    <div class="pull-right">
+                        <a class="collapsed" aria-controls="collapseGeneralInsp" aria-expanded="false" href="#collapseGeneralInsp"
+                            data-parent="#accordion" data-toggle="collapse"><i id="ThirdcollapseArrow" class="glyphicon glyphicon-chevron-up">
+                            </i></a>
+                    </div>
+                </div>
+            </div>
+            <div id="collapseGeneralInsp" class="panel-collapse collapse in" role="tabpanel"
+                aria-labelledby="headingGeneralInsp">
+                <div class="panel-body">
+                    <div id="SiteInspection-tables">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                    </th>
+                                    <th class="col-md-5 active ">
+                                    </th>
+                                    <th class="col-md-2 active text-center" style="text-align: center">
+                                        
+                                    </th>
+                                    <th class="col-md-2 active text-center" style="text-align: center">
+                                        Action Required?
+                                    </th>
+                                    <th class="col-md-3 active">
+                                        Notes
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{count = 0;
+                                }
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            1<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 1">
+                                        @Html.DisplayFor(model => model.SiteInspection1.Question)
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection1.AreaInspectedYes, new { @class = "check_AreaGroup1", @checked = "checked", tabindex = "42" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection1.AreaInspectedNo, new { @class = "check_AreaGroup1", tabindex = "43" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection1.AreaInspectedNA, new { @class = "check_AreaGroup1", tabindex = "44" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection1.ActionRequiredYes, new { @class = "check_ActionGroup1", tabindex = "45" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection1.ActionRequiredNo, new { @class = "check_ActionGroup1", @checked = "checked", tabindex = "46" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection1.Notes, new { @class = "form-control", tabindex = "47" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            2<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 2">
+                                        @Html.DisplayFor(model => model.SiteInspection2.Question)
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection2.AreaInspectedYes, new { @class = "check_AreaGroup2", @checked = "checked", tabindex = "48" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection2.AreaInspectedNo, new { @class = "check_AreaGroup2" ,tabindex = "49" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection2.AreaInspectedNA, new { @class = "check_AreaGroup2", tabindex = "50" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection2.ActionRequiredYes, new { @class = "check_ActionGroup2", tabindex = "51" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection2.ActionRequiredNo, new { @class = "check_ActionGroup2", @checked = "checked", tabindex = "52" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection2.Notes, new { @class = "form-control", tabindex = "53" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            3<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 3">
+                                        @Html.DisplayFor(model => model.SiteInspection3.Question)
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection3.AreaInspectedYes, new { @class = "check_AreaGroup3", @checked = "checked", tabindex = "54" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection3.AreaInspectedNo, new { @class = "check_AreaGroup3", tabindex = "55" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection3.AreaInspectedNA, new { @class = "check_AreaGroup3", tabindex = "56" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection3.ActionRequiredYes, new { @class = "check_ActionGroup3", tabindex = "57" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection3.ActionRequiredNo, new { @class = "check_ActionGroup3", @checked = "checked", tabindex = "58" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection3.Notes, new { @class = "form-control", tabindex = "59" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            4<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 4">
+                                        @Html.DisplayFor(model => model.SiteInspection4.Question)
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection4.AreaInspectedYes, new { @class = "check_AreaGroup4", @checked = "checked", tabindex = "60" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection4.AreaInspectedNo, new { @class = "check_AreaGroup4", tabindex = "61" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection4.AreaInspectedNA, new { @class = "check_AreaGroup4", tabindex = "62" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection4.ActionRequiredYes, new { @class = "check_ActionGroup4", tabindex = "63" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection4.ActionRequiredNo, new { @class = "check_ActionGroup4", @checked = "checked", tabindex = "64" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection4.Notes, new { @class = "form-control", tabindex = "65" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            5<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 5">
+                                        @Html.DisplayFor(model => model.SiteInspection5.Question)
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection5.AreaInspectedYes, new { @class = "check_AreaGroup5", @checked = "checked", tabindex = "66" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection5.AreaInspectedNo, new { @class = "check_AreaGroup5", tabindex = "67" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection5.AreaInspectedNA, new { @class = "check_AreaGroup5", tabindex = "68" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection5.ActionRequiredYes, new { @class = "check_ActionGroup5", tabindex = "69" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection5.ActionRequiredNo, new { @class = "check_ActionGroup5", @checked = "checked", tabindex = "70" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection5.Notes, new { @class = "form-control", tabindex = "71" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            6<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 6">
+                                        @Html.DisplayFor(model => model.SiteInspection6.Question)
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection6.AreaInspectedYes, new { @class = "check_AreaGroup6", @checked = "checked", tabindex = "72" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection6.AreaInspectedNo, new { @class = "check_AreaGroup6", tabindex = "73" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection6.AreaInspectedNA, new { @class = "check_AreaGroup6", tabindex = "74" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection6.ActionRequiredYes, new { @class = "check_ActionGroup6", tabindex = "75" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection6.ActionRequiredNo, new { @class = "check_ActionGroup6", @checked = "checked", tabindex = "76" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection6.Notes, new { @class = "form-control", tabindex = "77" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            7<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 7">
+                                        @Html.DisplayFor(model => model.SiteInspection7.Question)
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection7.AreaInspectedYes, new { @class = "check_AreaGroup7", @checked = "checked", tabindex = "78" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection7.AreaInspectedNo, new { @class = "check_AreaGroup7", tabindex = "79" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection7.AreaInspectedNA, new { @class = "check_AreaGroup7", tabindex = "80" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection7.ActionRequiredYes, new { @class = "check_ActionGroup7", tabindex = "81" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection7.ActionRequiredNo, new { @class = "check_ActionGroup7", @checked = "checked", tabindex = "82" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection7.Notes, new { @class = "form-control", tabindex = "83" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            8<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 8">
+                                        @Html.DisplayFor(model => model.SiteInspection8.Question)
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection8.AreaInspectedYes, new { @class = "check_AreaGroup8", @checked = "checked", tabindex = "84" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection8.AreaInspectedNo, new { @class = "check_AreaGroup8", tabindex = "84" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection8.AreaInspectedNA, new { @class = "check_AreaGroup8", tabindex = "85" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection8.ActionRequiredYes, new { @class = "check_ActionGroup8", tabindex = "86" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection8.ActionRequiredNo, new { @class = "check_ActionGroup8", @checked = "checked", tabindex = "87" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection8.Notes, new { @class = "form-control", tabindex = "88" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            9<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 9">
+                                        @Html.DisplayFor(model => model.SiteInspection9.Question)
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection9.AreaInspectedYes, new { @class = "check_AreaGroup9", @checked = "checked", tabindex = "89" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection9.AreaInspectedNo, new { @class = "check_AreaGroup9", tabindex = "90" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection9.AreaInspectedNA, new { @class = "check_AreaGroup9", tabindex = "91" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection9.ActionRequiredYes, new { @class = "check_ActionGroup9", tabindex = "92" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection9.ActionRequiredNo, new { @class = "check_ActionGroup9", @checked = "checked", tabindex = "93" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection9.Notes, new { @class = "form-control", tabindex = "94" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            10<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 10">
+                                        @Html.DisplayFor(model => model.SiteInspection10.Question)
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection10.AreaInspectedYes, new { @class = "check_AreaGroup10", @checked = "checked", tabindex = "95" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection10.AreaInspectedNo, new { @class = "check_AreaGroup10", tabindex = "96" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection10.AreaInspectedNA, new { @class = "check_AreaGroup10", tabindex = "97" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection10.ActionRequiredYes, new { @class = "check_ActionGroup10", tabindex = "98" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection10.ActionRequiredNo, new { @class = "check_ActionGroup10", @checked = "checked", tabindex = "99" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection10.Notes, new { @class = "form-control", tabindex = "100" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            11<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 11">
+                                        @Html.DisplayFor(model => model.SiteInspection11.Question)
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection11.AreaInspectedYes, new { @class = "check_AreaGroup11", @checked = "checked", tabindex = "101" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection11.AreaInspectedNo, new { @class = "check_AreaGroup11", tabindex = "102" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection11.AreaInspectedNA, new { @class = "check_AreaGroup11", tabindex = "103" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection11.ActionRequiredYes, new { @class = "check_ActionGroup11", tabindex = "104" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection11.ActionRequiredNo, new { @class = "check_ActionGroup11", @checked = "checked", tabindex = "105" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection11.Notes, new { @class = "form-control", tabindex = "106" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            12<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 12">
+                                        @Html.DisplayFor(model => model.SiteInspection12.Question)
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection12.AreaInspectedYes, new { @class = "check_AreaGroup12", tabindex = "107" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection12.AreaInspectedNo, new { @class = "check_AreaGroup12", @checked = "checked", tabindex = "108" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection12.AreaInspectedNA, new { @class = "check_AreaGroup12", tabindex = "109" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection12.ActionRequiredYes, new { @class = "check_ActionGroup12", @checked = "checked", tabindex = "110" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection12.ActionRequiredNo, new { @class = "check_ActionGroup12", tabindex = "111" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection12.Notes, new { @class = "form-control", tabindex = "112" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            13<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 13">
+                                        @Html.DisplayFor(model => model.SiteInspection13.Question)
+                                        <img id="opener" src="../../Images/Gray-ibutton.gif" height="20px" width="20px" alt="image not display"
+                                            style="cursor: pointer" />
+                                        <div id="dialog">
+                                            <p>
+                                                The following non-stormwater discharges are allowed under the permit from your construction activity, provided
+                                                that, with the exception of water used to control dust and to irrigate areas to be
+                                                vegetatively stabilized, these discharges are not routed to areas of exposed soil
+                                                on your site and you comply with any applicable requirements for these discharges
+                                                in part 2 of the CGP
+                                                <br />
+                                                <br />
+                                                i. Discharges from emergency fire-fighting activities;
+                                                <br />
+                                                <br />
+                                                ii. Fire hydrant flushings;
+                                                <br />
+                                                <br />
+                                                iii. Landscape irrigation;
+                                                <br />
+                                                <br />
+                                                iv. Water used to wash vehicles and equipment, provided that there is no discharge
+                                                at soaps, solvents, or detergents used for such purposes;
+                                                <br />
+                                                <br />
+                                                v. Water used to control dust;
+                                                <br />
+                                                <br />
+                                                vi. Potable water including uncontaminated water line flushings;
+                                                <br />
+                                                <br />
+                                                vii. Routine external building washdown that does not use detergents;
+                                                <br />
+                                                <br />
+                                                viii. Pavement wash waters provided spills or leaks of toxic or hazardous materials
+                                                have not occurred (unless all spill material has been removed) and where detergents
+                                                are not used. You are prohibited from directing pavement wash waters directly into
+                                                any surface water, storm drain inlet, or storm water conveyance, unless the conveyance
+                                                is connected to a sediment basin, sediment trap or similarly effective control;
+                                                <br />
+                                                <br />
+                                                ix. Uncontaminated air conditioning or compressor condensate;
+                                                <br />
+                                                <br />
+                                                x. Uncontaminated, non-turbid discharges of ground water or spring water;
+                                                <br />
+                                                <br />
+                                                xi. Foundation or footing drains where flows are not contaminated with process materials
+                                                such as solvents or contaminated ground water; and
+                                                <br />
+                                                <br />
+                                                xii. Construction dewatering water that has been treated by an appropriate control
+                                                under Part 2.1.3.4 of the CGP.
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection13.AreaInspectedYes, new { @class = "check_AreaGroup13", @checked = "checked", tabindex = "113" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection13.AreaInspectedNo, new { @class = "check_AreaGroup13", tabindex = "114" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection13.AreaInspectedNA, new { @class = "check_AreaGroup13", tabindex = "115" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection13.ActionRequiredYes, new { @class = "check_ActionGroup13", tabindex = "116" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection13.ActionRequiredNo, new { @class = "check_ActionGroup13", @checked = "checked", tabindex = "117" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection13.Notes, new { @class = "form-control", tabindex = "118" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            14<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 14">
+                                        @Html.DisplayFor(model => model.SiteInspection14.Question)
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection14.AreaInspectedYes, new { @class = "check_AreaGroup14", @checked = "checked", tabindex = "119" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection14.AreaInspectedNo, new { @class = "check_AreaGroup14", tabindex = "120" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection14.AreaInspectedNA, new { @class = "check_AreaGroup14", tabindex = "121" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection14.ActionRequiredYes, new { @class = "check_ActionGroup14", tabindex = "122" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection14.ActionRequiredNo, new { @class = "check_ActionGroup14", @checked = "checked", tabindex = "123" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection14.Notes, new { @class = "form-control", tabindex = "124" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            15<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 15">
+                                        @Html.DisplayFor(model => model.SiteInspection15.Question)
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection15.AreaInspectedYes, new { @class = "check_AreaGroup15", @checked = "checked", tabindex = "125" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection15.AreaInspectedNo, new { @class = "check_AreaGroup15", tabindex = "126" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection15.AreaInspectedNA, new { @class = "check_AreaGroup15", tabindex = "127" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection15.ActionRequiredYes, new { @class = "check_ActionGroup15", tabindex = "128" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection15.ActionRequiredNo, new { @class = "check_ActionGroup15", @checked = "checked", tabindex = "129" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection15.Notes, new { @class = "form-control", tabindex = "130" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            16<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 16">
+                                        @Html.DisplayFor(model => model.SiteInspection16.Question)
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection16.AreaInspectedYes, new { @class = "check_AreaGroup16", @checked = "checked", tabindex = "131" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection16.AreaInspectedNo, new { @class = "check_AreaGroup16", tabindex = "132" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection16.AreaInspectedNA, new { @class = "check_AreaGroup16", tabindex = "133" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection16.ActionRequiredYes, new { @class = "check_ActionGroup16", tabindex = "134" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection16.ActionRequiredNo, new { @class = "check_ActionGroup16", @checked = "checked", tabindex = "135" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection16.Notes, new { @class = "form-control", tabindex = "136" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="activeheader">
+                                        <label class="count-display">
+                                            17<br />
+                                        </label>
+                                    </td>
+                                    <td data-title="Item 17">
+                                        @Html.DisplayFor(model => model.SiteInspection17.Question)
+                                    </td>
+                                    <td data-title="Area Inspected?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection17.AreaInspectedYes, new { @class = "check_AreaGroup17", @checked = "checked", tabindex = "137" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection17.AreaInspectedNo, new { @class = "check_AreaGroup17", tabindex = "138" })No
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection17.AreaInspectedNA, new { @class = "check_AreaGroup17", tabindex = "139" })NA
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Action Required?">
+                                        <div class="row checkbox text-center">
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection17.ActionRequiredYes, new { @class = "check_ActionGroup17", tabindex = "140" })Yes
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                @Html.CheckBoxFor(model => model.SiteInspection17.ActionRequiredNo, new { @class = "check_ActionGroup17", @checked = "checked", tabindex = "141" })No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="Notes">
+                                        @Html.TextAreaFor(model => model.SiteInspection17.Notes, new { @class = "form-control", tabindex = "142" })
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <h3>
+                            Certification and Signature by Inspector
+                        </h3>
+                        <p>
+                            <i>"I certify under penalty of law that this document and all attachments were prepared
+                                under my direction or supervision in accordance with a system designed to assure
+                                that qualified personnel properly gathered and evaluated the information submitted.
+                                Based on my inquiry of the person or persons who manage the system, or those persons
+                                directly responsible for gathering the information, the information submitted is,
+                                to the best of my knowledge and belief, true, accurate, and complete. I am aware
+                                that there are significant penalties for submitting false information, including
+                                the possibility of fine and imprisonment for knowing violations." </i>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-sm-9 sp-15bottom">
+                                <b>Inspected By :
+                                    <label id="lblInspectorName">
+                                    </label>
+                                </b>
+                            </div>
+                            <div class="col-sm-3">
+                                <b>Date : : </b>@DateTime.Now.ToShortDateString()
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <br />
+                        <div class="col-md-12">
+                            <b>Signature and Affiliation : </b>
+                            <img id="uploadimg" src="" style="height: 50px; width: 100px" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr />
+                        </div>
+                    </div>
+                    <div>
+                        <h3>
+                            Certification and Signature by Contractor
+                        </h3>
+                        <p>
+                            <i>"I certify under penalty of law that this document and all attachments were prepared
+                                under my direction or supervision in accordance with a system designed to assure
+                                that qualified personnel properly gathered and evaluated the information submitted.
+                                Based on my inquiry of the person or persons who manage the system, or those persons
+                                directly responsible for gathering the information, the information submitted is,
+                                to the best of my knowledge and belief, true, accurate, and complete. I am aware
+                                that there are significant penalties for submitting false information, including
+                                the possibility of fine and imprisonment for knowing violations." </i>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-sm-3">
+                                <b>Print Name and Title : </b>
+                            </div>
+                            <div class="col-sm-9 sp-15bottom">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <br />
+                        <div class="col-md-12">
+                            <div class="col-sm-9 sp-15bottom">
+                                <b>Signature : </b>
+                            </div>
+                            <div class="col-sm-3">
+                                <b>Date: </b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr />
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-md-12">
+                            @if (User.Role == "Inspector")
+                            {
+@*<input type="button" id="btnSaveForNow" class="btn btn-primary" value="Save For Now" />*@
+@* <div id="btnSaveForNow" class="btn btn-primary">
+                            Save For Now</div>*@
+                                <button id="btnSaveForNow" class="btn btn-primary">
+                                    Save For Now
+                                </button>
+                                <button id="btnInspectionFinish1" class="btn btn-primary">
+                                    Save and Finish
+                                </button>
+                                @Html.HiddenFor(model => model.generalInspectionModel.IsComplete)
+                            }
+                            else
+                            {
+                                <button disabled="disabled" class="btn btn-primary">
+                                    Save For Now
+                                </button>
+                                <button disabled="disabled" class="btn btn-primary">
+                                    Save And Finish
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

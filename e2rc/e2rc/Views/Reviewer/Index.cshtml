@@ -1,0 +1,251 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<e2rc.Models.ReviewerModel>
+@{
+    ViewBag.Title = "Reviewer";
+}
+<style type="text/css">
+    .ui-widget-header .ui-icon
+    {
+        background-image: none !important;
+    }
+    .ui-icon
+    {
+        background-image: none !important;
+    }
+     .status
+    {
+        font-size:13px!important;
+        font-weight:normal!important;
+        float:right!important;
+    }
+    .container 
+    {
+        padding-left:0px!important;
+        padding-right:0px!important;
+    }
+    .col-sm-4
+    {
+         padding-left:0px!important;
+        padding-right:0px!important;
+    }
+    .panel-title 
+{
+    font-size:14px !important;
+}
+.table th {
+   text-align: center !important;
+}   
+</style>
+<script type="text/javascript">
+    // auto search by franchise name
+    $(function () {
+        $("#txtSearch").autocomplete({
+            source: '@Url.Action("GetReviewerName", new { view =Request.QueryString["view"]})'
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        ($('#Activate').attr('checked', true));
+    });
+
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        $(".Update").click(function () {
+            var chkReviewer_IDs = [], unchkReviewer_IDs = [];
+            $(".rowstatus").each(function () {
+                if ($(this).is(':checked')) {
+                    var UpdateTR = $(this).parent().parent();
+                    chkReviewer_IDs.push(parseInt($(UpdateTR).find("input[type=hidden]:first").val()));
+                }
+                else {
+                    var UpdateTR = $(this).parent().parent();
+                    unchkReviewer_IDs.push(parseInt($(UpdateTR).find("input[type=hidden]:first").val()));
+                }
+            });
+
+            $.ajax({
+                url: '/Reviewer/UpdateReviewerStatusList/',
+                type: 'POST',
+                data: JSON.stringify({ chkedReviewer_ID: chkReviewer_IDs, unchkReviewer_ID: unchkReviewer_IDs }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    alert("Reviewer Status Updated Sucessfully ")
+                    window.location.reload(true);
+                },
+                error: function (data) {
+                    alert(data)
+                }
+            });
+
+
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('#Activate').click(function () {
+            if ($(this).is(':checked')) {
+                $(".rowstatus").each(function () {
+                    $(this).prop("checked", true);
+                });
+            }
+            else {
+                $(".rowstatus").each(function () {
+                    $(this).prop("checked", false);
+                });
+            }
+        });
+    });
+    </script>
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+                @Html.ActionLink("Dashboard", "Index", "Dashboard", null, new { @class = "btn btn-custom btn-black margin-0" })
+            </div>
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-4">
+                @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-black btn-custom margin-0" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            @using (Html.BeginForm("Index", "Reviewer", FormMethod.Get))
+            {
+                <div style="float: left; width: 85%;">
+                    @Html.TextBox("search", null, new { id = "txtSearch", @class = "form-control text-search", placeholder = "Search by Reviewer Name", style = "height: 0% !important;" })
+                </div>
+                <div style="float: left; width: 15%;">
+                    <button class="btn btn-black btn-custom margin-0 form-control glyphicon glyphicon-search align-right btn-search"
+                        style="height: 0% !important;">
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="panel-head">
+   <table>
+<tr >
+   <td style="width:83%;">
+   Reviewer User Information
+    </td>
+    <td>
+   <table style="float:right!important;">
+   <tr>
+   <td>
+        @Html.ActionLink("Active", "Index", "Reviewer", new { view = "Active" }, new { @class = "btn btn-custom btn-black margin-0 status",@style = "margin:5px!important;" })
+        </td> 
+    <td>
+         @Html.ActionLink("Inactive", "Index", "Reviewer", new { view = "InActive" }, new { @class = "btn btn-custom btn-black margin-0 status" })
+    </td>   
+   </tr>
+   </table>
+   </td>  
+    </tr>
+   </table>
+</div>
+<div id="dialog-confirm">
+</div>
+<div class="panel panel-default" style="margin-bottom: 0% !important;">
+    <div class="panel-body padding-0">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover  margin-0 ">
+                <tr class="panel-title">               
+                    <th class="header-color col-md-2 text-center">
+                       @* @Html.DisplayNameFor(model => model.First().FirstName)*@
+                         @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.FirstNameSortParm })  
+                    </th>
+                    <th class="header-color col-md-2 text-center">
+                       @* @Html.DisplayNameFor(model => model.First().LastName)*@
+                         @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastNameSortParm })  
+                    </th>
+                    <th class="header-color col-md-2">                      
+                         @Html.ActionLink("Username", "Index", new { sortOrder = ViewBag.UserNameSortParm }) 
+                    </th>
+                    <th class="header-color col-md-3">                      
+                           @Html.ActionLink("Email", "Index", new { sortOrder = ViewBag.EmailSortParm })  
+                    </th>
+                    <th class="header-color col-md-1"">
+                       @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.DateSortParm }) 
+                    </th>
+                    <th class="header-color col-md-2" style="color:#199AD6">
+                        Details
+                    </th>
+                    <th class="header-color col-md-3 col-sm-1 col-xs-1" style="color:#199AD6">
+                        Status @Html.CheckBox("Activate All", new { @class = "sp-15bottom status", @id = "Activate"})
+                    </th>
+                </tr>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                    <tr>
+                         <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                            @Html.HiddenFor(modelItem => item.Reviewer_ID)
+                        </td>
+                         <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                          
+                        </td>
+                          <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                           @* @Html.ActionLink("Edit", "Edit", new { ProjectManager_ID = item.ProjectManager_ID }) |*@
+                            @Html.ActionLink("View", "Details", new { Reviewer_ID = item.Reviewer_ID }) 
+                           @* |<a href="#" onclick="ConfirmDeletion('Are you sure want to delete this Project Manager ?',
+                                                                 'Delete Project Manager ?','/ProjectManager/Delete',
+                                                                  'ProjectManager_ID',@item.ProjectManager_ID,'unable to delete the Project Manager.'
+                                                                  ,'Project Manager has been deleted successfully.',
+                                                                  '../ProjectManager/index');" >Delete</a>*@
+                        </td>
+                        <td> @Html.CheckBoxFor(modelItem => item.IsActive, new { @class = "sp-15bottom rowstatus" }) </td> 
+                    </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">
+                            No reviewer information found to display.
+                        </td>
+                    </tr>
+
+                }
+            </table>
+        </div>
+    </div>
+</div>
+@if (Model != null)
+{
+    <div class="panel-head padding-0" style="font-size: 13px !important;">
+     <div style="float:right;padding-right:1%;"><button class="Update btn btn-custom btn-black">Update</button></div>
+     @Html.PagedListPager(Model, Page => Url.Action("Index", new
+{
+    Page,
+    search = Request.QueryString["search"],
+    view = Request.QueryString["view"]
+    
+}), new PagedListRenderOptions()
+{
+    Display = PagedListDisplayMode.IfNeeded,
+    DisplayPageCountAndCurrentLocation = true,
+    MaximumPageNumbersToDisplay = 10
+})
+    </div>
+}

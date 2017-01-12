@@ -1,0 +1,143 @@
+﻿@model e2rc.Models.FranchiseAssignLocationToInspectorModel
+@{
+    ViewBag.Title = "Franchise Assign Location To InspectorModel";
+}
+<script src="~/Scripts/multiple-select.js"></script>
+<link href="~/Content/css/multiple-select.css" rel="stylesheet" />
+<script>
+    $(function () {
+        $("#lstInspector_ID").multipleSelect({
+            placeholder: "Select Inspector Name",
+            filter: true
+        });
+        $("#lstLocation_ID").multipleSelect({
+            placeholder: "Select Project Name",
+            filter: true
+        });
+        $(".ms-parent").css("width", "276.66px");
+
+        $("#btnSubmit").click(function () {
+            //alert("Selected values: " + $("#lstInspector_ID").multipleSelect("getSelects"));
+            //alert("Selected values Type: " + typeof($("#lstInspector_ID").multipleSelect("getSelects")));
+            //alert("Selected texts: " + $("#lstLocation_ID").multipleSelect("getSelects", "text"));
+            if (($("#lstInspector_ID").multipleSelect("getSelects") != '') && ($("#lstLocation_ID").multipleSelect("getSelects") != '')) {
+                $("#RemoveAccess").val(false);
+                return true;
+            }
+            else {
+                alert('Select Atleast one Inspector and Project Name !');
+                return false;
+            }
+        });
+        $("#btnRemoveAccess").click(function () {
+            if ($("#lstInspector_ID").multipleSelect("getSelects") != '') {
+                $("#RemoveAccess").val(true);
+                return true;
+            }
+        });
+    });
+</script>   
+
+<script type="text/javascript">
+    $(function () {
+        $(".btnbk").click(function () {
+            //$("input:text,select").each(function () {
+            //    if ($(this).val().trim() != "" && $(this).val().trim().length > 0) {
+            //        IsFormFilled = true;
+            //    }
+
+            //});
+            if (($("#lstInspector_ID").multipleSelect("getSelects") != '') || ($("#lstLocation_ID").multipleSelect("getSelects") != '')) {
+                IsFormFilled = true;
+            } else {
+                IsFormFilled = false;
+            }
+            if (IsFormFilled) {
+                if (confirm("The information is incomplete or has not been saved.Select 'OK' to proceed or 'Cancel' to complete and save the account information")) {
+                  window.location = "@Url.Action("Index","Dashboard")";
+                }
+                else {
+                    IsFormFilled = false;
+                }
+            } else {
+                window.location = "@Url.Action("Index","Dashboard")";
+            }
+        });
+    });
+</script>
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+                <div class="btn btn-black btn-custom margin-0 btnbk " style="width:100%;"> Back</div>
+            </div>
+            <div class="col-sm-1">
+            </div>
+            @*<div class="col-sm-4">
+                    @Html.ActionLink("View Assign Location", "Index", "LocationAssign", null, new { @class = "btn btn-custom btn-black margin-0" })
+                </div>*@
+        </div>
+    </div>
+</div>
+<div class="panel-head">
+    Assign Project to Inspector
+</div>
+@using (Html.BeginForm("create", "FranchiseAssignLocationToInspector", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div id="accordion" class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <b>Assign Project Details</b>
+                </div>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse in" style="overflow:inherit">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                Inspector Name
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(m => m.lstInspector_ID, new MultiSelectList(new e2rc.Models.FranchiseAssignLocationToInspectorModel().GetInspectorDetails((long)User.User_ID), "Inspector_ID", "Name"), new { @class = "", multiple = "multiple" })
+                                @*@Html.DropDownListFor(m => m.Inspector_ID, new MultiSelectList(new e2rc.Models.FranchiseAssignLocationToInspectorModel().GetInspectorDetails((long)User.User_ID), "Inspector_ID", "Name"),"Select Inspector Name", new { @class = "form-control sp-15bottom " })*@
+                                @*@Html.DropDownListFor(m => m.inspector.Inspector_ID, new SelectList(new e2rc.Models.LocationAssignModel().inspectors, "Inspector_ID", "Name"), "Select Inspector's Name", new { @class = "form-control sp-15bottom" })*@
+                                @Html.ValidationMessageFor(model => model.inspector.Inspector_ID)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                Project Name
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(m => m.lstLocation_ID, new MultiSelectList(new e2rc.Models.FranchiseAssignLocationToInspectorModel().FranchiseLocations((long)User.User_ID), "Location_ID", "Name"), new { @class = "", multiple = "multiple" })
+                                @Html.ValidationMessageFor(model => model.location.Location_ID)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button id="btnSubmit" class="btn  btn-primary" value="Submit">
+                                Assign Access
+                            </button>
+                            <button id="btnRemoveAccess" class="btn btn-primary" value="Submit">
+                                Remove Access
+                            </button>
+                            @Html.HiddenFor(m => m.RemoveAccess)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        @Html.ValidationSummary(true)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

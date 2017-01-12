@@ -1,0 +1,577 @@
+﻿@model e2rc.Models.FranchiseModel
+@{
+    ViewBag.Title = "Create Franchise";
+}
+
+<style type="text/css">
+    @*css for dropdown validation border color*@ select.input-validation-error {
+        border: 1px solid #FF0034;
+    }
+</style>
+<script type="text/javascript">
+
+    $(function () {
+        $(".date").bind("change", function (e) {
+            var date1 = document.getElementById("Date").value.split("/");
+            var month = parseInt(date1[0]);
+            var day = parseInt(date1[1]);
+            var year = parseInt(date1[2]);
+            var ListofDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            if (month == 1 || month > 2) {
+                if (day > ListofDays[month - 1]) {
+                    alert('Invalid date format!');
+                    return false;
+                }
+            }
+            if (month == 2) {
+                var lyear = false;
+                if ((!(year % 4) && year % 100) || !(year % 400)) {
+                    lyear = true;
+                }
+                if ((lyear == false) && (day >= 29)) {
+                    alert('Invalid date format!');
+                    return false;
+                }
+                if ((lyear == true) && (day > 29)) {
+                    alert('Invalid date format!');
+                    return false;
+                }
+            }
+
+            if (month > 12 && day > 12) {
+                alert('Invalid date format!');
+                return false;
+            }
+
+            if (year < 100) {
+                year = "20" + year;
+            }
+            if (month < 10) {
+                month = "0" + month;
+            }
+            if (day < 10) {
+                day = "0" + day;
+            }
+
+            if (month > 12) {
+                $(this).val(day + "/" + month + "/" + year);
+            }
+            else {
+                $(this).val(month + "/" + day + "/" + year);
+            }
+            if ($(this).val() == "NaN/NaN/NaN")
+                $(this).val("MM/DD/YYYY");
+
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        //        var flag = 0;
+        //        $("#FirstcollapseArrow").click(function () {
+        //            flag = 0;
+        //            if ($(this).attr('class') == 'glyphicon glyphicon-chevron-down') {
+        //                flag = 1;
+        //                $(this).removeClass('glyphicon glyphicon-chevron-down');
+        //                $(this).addClass('glyphicon glyphicon-chevron-up');
+        //            }
+        //            else {
+        //                flag = 0;
+        //                $(this).removeClass('glyphicon glyphicon-chevron-up');
+        //                $(this).addClass('glyphicon glyphicon-chevron-down');
+        //            }
+
+        //            if (flag == 1) {
+        //                $("#SecondcollapseArrow").removeClass('glyphicon glyphicon-chevron-up');
+        //                $("#SecondcollapseArrow").addClass('glyphicon glyphicon-chevron-down');
+        //                $("#ThirdcollapseArrow").removeClass('glyphicon glyphicon-chevron-up');
+        //                $("#ThirdcollapseArrow").addClass('glyphicon glyphicon-chevron-down');
+        //            }
+        //        });
+        //        $("#SecondcollapseArrow").click(function () {
+
+        //            if ($(this).attr('class') == 'glyphicon glyphicon-chevron-down') {
+        //                flag = 1;
+        //                $(this).removeClass('glyphicon glyphicon-chevron-down');
+        //                $(this).addClass('glyphicon glyphicon-chevron-up');
+        //            }
+        //            else {
+        //                flag = 0;
+        //                $(this).removeClass('glyphicon glyphicon-chevron-up');
+        //                $(this).addClass('glyphicon glyphicon-chevron-down');
+        //            }
+        //            if (flag == 1) {
+        //                $("#FirstcollapseArrow").removeClass('glyphicon glyphicon-chevron-up');
+        //                $("#FirstcollapseArrow").addClass('glyphicon glyphicon-chevron-down');
+        //                $("#ThirdcollapseArrow").removeClass('glyphicon glyphicon-chevron-up');
+        //                $("#ThirdcollapseArrow").addClass('glyphicon glyphicon-chevron-down');
+        //            }
+        //        });
+        //        $("#ThirdcollapseArrow").click(function () {
+
+        //            if ($(this).attr('class') == 'glyphicon glyphicon-chevron-down') {
+        //                flag = 1;
+        //                $(this).removeClass('glyphicon glyphicon-chevron-down');
+        //                $(this).addClass('glyphicon glyphicon-chevron-up');
+        //            }
+        //            else {
+        //                flag = 0;
+        //                $(this).removeClass('glyphicon glyphicon-chevron-up');
+        //                $(this).addClass('glyphicon glyphicon-chevron-down');
+        //            }
+        //            if (flag == 1) {
+        //                $("#FirstcollapseArrow").removeClass('glyphicon glyphicon-chevron-up');
+        //                $("#FirstcollapseArrow").addClass('glyphicon glyphicon-chevron-down');
+        //                $("#SecondcollapseArrow").removeClass('glyphicon glyphicon-chevron-up');
+        //                $("#SecondcollapseArrow").addClass('glyphicon glyphicon-chevron-down');
+        //            }
+        //        });
+
+        var IsFormFilled = false;
+        $(".btnbk").click(function () {
+
+            $("input:text:not(.date),select").each(function () {
+                if ($(this).val().trim() != "" && $(this).val().trim().length > 0) {
+                    IsFormFilled = true;
+                }
+
+            });
+            if (IsFormFilled) {
+                if (confirm("The account information is incomplete or has not been saved.Select 'OK' to proceed or 'Cancel' to complete and save the account information")) {
+                    window.location = "@Url.Action("Index","Franchise")";
+                }
+                else {
+                    IsFormFilled = false;
+                }
+            } else {
+                window.location = "@Url.Action("Index","Franchise")";
+            }
+        });
+
+        $(".btnDashboardbk").click(function () {
+
+            $("input:text:not(.date),select").each(function () {
+                if ($(this).val().trim() != "" && $(this).val().trim().length > 0) {
+                    IsFormFilled = true;
+                }
+
+            });
+            if (IsFormFilled) {
+                if (confirm("The account information is incomplete or has not been saved.Select 'OK' to proceed or 'Cancel' to complete and save the account information")) {
+                    window.location = "@Url.Action("Index","Dashboard")";
+                }
+                else {
+                    IsFormFilled = false;
+                }
+            } else {
+                window.location = "@Url.Action("Index","Dashboard")";
+            }
+        });
+
+        $("#AdminUser_PhoneNumber").on("keyup", function (e) {
+            if ($(this).val().length == 3) {
+
+                $(this).val($(this).val() + "-");
+
+            } else if ($(this).val().length == 7) {
+
+                $(this).val($(this).val() + "-");
+
+            }
+        });
+
+        $("#AdminUser_MobileNumber").on("keyup", function (e) {
+            if ($(this).val().length == 3) {
+
+                $(this).val($(this).val() + "-");
+
+            } else if ($(this).val().length == 7) {
+
+                $(this).val($(this).val() + "-");
+
+            }
+        });
+
+    });
+</script>
+<script type="text/javascript">
+    function UploadData() {
+        alert(1);
+    }
+
+    $("#btnSubmit").click(function () {
+        alert(1);
+        var fileUpload = document.getElementById("PostedFile1");
+        if (document.getElementById("PostedFile1").style.visibility == 'visible') {
+            //if (document.getElementById("Role_Role_ID").value == 2) {
+            if (document.getElementById('PostedFile1').files[0].size > 5000) {
+                alert('Please upload logo with maximum size 50kb.');
+                return false;
+            }
+            else {
+                if (Upload()) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }            
+        }
+    });
+
+    function Upload() {
+        //Get reference of FileUpload.
+        alert(1);
+        var fileUpload = document.getElementById("PostedFile1");
+
+        //Check whether the file is valid Image.
+        //Check whether HTML5 is supported.
+        if (typeof (fileUpload.files) != "undefined") {
+            //Initiate the FileReader object.
+            var reader = new FileReader();
+            //Read the contents of Image File.
+            reader.readAsDataURL(fileUpload.files[0]);
+            reader.onload = function (e) {
+                //Initiate the JavaScript Image object.
+                var image = new Image();
+                //Set the Base64 string return from FileReader as source.
+                image.src = e.target.result;
+
+                //Validate the File Height and Width.
+                var returnData = image.onload = function () {
+                    var height = this.height;
+                    if (height > 200) {
+                        alert("height must not exceed 200px.");
+                        return false;
+                    }
+                    else {
+                        //document.getElementById("frmLogoUpdate").submit();
+                        return true;
+                    }
+                };
+                return returnData;
+            }
+        }
+        else {
+            alert("This browser does not support HTML5.");
+            return false;
+        }
+    }
+</script>
+
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+                @if (ViewBag.View == "Franchise")
+                {
+                    <div class="btn btn-black btn-custom  btnDashboardbk" style="width:100%;"> Back</div>
+                }
+                else
+                {
+                    <div class="btn btn-black btn-custom  btnbk" style="width:100%;"> Back</div>
+
+                }
+
+
+            </div>
+            <div class="col-sm-1">
+            </div>
+            @*<div class="col-sm-4">
+                   @* @Html.ActionLink("View Franchises", "Index", "Franchise", null, new { @class = "btn btn-custom btn-black " })
+                    <div class="btn btn-black btn-custom btnbk" style="width: 100%;">
+                        View Franchises</div>
+                </div>*@
+        </div>
+    </div>
+</div>
+<div class="panel-head">
+    Create Franchise Company Account
+</div>
+@using (Html.BeginForm("Create", "Franchise", FormMethod.Post, new { id = "frmCreateFranchise", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div id="accordion" class="panel-group" aria-multiselectable="true" role="tablist">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                @* <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                            aria-controls="collapseOne" style="text-align: none;">Company Details</a>
+                        <div class="pull-right">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                aria-controls="collapseOne"><i id="FirstcollapseArrow" class="glyphicon glyphicon-chevron-up">
+                                </i></a>
+                        </div>
+                    </h4>*@
+                <div class="panel-title">
+                    <b>Company Details</b>
+                </div>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-4 sp-15bottom">
+                                    Company Name <span style="color: Red">*</span>
+                                </label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.FraCompName, new { @class = "form-control sp-15bottom", @placeholder = "Enter Company Name" })
+                                    @Html.ValidationMessageFor(model => model.FraCompName)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-4 sp-15bottom">
+                                    Date <span style="color: Red">*</span>(mm/dd/yyyy)
+                                </label>
+                                <div class="col-sm-8">
+                                    @Html.EditorFor(model => model.Date, new { @class = "form-control", placeholder = "Enter Date", data_val = true })
+                                    @Html.ValidationMessageFor(model => model.Date)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="HeadingTwo">
+                @*<h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true"
+                            aria-controls="collapseTwo">Address</a>
+                        <div class="pull-right">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true"
+                                aria-controls="collapseTwo"><i id="SecondcollapseArrow" class="glyphicon glyphicon-chevron-up">
+                                </i></a>
+                        </div>
+                    </h4>*@
+                <div class="panel-title">
+                    <b>Address</b>
+                </div>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-4 sp-15bottom">
+                                    Street Address <span style="color: Red">*</span>
+                                </label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Address.MailingAddress, new { @class = "form-control sp-15bottom", placeholder = "Enter Street Address" })
+                                    @Html.ValidationMessageFor(model => model.Address.MailingAddress)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-4 sp-15bottom">
+                                    City <span style="color: Red">*</span>
+                                </label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Address.City, new { @class = "form-control sp-15bottom", placeholder = "Enter City" })
+                                    @Html.ValidationMessageFor(model => model.Address.City)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-4 sp-15bottom">
+                                    State <span style="color: Red">*</span>
+                                </label>
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(model => model.Address.State.State_ID, new SelectList(Model.Address.States, "State_ID", "Name"), "Select State", new { @class = "form-control sp-15bottom" })
+                                    @Html.ValidationMessageFor(model => model.Address.State.State_ID)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-4 sp-15bottom">
+                                    Zip Code <span style="color: Red">*</span>
+                                </label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Address.ZipCode, new { @class = "form-control sp-15bottom zip-code", placeholder = "Enter Zip Code" })
+                                    @Html.ValidationMessageFor(model => model.Address.ZipCode)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="HeadingThree">
+                @*<h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true"
+                            aria-controls="collapseThree">Administrator Details</a>
+                        <div class="pull-right">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true"
+                                aria-controls="collapseThree"><i id="ThirdcollapseArrow" class="glyphicon glyphicon-chevron-up">
+                                </i></a>
+                        </div>
+                    </h4>*@
+                <div class="panel-title">
+                    <b>Administrator Details</b>
+                </div>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse  in" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                First Name <span style="color: Red">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.AdminUser.FirstName, new { @class = "form-control sp-15bottom", placeholder = "Enter First Name" })
+                                @Html.ValidationMessageFor(model => model.AdminUser.FirstName)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                Last Name <span style="color: Red">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.AdminUser.LastName, new { @class = "form-control sp-15bottom", placeholder = "Enter Last Name" })
+                                @Html.ValidationMessageFor(model => model.AdminUser.LastName)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                Username <span style="color: Red">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control sp-15bottom", placeholder = "Enter Username" })
+                                @Html.ValidationMessageFor(model => model.UserName)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                Email <span style="color: Red">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.AdminUser.Email, new { @type = "email", @class = "form-control sp-15bottom", placeholder = "example@gmail.com" })
+                                @Html.ValidationMessageFor(model => model.AdminUser.Email)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                Password <span style="color: Red">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.PasswordFor(model => model.AdminUser.Password, new { @class = "form-control sp-15bottom", placeholder = "******" })
+                                @Html.ValidationMessageFor(model => model.AdminUser.Password)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                Confirm Password <span style="color: Red">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.PasswordFor(model => model.AdminUser.ConfirmPassword, new { @class = "form-control sp-15bottom", placeholder = "******" })
+                                @Html.ValidationMessageFor(model => model.AdminUser.ConfirmPassword)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                Role <span style="color: Red">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.AdminUser.Role.Role_ID, new SelectList(Model.AdminUser.Roles, "Role_ID", "Description"), new { @class = "form-control sp-15bottom", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.AdminUser.Role.Role_ID)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                Office Phone<span style="color: Red">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.AdminUser.PhoneNumber, new { @class = "form-control sp-15bottom", placeholder = "999-999-9999" })
+                                @Html.ValidationMessageFor(model => model.AdminUser.PhoneNumber)
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-sm-4 sp-15bottom">
+                                Mobile Phone<span style="color: Red">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.AdminUser.MobileNumber, new { @class = "form-control sp-15bottom", placeholder = "999-999-9999" })
+                                @Html.ValidationMessageFor(model => model.AdminUser.MobileNumber)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-sm-4 sp-15bottom">
+                                <label class="checkbox-inline">
+                                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-inline " })Company Active
+                                </label>
+                            </div>
+                        </div>
+
+                        @Html.HiddenFor(m => m.AdminUser.CompanyName, new { value = "e2rc" })
+                    </div>
+                    @*<div class="row">
+                            <div class="col-md-12 ">
+                                <button id="btnSubmit" class="btn  btn-primary" value="Submit">
+                                    Save</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            @Html.ValidationSummary(true)
+                        </div>*@
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading sign">
+                <div class="panel-title sign">
+                    <b>Logo Details</b>
+                </div>
+            </div>
+            <div id="collapsesignature">
+                <div class="panel-body">
+                    <div class="">
+                        <div class="row sign">
+                            <div class="col-md-12">
+                                <label class="col-sm-2 sp-15bottom">
+                                    Logo <span style="color: Red"></span>
+                                </label>
+                                <div class="col-sm-4">
+                                    @Html.TextBoxFor(m => m.PostedFile, new { type = "file" })
+                                </div>
+                                <div class="col-sm-4">
+                                    @if (ViewBag.ErrorMsg!=null)
+                                    {
+                                         <span style="color: Red">@ViewBag.ErrorMsg</span>
+                                    }
+                                    @Html.ValidationMessageFor(m => m.PostedFile, string.Empty, new { @style = "margin-top:2% !important;" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @*<button id="btnSubmit" class="btn  btn-primary" value="Submit">
+                                Save
+                            </button>*@
+                            <input type="submit" id="btnSUbmit" class="btn  btn-primary" value="Save" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        @Html.ValidationSummary(true)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

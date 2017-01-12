@@ -1,0 +1,104 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<e2rc.Models.ClientDashboard> 
+<style type="text/css">
+.table th, .table td {
+    line-height: 20px;
+    text-align: center;
+}
+ .ui-dialog, .ui-widget, .ui-widget-content
+ {
+     width:85% !important;
+     z-index:10021!important;
+ }
+ 
+ .ui-datepicker
+ {
+     width:20% !important;
+ }
+  #MWorkOrderdialog
+ {
+     width:100% !important;
+ }
+ .ui-icon 
+ {
+     background-image:none !important;
+ }
+ #tblMaintenance
+ {
+     line-height:0px !important;
+ } 
+ </style> 
+
+<div id="MWorkOrderdialog" style="width:100% !important;"></div>
+<div style="float:right;font-size:11px;color:White;margin-top: -24px;margin-right:10px;"><label style="font-size:11px;color:White;font-weight:normal">Active Projects : </label>@ViewBag.ClientprojectCount </div>
+<div class="panel panel-default" style="margin-bottom: 0% !important;">
+    <div class="panel-body padding-0">   
+    <div class="table-responsive">
+<table id="tblClientWorkFlow" class="table table-bordered table-striped table-hover  margin-0 " style="width:100%;">  
+<tr>
+    <th class="header-color col-md-3" style="background:#e2f8ff !important;text-align: center;" >
+     @Html.ActionLink("Project Name", "Index", new { sortOrder = ViewBag.ProjectNameSortParm })  
+    </th>  
+     <th class="header-color col-md-2" style="background:#e2f8ff !important;text-align: center;">
+      @Html.ActionLink("Tracking No.", "Index", new { sortOrder = ViewBag.TrackingNoSortParm })    
+    </th> 
+     <th class="header-color col-md-2" style="background:#e2f8ff !important;color: #428bca !important;text-align: center;">
+       @Html.ActionLink("Open Work Orders", "Index", new { sortOrder = ViewBag.OpenWorkOrderSortParm })
+     </th>
+     <th class="header-color col-md-2" style="background:#e2f8ff !important;color: #428bca !important;text-align: center;"> Inspection </th>
+    @* <th class="header-color col-md-2" style="background:#e2f8ff !important;"> Work Order </th>*@
+</tr>
+
+@if (Model.Count >0)
+{
+    foreach (var item in Model)
+    {
+    <tr>
+    <td>     
+         @item.ProjectName
+         @Html.HiddenFor( m=>item.Location_ID)
+         @Html.HiddenFor(m=>item.Client_ID)
+        </td> 
+         <td>
+          @item.Tracking_No     
+        </td> 
+        <td>@item.OpenWorkOrder</td>
+        <td> 
+          @Html.ActionLink("View", "ProjectWiseInpectionSubmission", "Submission", new { Location_ID = item.Location_ID, Client_ID = item.Client_ID, display = "disableBack" }, new { @class = "dashboardbtn btn-primary", @style = "border: 0px;" }) 
+        </td>         
+    </tr>  
+    }
+}
+else
+{
+     <tr>
+      <td colspan="3">
+      No project information found to display.
+     </td>
+    </tr>
+}
+</table>
+</div>
+</div>
+</div>
+@if (Model.Count>0)
+{
+    <div class="panel-head padding-0" style="font-size: 11px !important;">
+        @Html.PagedListPager(Model, Page => Url.Action("Index", new
+   {
+       Page,
+       search = Request.QueryString["search"],
+       sortOrder = Request.QueryString["sortOrder"]
+   }), new PagedListRenderOptions()
+   {
+       Display = PagedListDisplayMode.IfNeeded,
+       DisplayPageCountAndCurrentLocation = true,
+       MaximumPageNumbersToDisplay = 10
+
+   })
+    </div>
+}
+    
+
+

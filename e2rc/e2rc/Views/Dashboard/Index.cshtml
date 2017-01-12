@@ -1,0 +1,94 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model e2rc.Models.DashboardModel
+@{
+    ViewBag.Title = "Dashboard";
+}
+    
+
+<style type="text/css">  
+    .container
+    {
+    padding-left:0px!important;
+    }
+    
+    #id1 li ul li a {
+    min-width: 240px !important;
+    padding: 0 20px;
+    width: auto;
+}
+</style>
+<div class="wrapper">
+<div class="container">
+@*    <div class="row" style="position:relative;z-index:9999;">
+        <div class="col-md-12 col-sm-6 col-xs-12 tab-less animate fade-in-down" style="font-size:12px;!important">
+           @* <div class="height-141px margin-bottom" style="height:100px !important;">
+                <div class=" bg-gray " style="border-radius: 15px;">
+                    <a href="#" class="email-heading" style="margin-top: 20px;"><b>
+                        @User.Name </b>
+                        <br />
+                        <b>
+                            @User.Email </b></a>
+                </div>
+            </div>
+         @*    @User.Name
+        </div>     
+    </div>*@
+    <div class="row" style="margin-left: -13px !important;">
+        <div class="col-md-12 col-sm-6 col-xs-5 tab-less" style="width: 100%;">
+            <div class="height-Auto animate fade-in-up" style="background-color: #199ad6 !important;">
+                <div class="tbl-width padding-top-10" style="padding-bottom: 5PX;">
+                    <div style="text-align: center; color: White;font-size:14px !important;">
+                     @{if (User.Role == "Franchise Admin")
+                       { 
+                        <span> Active Companies</span>                        
+                       }
+                       else if (User.Role == "Super Admin")
+                       {
+                           <span> Active Franchise</span>   
+                       }
+                       else
+                       {
+                       <span>Active Projects</span>
+                       }
+                       }
+
+                    </div>
+                  
+                    @{if (User.Role == "Super Admin")
+                      {
+                       @Html.Partial("_SuperAdmin", Model.SuperAdminActiveList)
+                      }
+                      else if (User.Role == "Inspector")
+                      {
+                        @Html.Partial("_Maintenance", Model.ActionMaintenanceList)
+                      }
+                      else if (User.Role == "Company")
+                      {
+                        @Html.Partial("_Client", Model.ClientDataList)
+                      }
+                      else if (User.Role == "Project Manager")
+                      {
+                        @Html.Partial("_ProjectManagerDataList", Model.ProjectManagerDataList)
+                      }
+                      else if (User.Role == "Franchise Admin")
+                      {
+                         @Html.Partial("_FranchiseList", Model.FranchiseDataList)
+                      }
+                      else if (User.Role == "Owner" || User.Role == "Operator")
+                      {
+                         @Html.Partial("_DirectorReportList", Model.DirectorReportList)
+                      }   
+                       else if (User.Role == "Reviewer")
+                      {
+                         @Html.Partial("_Reviewer", Model.ReviewerDataList)
+                      }                
+                    }        
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>

@@ -1,0 +1,458 @@
+﻿@model e2rc.Models.CorrectiveActionModel
+@{
+    ViewBag.Title = "CreatePDF";
+}
+@{
+    Layout = "~/Views/Shared/_Download.cshtml";
+}
+
+<style type="text/css">
+    .ui-dialog .ui-dialog-titlebar-close {
+        margin: -6px 0 0 0;
+    }
+
+        .ui-dialog .ui-dialog-titlebar-close:hover {
+            border: 0px;
+        }
+
+        .ui-dialog .ui-dialog-titlebar-close span {
+            display: none;
+        }
+</style>
+
+    @if (Model.isCorrective)
+    {
+        <div class="panel-head">
+            CORRECTIVE ACTION REPORT
+        </div>
+    }
+    else
+    {
+        <div class="panel-head">
+            MAINTENANCE ACTION REPORT
+        </div>
+    }
+
+<div>
+    @*@if (@ViewBag.message != null)
+            {
+                REPRESNT STRING INTO HTML FORMAT USING BELOW LINE
+                <h3> <font style="color: red;"> @Html.Raw(ViewBag.message)</font></h3>
+        }*@
+</div>
+<div id="accordion" class="panel-group" aria-multiselectable="true" role="tablist">
+    <div class="panel panel-default">
+
+        <div class="panel-heading" role="tab" id="General_Info_Heading">
+            <div class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                   aria-controls="collapseOne" style="text-align: none; text-decoration: none;">
+                    Section A (CGP Part 5.4.1)
+                </a>
+            </div>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="General_Info_Heading">
+            <div class="panel-body">
+                <div class="Container">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <label class="col-md-4 col-sm-6 col-xs-12  sp-15bottom">
+                                Company Name
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12  ">
+                                @Html.DisplayFor(model => model.CompanyName, new { @class = "form-control", tabindex = "1" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12 ">
+                            <label class="col-md-4 col-sm-6 col-xs-12 sp-15bottom">
+                                Form Completed By
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                @Html.DisplayName(User.UserName)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <label class="col-md-4 col-sm-6 col-xs-12  sp-15bottom">
+                                Project Name
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.DisplayFor(model => model.ProjectName, new { @class = "form-control", tabindex = "3" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <label class="col-md-4 col-sm-6 col-xs-12 sp-15bottom">
+                                Today's Date
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-sm-12">
+                                @Html.DisplayFor(model => model.CurrentDate, new { @class = "form-control", placeholder = "Enter Date", data_val = true })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <label class="col-md-4 col-sm-6 col-xs-12 sp-15bottom">
+                                Date Problem First Discovered
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                @if (Model.ProblemDiscoveredDate != null)
+                                { @Model.ProblemDiscoveredDate.ToString("MM/dd/yyyy")}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <label class="col-sm-4 sp-15bottom">
+                                Time Discovered
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.DisplayFor(model => model.TimeDiscovered, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label class="col-md-12 sp-15bottom">
+                                <i>What site conditions triggered the requirement to conduct a corrective action?</i>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="checkbox">
+                                @if (Model.TriggerCode != null)
+                                {
+                                    foreach (var item in e2rc.Models.Repository.CorrectiveActionRepository.Queryget())
+                                    {
+                                        var checkID = 0;
+                                        foreach (var item2 in Model.TriggerCode.Split(','))
+                                        {
+                                            if (item.Code_ID == Convert.ToInt32(@item2))
+                                            {
+                                                checkID = item.Code_ID;
+                                                <div class="col-md-12 col-sm-6 col-xs-12" style="margin-left:30px;">
+                                                    <label>
+                                                        <input type="checkbox"
+                                                               name="lstTriggerCode"
+                                                               value="@item.Code_ID" checked="checked" /> @item.Description
+                                                        </label>
+                                                    </div>
+                                            }
+                                        }
+                                        if (checkID != item.Code_ID)
+                                        {
+                                            <div class="col-md-12 col-sm-6 col-xs-12" style="margin-left:30px;">
+                                                <label>
+                                                    <input type="checkbox"
+                                                           name="lstTriggerCode"
+                                                           value="@item.Code_ID" /> @item.Description
+                                                    </label>
+                                                </div>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    foreach (var item in e2rc.Models.Repository.CorrectiveActionRepository.Queryget())
+                                    {
+
+                                        <div class="col-md-12 col-sm-6 col-xs-12" style="margin-left:30px;">
+                                            <label>
+                                                <input type="checkbox"
+                                                       name="lstTriggerCode"
+                                                       value="@item.Code_ID" /> @item.Description
+                                                </label>
+                                            </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="InspectionOccuringYes">
+                        <div class="col-md-12">
+                            <label class="col-md-4 col-sm-6 col-xs-12 sp-15bottom">
+                                Description of Issue:
+                            </label>
+                        </div>
+                        <div class="col-md-12 sp-15bottom">
+                            <label class="col-md-4 col-sm-6 col-xs-12 sp-15bottom">
+                                @Html.DisplayFor(model => model.DescriptionIssue, new { @class = "form-control", tabindex = "31" })
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row" id="InspectionOccuringYes">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <label class="col-md-4 col-sm-6 col-xs-12 sp-15bottom">
+                                Completion Deadline:
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                @if (Model.CompletionDeadline != null)
+                                { @Model.CompletionDeadline.ToString("MM/dd/yyyy")}
+                            </div>
+                        </div>
+                        <div class="col-md-12 sp-15bottom">
+                            <label class="col-md-4 col-sm-6 col-xs-12 sp-15bottom">
+                                @Html.DisplayFor(model => model.CompletionDeadlineNote, new { @class = "form-control", tabindex = "31" })
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="Upload_Info_Heading">
+            <div class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseUploadData" aria-expanded="true"
+                   aria-controls="collapseUploadData" style="text-align: none; text-decoration: none;">
+                    Section B.1 (CGP Part 5.4.2)
+                </a>
+            </div>
+        </div>
+        <div id="collapseUploadData" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="Upload_Info_Heading">
+            <div class="panel-body">
+                <div class="">
+                    <div id="stromDetails" class="table-responsive">
+
+                        <table id="tblAddProblemInfo" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                    </th>
+                                    <th class=" col-md-4 active center">
+                                        Cause of Problem
+                                    </th>
+                                    <th class=" col-md-4 active">
+                                        How was this Determined?
+                                    </th>
+                                    <th class="col-md-4 active">
+                                        Date
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    Int16 cnt = 0;
+                                    Int16 rowIndex = 0;
+                                }
+
+                                @foreach (var item in Model.UploadProblemDataModelList)
+                                {
+
+                                    <tr class="trUploaddata">
+                                        <td data-title=@(++cnt) class="activeheader">
+                                            <label class="count-display">
+                                                @(++rowIndex)<br />
+                                            </label>
+                                            <input type="hidden" id="hfstID1" name="hfstID1" value="1" />
+                                            <br />
+                                        </td>
+                                        <td data-title="Cause of Problem">
+                                            @item.ProblemCause
+                                        </td>
+                                        <td data-title="Problem Determined">
+                                            @item.ProblemDetermined
+                                        </td>
+                                        <td data-title="Problem Date">
+                                            @item.ProblemDate.ToString("MM/dd/yyyy")
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="Upload_Info_Heading">
+            <div class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseUploadData" aria-expanded="true"
+                   aria-controls="collapseUploadData" style="text-align: none; text-decoration: none;">
+                    Section B.2 (CGP Part 5.4.2)
+                </a>
+            </div>
+        </div>
+        <div id="collapseUploadData" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="Upload_Info_Heading">
+            <div class="panel-body">
+                <div class="">
+                    <div class="row" id="InspectionOccuringYes">
+                        <div class="col-md-6">
+                            <label>
+                                Stormwater Control Modifications Implemented to Correct the Problem
+                            </label>
+                        </div>
+                    </div>
+                    <div id="stromDetails" class="table-responsive">
+                        <table id="tblAddStromEvents" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                    </th>
+                                    <th class=" col-md-4 active">
+                                        Stormwater Modifications Needed
+                                    </th>
+                                    <th class=" col-md-2 active">
+                                        Date Completed
+                                    </th>
+                                    <th class="col-md-2 active">
+                                        SWPPP Update Required?
+                                    </th>
+                                    <th class="col-md-4 active">
+                                        Notes
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    Int16 count = 0;
+
+                                }
+                                @foreach (var item in Model.UploadStromDataModelList)
+                                {
+                                    <tr class="trUploaddata">
+                                        <td class="activeheader">
+                                            <label class="count-display">
+                                                @(++count)<br />
+                                            </label>
+                                            <input type="hidden" id="hfstID1" name="hfstID1" value="1" />
+                                            <br />
+                                        </td>
+                                        <td data-title="StromModification">
+                                            @item.StromModifiedText
+                                        </td>
+                                        <td data-title="StormCompletedDate">
+                                            @item.CompletedDate.ToString("MM/dd/yyyy")
+                                        </td>
+                                        <td data-title="SWPPP Update Date">
+                                            @item.SWPPUpdateDate.ToString("MM/dd/yyyy")
+                                        </td>
+                                        <td data-title="Notes">
+                                            @item.Notes
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div id="headingGeneralInsp" class="panel-heading" role="tab">
+            <div class="panel-title">
+                <a class="" aria-controls="collapseGeneralInsp" aria-expanded="false" href="#collapseGeneralInsp"
+                   data-parent="#accordion" data-toggle="collapse" style="text-decoration: none;">
+                    Section C (CGP Part 5.4.3)
+                </a>
+            </div>
+        </div>
+        <div id="collapseGeneralInsp" class="panel-collapse collapse in" role="tabpanel"
+             aria-labelledby="headingGeneralInsp">
+            <div class="panel-body">
+                <div>
+                    <h3>
+                        Certification and Signature by Contractor
+                    </h3>
+                    <p>
+                        <i>
+                            "I certify under penalty of law that this document and all attachments were prepared
+                            under my direction or supervision in accordance with a system designed to assure
+                            that qualified personnel properly gathered and evaluated the information submitted.
+                            Based on my inquiry of the person or persons who manage the system, or those persons
+                            directly responsible for gathering the information, the information submitted is,
+                            to the best of my knowledge and belief, true, accurate, and complete. I am aware
+                            that there are significant penalties for submitting false information, including
+                            the possibility of fine and imprisonment for knowing violations."
+                        </i>
+                    </p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-sm-9 sp-15bottom">
+                            <b>
+                                Signature of Contractor or Subcontractor :
+                                <label id="lblInspectorName">
+
+                                </label>
+                            </b>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <br />
+                        <div class="col-sm-9 sp-15bottom">
+                            <b>Printed Name and Affiliation : </b>
+                        </div>
+                        <div class="col-sm-3">
+                            <b>Date: </b>@DateTime.Now.ToShortDateString()
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr />
+                    </div>
+                </div>
+                <div>
+                    <h3>
+                        Certification and Signature Permittee or 'Duly Authorized Representative'
+                    </h3>
+                    <p>
+                        <i>
+                            "I certify under penalty of law that this document and all attachments were prepared
+                            under my direction or supervision in accordance with a system designed to assure
+                            that qualified personnel properly gathered and evaluated the information submitted.
+                            Based on my inquiry of the person or persons who manage the system, or those persons
+                            directly responsible for gathering the information, the information submitted is,
+                            to the best of my knowledge and belief, true, accurate, and complete. I am aware
+                            that there are significant penalties for submitting false information, including
+                            the possibility of fine and imprisonment for knowing violations."
+                        </i>
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-sm-4">
+                            <b>Signature of Permittee or 'Duly Authorized Representative' : </b>
+                        </div>
+                        @*<div class="col-sm-9 sp-15bottom">
+                            </div>*@
+                    </div>
+                </div>
+                <div class="row">
+                    <br />
+                    <div class="col-md-12">
+                        <div class="col-sm-9 sp-15bottom">
+                            <b>Printed Name and Affiliation : </b>
+                        </div>
+                        <div class="col-sm-3">
+                            <b>Date: </b> @DateTime.Now.ToShortDateString()
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

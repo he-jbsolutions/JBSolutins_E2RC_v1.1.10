@@ -1,0 +1,1313 @@
+﻿@model e2rc.Models.CorrectiveActionModel
+@{
+    ViewBag.Title = "Create Corrective Action";
+}
+@{
+    Layout = "~/Views/Shared/_FullContainerLayout.cshtml";
+}
+
+<style type="text/css">
+    .ui-dialog .ui-dialog-titlebar-close {
+        margin: -6px 0 0 0;
+    }
+
+        .ui-dialog .ui-dialog-titlebar-close:hover {
+            border: 0px;
+        }
+
+        .ui-dialog .ui-dialog-titlebar-close span {
+            display: none;
+        }
+</style>
+
+<!-- Section B.1 Problem Cause -->
+<script type="text/javascript">
+    $(function () {
+        $("#tblAddProblemInfo tr:eq(1) td:gt(0):not(:last)").each(function () {
+            var id = $(this).children(":first").attr("id");
+            //newid = id.replace("weatherInspectionModel_", "").replace("_Item_ID", "").replace("_UOM_ID", "");
+            newid = id.replace("CorrectiveActionUpload1", "Problem1");
+            $(this).children(":first").attr("id", newid);
+            $(this).children(":first").attr("Name", newid);
+
+        });
+        var StrmEvRowCount = 2;
+        function AddStormEventRow() {
+
+            var tr = $('<tr id="' + StrmEvRowCount + '"><td></td>' +
+                '<td data-title="Cause of Problem">' +
+                '<input type="text" class="form-control"  id="Problem' + StrmEvRowCount + '_ProblemCause" name="Problem' + StrmEvRowCount + '_ProblemCause" data_val="true" placeholder = "Enter cause of problem" /></td>' +
+                '<td data-title="Problem Determined">' +
+                '<input type="text" class="form-control" id="Problem' + StrmEvRowCount + '_ProblemDetermined" name="Problem' + StrmEvRowCount + '_ProblemDetermined" data_val="true" placeholder = "Enter How was Problem Determined"/></td>' +
+                '<td data-title="Problem Date">' +
+                '<input type="text" class = "storm-date form-control" id="Problem' + StrmEvRowCount + '_ProblemDate" name="Problem' + StrmEvRowCount + '_ProblemDate" data_val="true" placeholder = "Select Problem Date" /></td>' +
+                '<td> <span class="glyphicon glyphicon-plus-sign AddNewUploadData" style="cursor: pointer;"></span>' +
+                 '<span id="AdddeleteUploadData1" class="glyphicon glyphicon-minus-sign removerow" style="cursor: pointer;"></span></td>' +
+                '</tr>');
+
+            $(tr).find(".storm-date").bind("change", function (e) {
+                var date = $(this).val().split("/");
+                var month = parseInt(date[0]);
+                var day = parseInt(date[1]);
+                var year = parseInt(date[2]);
+
+                if (year < 100) {
+                    year = "20" + year;
+                }
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                if (day < 10) {
+                    day = "0" + day;
+                }
+
+                if (month > 12 && day > 12) {
+                    alert('Invalid date format!');
+                    return false;
+                }
+
+                /*if (month >= 12 && day < 12) {
+                    $(this).val(day + "/" + month + "/" + year);
+                }
+                else {
+                    $(this).val(month + "/" + day + "/" + year);
+                }*/
+
+                if (month >= 12 && day < 12) {
+                    $(this).val(month + "/" + day + "/" + year);
+                }
+                else {
+                    $(this).val(month + "/" + day + "/" + year);
+                }
+                if ($(this).val() == "NaN/NaN/NaN")
+                    $(this).val("MM/DD/YYYY");
+            });
+
+            $(tr).find("#AdddeleteUploadData1").bind("click", function () {
+
+                if ($("#tblAddProblemInfo  tr:not(:last):gt(0)").length > 1) {
+                    var tr = $(this).parent().parent();
+                    if ($(tr).find(".stchildRow").length == 1) {
+                        $(this).parent().parent().remove();
+                    }
+                    else {
+                        if ($(tr).next().length == 1 && $(tr).next().find(".stchildRow").length == 1) {
+                            alert("please delete child row before this row.");
+                        }
+                        else {
+                            $(this).parent().parent().remove();
+                        }
+                    }
+
+                    var StrmEvRowIndex = 1;
+                    $("#tblAddProblemInfo  tr:not(:last):gt(0)").each(function () {
+                        if ($(this).find(".stchildRow").length == 0) {
+                            $(this).find("td:eq(0)").text(StrmEvRowIndex++);
+                        }
+                    });
+                } else {
+                    alert("you can not delete this record.");
+                }
+            });
+
+            if ($(this).parent().parent().has("td:[colspan$=5]").length) {
+                $(this).parent().parent().before(tr);
+            }
+            else {
+                $(tr).find(".AddNewUploadData").addClass("stchildRow");
+                $(this).parent().parent().after(tr);
+            }
+            $(tr).find("input:text.storm-date").datepicker({ maxDate: "0:d" });
+            ++StrmEvRowCount;
+
+            var StrmEvRowIndex = 1;
+            $("#tblAddProblemInfo  tr:not(:last):gt(0)").each(function () {
+                if ($(this).find(".stchildRow").length == 0) {
+                    $(this).find("td:eq(0)").text(StrmEvRowIndex++);
+                }
+            });
+        }
+
+        $("#tblAddProblemInfo").on("click", ".AddNewUploadData", AddStormEventRow);
+
+    });
+
+
+</script>
+<script type="text/javascript">
+    $(function () {
+
+        $(".removerow").click(function () {
+
+            if ($("#tblAddProblemInfo  tr:not(:last):gt(0)").length > 1) {
+                var tr = $(this).parent().parent();
+                if ($(tr).find(".stchildRow").length == 1) {
+                    $(this).parent().parent().remove();
+                }
+                else {
+                    if ($(tr).next().length == 1 && $(tr).next().find(".stchildRow").length == 1) {
+                        alert("please delete child row before this row.");
+                    }
+                    else {
+                        $(this).parent().parent().remove();
+                    }
+                }
+
+                var RowIndex = 1;
+                $("#tblAddProblemInfo  tr:not(:last):gt(0)").each(function () {
+                    if ($(this).find(".stchildRow").length == 0) {
+                        $(this).find("td:eq(0)").text(RowIndex++);
+                    }
+                });
+            }
+            else {
+                alert("you can not delete this record.");
+            }
+        });
+    });
+
+</script>
+<!-- Section B.2 Strom Modification-->
+<script type="text/javascript">
+    $(function () {
+        $("#tblAddStromEvents tr:eq(1) td:gt(0):not(:last)").each(function () {
+            var id = $(this).children(":first").attr("id");
+            newid = id == "StromControl1_SWPPPRequireYes" ? id.replace("StromControl1_SWPPPRequireYes", "StromControl1_SWPPPRequireYesNo") : id.replace("StromControl1.", "StromControl1_");
+
+            //$(this).children(":first").attr("id", newid);
+            $(this).children(":first").attr("Name", newid);
+            $("#StromControl1_SWPPUpdateDate").attr("Name", "StromControl1_SWPPUpdateDate");
+        });
+        var StrmEvRowCount = 2;
+        function AddStormEventRow() {
+
+            var tr = $('<tr id="' + StrmEvRowCount + '"><td></td>' +
+                '<td data-title="StromModification">' +
+                '<input type="text" class="form-control"  id="StromControl' + StrmEvRowCount + '_StromModifiedText" name="StromControl' + StrmEvRowCount + '_StromModifiedText" data_val="true" placeholder = "Enter Stormwater Modifications" /></td>' +
+                '<td data-title="StormCompletedDate">' +
+                '<input type="text" class = "storm-date form-control" id="StromControl' + StrmEvRowCount + '_CompletedDate" name="StromControl' + StrmEvRowCount + '_CompletedDate" data_val="true" placeholder = "Select Complete Date" /></td>' +
+                '<td data-title="SWPPP Update Date">' +
+                '<input class="check_stormEvent" id="StromControl' + StrmEvRowCount + '_SWPPPRequireYes" name="StromControl' + StrmEvRowCount + '_SWPPPRequireYesNo" tabindex="20" type="checkbox" checked="checked" value="true" style="display:inline-block;margin-top:12px;margin-right:2px;"/>Yes&nbsp;' +
+                '<input class="check_stormEvent" id="StromControl' + StrmEvRowCount + '_SWPPPRequireNo" name="StromControl' + StrmEvRowCount + '_SWPPPRequireYesNo" tabindex="20" type="checkbox" style = "display:inline-block;margin-top:12px;margin-right:2px;"/>No' +
+                '<input type="text" class = "storm-date form-control" id="StromControl' + StrmEvRowCount + '_SWPPUpdateDate" name="StromControl' + StrmEvRowCount + '_SWPPUpdateDate" data_val="true" placeholder = "Select SWPPP Update Date" /></td>' +
+                '<td data-title="Notes">' +
+                '<input type="text" class="form-control" id="StromControl' + StrmEvRowCount + '_Notes" name="StromControl' + StrmEvRowCount + '_Notes" data_val="true" placeholder = "Enter Notes"/></td>' +
+                '<td> <span class="glyphicon glyphicon-plus-sign addstormevent" style="cursor: pointer;"></span>' +
+                 '<span id="Adddeletestormevent" class="glyphicon glyphicon-minus-sign removeStormrow" style="cursor: pointer;"></span></td>' +
+                '</tr>');
+
+            $(tr).find(".storm-date").bind("change", function (e) {
+                var date = $(this).val().split("/");
+                var month = parseInt(date[0]);
+                var day = parseInt(date[1]);
+                var year = parseInt(date[2]);
+
+                if (year < 100) {
+                    year = "20" + year;
+                }
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                if (day < 10) {
+                    day = "0" + day;
+                }
+
+                if (month > 12 && day > 12) {
+                    alert('Invalid date format!');
+                    return false;
+                }
+
+                /*if (month >= 12 && day < 12) {
+                    $(this).val(day + "/" + month + "/" + year);
+                }
+                else {
+                    $(this).val(month + "/" + day + "/" + year);
+                }*/
+                if (month >= 12 && day < 12) {
+                    $(this).val(month + "/" + day + "/" + year);
+                }
+                else {
+                    $(this).val(month + "/" + day + "/" + year);
+                }
+                if ($(this).val() == "NaN/NaN/NaN")
+                    $(this).val("MM/DD/YYYY");
+            });
+
+            $(tr).find("#Adddeletestormevent").bind("click", function () {
+
+                if ($("#tblAddStromEvents  tr:not(:last):gt(0)").length > 1) {
+                    var tr = $(this).parent().parent();
+                    if ($(tr).find(".stchildRow").length == 1) {
+                        $(this).parent().parent().remove();
+                    }
+                    else {
+                        if ($(tr).next().length == 1 && $(tr).next().find(".stchildRow").length == 1) {
+                            alert("please delete child row before this row.");
+                        }
+                        else {
+                            $(this).parent().parent().remove();
+                        }
+                    }
+
+                    var StrmEvRowIndex = 1;
+                    $("#tblAddStromEvents  tr:not(:last):gt(0)").each(function () {
+                        if ($(this).find(".stchildRow").length == 0) {
+                            $(this).find("td:eq(0)").text(StrmEvRowIndex++);
+                        }
+                    });
+                } else {
+                    alert("you can not delete this record.");
+                }
+            });
+
+            /*Check Box Opertion On Section B.2 For SWPPP Update Required */
+            $(tr).find("input.check_stormEvent").bind("change", function (e) {
+                //$("input.check_stormEvent:checkbox:checked").each(function () {
+                
+                var $box = $(this);
+                if ($box.is(":checked")) {
+                    var group = "input:checkbox[name='" + $box.attr("name") + "']";
+                    $(group).prop("checked", false);
+                    $box.prop("checked", true);
+
+                    var arrSWPPUpdateDateID = ($(this).attr("id")).split("_", 20);
+                    var SWPPUpdateDateID = arrSWPPUpdateDateID[0] + "_SWPPUpdateDate"
+                   
+                    /*Set Check Box Value Which dynamically*/
+                    if (arrSWPPUpdateDateID[1] == "SWPPPRequireYes") {
+                        $(group).prop("value", false);
+                        $("#" + $box.attr("id")).prop("value", true);
+                    }
+                    else {
+                        $(group).prop("value", false);
+                        $("#" + $box.attr("id")).prop("value", false);
+                    }
+
+                    /*Show Hide Calender Control*/
+                    var bYesNo = $("#"+ $box.attr("id")).val();
+                    if (bYesNo == 'true') {
+                        $("#" + SWPPUpdateDateID).show();
+                    }
+                    else {
+                        $("#" + SWPPUpdateDateID).hide();
+                    }
+                }
+                else{
+                    $box.prop("checked", false);
+                }
+            });
+            
+            if ($(this).parent().parent().has("td:[colspan$=6]").length) {
+                $(this).parent().parent().before(tr);
+            }
+            else {
+                $(tr).find(".addstormevent").addClass("stchildRow");
+                $(this).parent().parent().after(tr);
+            }
+            $(tr).find("input:text.storm-date").datepicker({ maxDate: "0:d" });
+            ++StrmEvRowCount;
+
+            var StrmEvRowIndex = 1;
+            $("#tblAddStromEvents  tr:not(:last):gt(0)").each(function () {
+                if ($(this).find(".stchildRow").length == 0) {
+                    $(this).find("td:eq(0)").text(StrmEvRowIndex++);
+                }
+            });
+        }
+        $("#tblAddStromEvents").on("click", ".addstormevent", AddStormEventRow);
+    });
+
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        $(".removeStormrow").click(function () {
+
+            if ($("#tblAddStromEvents  tr:not(:last):gt(0)").length > 1) {
+                var tr = $(this).parent().parent();
+                if ($(tr).find(".stchildRow").length == 1) {
+                    $(this).parent().parent().remove();
+                }
+                else {
+                    if ($(tr).next().length == 1 && $(tr).next().find(".stchildRow").length == 1) {
+                        alert("please delete child row before this row.");
+                    }
+                    else {
+                        $(this).parent().parent().remove();
+                    }
+                }
+
+                var RowIndex = 1;
+                $("#tblAddStromEvents  tr:not(:last):gt(0)").each(function () {
+                    if ($(this).find(".stchildRow").length == 0) {
+                        $(this).find("td:eq(0)").text(RowIndex++);
+                    }
+                });
+            }
+            else {
+                alert("you can not delete this record.");
+            }
+        });
+    });
+
+</script>
+<!-- Validation And Condition Operation-->
+<script type="text/javascript">
+    $(function () {
+        if ($("#CompletionDeadline").val() == "01/01/1900") {
+            $("#CompletionDeadline").attr("value", "");
+        }
+
+        /* Check Completion Deadline Note occurs 8 days or more after the Date of Discovery Show or Hide */
+        $("#CompletionDeadlineNote").hide();
+        
+        $("#CompletionDeadline, #ProblemDiscoveredDate").change(function () {
+            var ProblemDiscoveredDate = moment($("#ProblemDiscoveredDate").val());
+            var CompletionDeadline = moment($("#CompletionDeadline").val());
+
+            var ProblemDiscoveredDay = ProblemDiscoveredDate.date();    //Day
+            var ProblemDiscoveredMonth = ProblemDiscoveredDate.month(); // Month
+            var ProblemDiscoveredYear = ProblemDiscoveredDate.year();   // Year
+
+            var CompletionDeadlineDay = CompletionDeadline.date();      //Day
+            var CompletionDeadlineMonth = CompletionDeadline.month();   // Month
+            var CompletionDeadlineYear = CompletionDeadline.year();     // Year
+
+            var CompletionDeadlineMV = moment([CompletionDeadlineYear, CompletionDeadlineMonth, CompletionDeadlineDay]);
+            var ProblemDiscoveredMV = moment([ProblemDiscoveredYear, ProblemDiscoveredMonth, ProblemDiscoveredDay]);
+
+            var Diff = CompletionDeadlineMV.diff(ProblemDiscoveredMV, 'days'); // 1
+
+            if (Diff > 7) {
+                $("#CompletionDeadlineNote").show();
+            }
+            else
+            {
+                $("#CompletionDeadlineNote").hide();
+            }
+        });
+
+        /* Validation For Section B.2 (CGP Part 5.4.2) For SWPPP Update Required*/
+
+        $("input.check_stormEvent").click(function () {
+            var $box = $(this);
+            if ($box.is(":checked")) {
+
+                $("#StromControl1_SWPPPRequireYes").attr("Name", "StromControl1_SWPPPRequireYesNo");
+                $("#StromControl1_SWPPPRequireNo").attr("Name", "StromControl1_SWPPPRequireYesNo");
+
+                //  var group = "input:checkbox[name='" + $box.attr("name") + "']";
+                var group = "input:checkbox[name=StromControl1_SWPPPRequireYesNo]";
+                //alert('Group ' + group);
+                $(group).prop("checked", false);
+                $box.prop("checked", true);
+                $(group).prop("value", false);
+                $box.prop("value", true);
+
+                var bYesNo = $("#StromControl1_SWPPPRequireYes").val();
+                if (bYesNo == 'true') {
+                    $("#StromControl1_SWPPUpdateDate").show();
+                }
+                else {
+                    $("#StromControl1_SWPPUpdateDate").hide();
+                }
+            }
+            else {
+                $box.prop("checked", false);
+                if (!($("#" + $box.attr("id")).is(":checked"))) {
+                    $("#StromControl1_SWPPUpdateDate").hide();
+                }
+                //$("#StromControl1_SWPPUpdateDate").show();
+            }
+        });
+
+            /*$("#Problem1_ProblemCause").change(function () {
+                if (document.getElementById('Problem1_ProblemCause').value != "") {
+                    document.getElementById('Problem1_ProblemCause').style.borderColor = "#cccccc";
+                }
+            });
+            $("#Problem1_ProblemDetermined").change(function () {
+                if (document.getElementById('Problem1_ProblemDetermined').value != "") {
+                    document.getElementById('Problem1_ProblemDetermined').style.borderColor = "#cccccc";
+                }
+            });
+            $("#Problem1_ProblemDate").change(function () {
+                if (document.getElementById('Problem1_ProblemDate').value != "") {
+                    document.getElementById('Problem1_ProblemDate').style.borderColor = "#cccccc";
+                }
+            });
+            $("#StromControl1_StromModifiedText").change(function () {
+                if (document.getElementById('StromControl1_StromModifiedText').value != "") {
+                    document.getElementById('StromControl1_StromModifiedText').style.borderColor = "#cccccc";
+                }
+            });
+            $("#StromControl1_CompletedDate").change(function () {
+                if (document.getElementById('StromControl1_CompletedDate').value != "") {
+                    document.getElementById('StromControl1_CompletedDate').style.borderColor = "#cccccc";
+                }
+            });
+            $("#StromControl1_SWPPUpdateDate").change(function () {
+                if (document.getElementById('StromControl1_SWPPUpdateDate').value != "") {
+                    document.getElementById('StromControl1_SWPPUpdateDate').style.borderColor = "#cccccc";
+                    //IsAllDataValide = true;
+                }
+            });
+            $("#StromControl1_Notes").change(function () {
+                if (document.getElementById('StromControl1_Notes').value != "") {
+                    document.getElementById('StromControl1_Notes').style.borderColor = "#cccccc";
+                    //IsAllDataValide = true;
+                }
+            });*/
+       // });
+
+        $('#btnSaveFinal').click(function () {
+            return fnValidate('btnSaveFinal');
+        });
+
+        $('#btnSaveDraft').click(function () {
+            
+            ////return fnValidate('btnSaveDraft');
+            //if ($("#CompletionDeadline").val() == "") {
+            //    // alert('Completion Deadline Note is Required.'); 01-01-2000
+            //   // $('#CompletionDeadline').attr('value', '01/01/2000');
+            //    return true;
+
+            // }
+            $('#IsComplete').val("false");
+            $("#CompletionDeadline").attr("value", "01/01/1900");
+            bIsAllValidate = true;
+        });
+
+        // Validation For Corrective Action Report page
+        function fnValidate(btnClickedName) {
+
+            //var studentListVal = null;
+            // Create a Array List for site conditions triggered the requirement to conduct a corrective action
+            lstTriggerCode = [];
+
+            $('input:checkbox:checked').each(function () {
+                lstTriggerCode.push($(this).attr('value'));
+            });
+
+            var bIsAllValidate = true, RowIndex = 0, RowIndex = 0, parentid = 1, rowtext = 1;
+            // Validation For Completion Require Note
+            if (btnClickedName == 'btnSaveFinal') {
+                $('#IsComplete').val("true");
+
+                /* Validation CompletionDeadline Date Required */
+                //if ($("#CompletionDeadline").val() == "") {
+                //    // alert('Completion Deadline Note is Required.');
+                //    $('#CompletionDeadline').css('border', 'red solid 1px');
+                //    $('#CompletionDeadline').focus()
+                //    bIsAllValidate = false;
+                //}
+
+                /* Validation Description of Issue Required */
+                if ($("#DescriptionIssue").val() == "") {
+                  //   alert('Completion Deadline Note is Required.');
+                    $('#DescriptionIssue').css('border', 'red solid 1px');
+                    $('#DescriptionIssue').focus()
+                    bIsAllValidate = false;
+                }
+
+                if ($('#CompletionDeadlineNote').css('display') != 'none') {
+                   // alert('display none');
+                    if ($("#CompletionDeadlineNote").val() == "") {
+                        // alert('Completion Deadline Note is Required.');
+                        $('#CompletionDeadlineNote').css('border', 'red solid 1px');
+                        $('#CompletionDeadlineNote').focus()
+                        bIsAllValidate = false;
+                    }
+                }
+               
+            }
+            $("#DescriptionIssue").change(function () {
+                if (document.getElementById('DescriptionIssue').value != "") {
+                    document.getElementById('DescriptionIssue').style.borderColor = "#cccccc";
+                    IsAllDataValide = true;
+                }
+            });
+
+            $("#CompletionDeadlineNote").change(function () {
+                if (document.getElementById('CompletionDeadlineNote').value != "") {
+                    document.getElementById('CompletionDeadlineNote').style.borderColor = "#cccccc";
+                    IsAllDataValide = true;
+                }
+            });
+            //else {
+            //    $('#IsComplete').val("false");
+            //    /* Validation CompletionDeadline Date Required */
+            //    if ($("#CompletionDeadline").val() == "") {
+            //        // alert('Completion Deadline Note is Required.');
+            //        $('#CompletionDeadline').css('border', '#ccccc solid 1px');
+            //        bIsAllValidate = true;
+            //    }
+            //}
+            /*Section B.1 Problem All Row Validation*/
+            $("#tblAddProblemInfo tr:gt(0):not(:last)").each(function () {
+
+                RowIndex++;
+                var id = '', val = '', tdText = '';
+                if ($(this).find(".childRow").length == 0) {
+
+                    $(this).find("td:eq(0)").text(rowtext++);
+
+                    id = "hfID" + RowIndex;
+                    val = RowIndex.toString();
+                    tdText = val;
+                    parentid = RowIndex;
+                }
+                else {
+                    id = "hfPID" + RowIndex;
+                    val = parentid.toString();
+                }
+
+                $(this).find("td:eq(0)").html(tdText + '<input type="hidden" id="' + id + '" name="' + id + '" value="' + val + '" />');
+                $(this).find("td:gt(0):not(:last)").each(function () {
+                    var tempid = $(this).children(":first").attr("id");
+                    newid = tempid.replace(parseInt(tempid.substr(tempid.indexOf("UploadData") + 10)), (RowIndex));
+                    $(this).children(":first").attr("id", newid);
+                    $(this).children(":first").attr("Name", newid);
+
+                    if (!$(this).children(":first").is("input[type=file]") && $(this).children(":first").val() == "") {
+                        //alert("Problem" + $(this).children(":first").attr("id"));
+                        $(this).children(":first").css("border", "1px solid red");
+                        $(this).children(":first").bind("change", function () {
+                            if ($(this).val() != "")
+                                $(this).css("border", "1px solid #cccccc");
+                            
+                        });
+                        bIsAllValidate = false;
+                    }
+                });
+
+            });
+
+            /*Section B.2 Stormwater Control Modifications  All Row Validation*/
+            RowIndex = 0, RowIndex = 0, parentid = 1, rowtext = 1;
+            $("#tblAddStromEvents tr:gt(0):not(:last)").each(function () {
+                
+                RowIndex++;
+                var id = '', val = '', tdText = '';
+                if ($(this).find(".childRow").length == 0) {
+
+                    $(this).find("td:eq(0)").text(rowtext++);
+
+                    id = "hfID" + RowIndex;
+                    val = RowIndex.toString();
+                    tdText = val;
+                    parentid = RowIndex;
+                }
+                else {
+                    id = "hfPID" + RowIndex;
+                    val = parentid.toString();
+                }
+
+                $(this).find("td:eq(0)").html(tdText + '<input type="hidden" id="' + id + '" name="' + id + '" value="' + val + '" />');
+                $(this).find("td:gt(0):not(:last)").each(function () {
+
+                    var tempid = $(this).children(":first").attr("id");
+                    newid = tempid.replace(parseInt(tempid.substr(tempid.indexOf("UploadData") + 10)), (RowIndex));
+                    //console.log($(this).attr("id"));
+                    var arrSWPPUpdateDateID = (newid).split("_", 20);
+                    var SWPPUpdateDateID = arrSWPPUpdateDateID[0] + "_SWPPUpdateDate";
+                    if (arrSWPPUpdateDateID[1] != "SWPPPRequireYes") {
+                      
+                        $(this).children(":first").attr("id", newid);
+                        $(this).children(":first").attr("Name", newid);
+                    }
+                    //input: checkbox: checked
+                    if ($(this).children(":first").is("input:checkbox:checked")) {
+                       // alert("Strom 1" + $(this).children(":first").attr("id"));
+                        /* SWPPP Update Required Date Required Fill Validation */
+                        if ($("#" + SWPPUpdateDateID).val() == "") {
+                            //alert("Test Strom 1");
+                            $("#" + SWPPUpdateDateID).css("border", "1px solid red");
+                            bIsAllValidate = false;
+                        }
+
+                        $("#" + SWPPUpdateDateID).bind("change", function () {
+                            if ($("#" + SWPPUpdateDateID) != "")
+                                $("#" + SWPPUpdateDateID).css("border", "1px solid #cccccc");
+                        });
+                        
+                    }
+                    if ($(this).children(":first").val() == "") {
+                        //alert("Strom" + $(this).children(":first").attr("id"));
+                        $(this).children(":first").css("border", "1px solid red");
+                        $(this).children(":first").bind("change", function () {
+                            if ($(this).val() != "")
+                                $(this).css("border", "1px solid #cccccc");
+                            
+                        });
+                        bIsAllValidate = false;
+                    }
+                });
+            });
+
+            /* Check Completion Deadline Note occurs 8 days or more after the Date of Discovery Required */
+            
+            //if ($('#CompletionDeadlineNote').css('display') != 'none') {
+            //    var strCompletionDeadlineNote = $("#CompletionDeadlineNote").val();
+
+            //    if (strCompletionDeadlineNote != null || strCompletionDeadlineNote != '') {
+            //        // alert('Completion Deadline Note is Required.');
+            //        $('#CompletionDeadlineNote').css('border', 'red solid 1px');
+            //        $('#CompletionDeadlineNote').focus()
+            //        bIsAllValidate = false;
+            //    }
+            //}
+
+            //Validation For Section B.1 (CGP Part 5.4.2) Problem1_ProblemCause,Problem1_ProblemDetermined, Problem1_ProblemDate
+            /*
+                if ($('#StromControl1_Notes').val() == "") {
+                    //   alert('test StromControl1_Notes')
+                    $('#StromControl1_Notes').css('border', 'red solid 1px');
+                    //document.getElementById('StromControl1_Notes').style.borderColor = "red";
+                    $('#StromControl1_Notes').focus()
+                    bIsAllValidate = false;
+                }*/
+
+            if (bIsAllValidate) {
+                document.getElementById('loader1').style.display = 'block';
+                return true;
+            } else {
+                alert("Please fill all red marked fields.");
+                $(document.forms[1]).valid();
+                return false;
+            }
+        }
+    });
+</script>
+<!--Help Box Popup dialoge-->
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //$("#CreatedBy").val('@User.User_ID');
+        $("#HelpBoxdialog").dialog({
+            autoOpen: false,
+            //title: "",
+            width: "50%",
+            height: 'auto',
+            align: 'center',
+            modal: true,
+
+            show: {
+                effect: "fadein",
+                duration: 1000
+            },
+            hide: {
+                effect: "newspaper",
+                duration: 1000
+            }
+        });
+
+        $("#SectionA_Help").click(function (e) {
+            $("#HelpBoxdialog").dialog({
+                autoOpen: false,
+                title: "Section A (CGP Part 5.4.1) Help "
+            });
+            $("#Helptext").text("");
+            $("#Helptext").text("Complete Section A within 24 hours of discovering the condition that triggered the corrective action.");
+            // $('<p>Complete Section A within 24 hours of discovering the condition that triggered the corrective action. </p>').appendTo('#divContent');
+            $("#HelpBoxdialog").dialog("open");
+        });
+        $("#SectionB1_Help").click(function (e) {
+            $("#HelpBoxdialog").dialog({
+                autoOpen: false,
+                title: "Section B.1 (CGP Part 5.4.2) Help"
+            });
+            $("#Helptext").text("");
+            $("#Helptext").text("Complete a separate corrective action report for each triggering event.");
+            //$('<p>Complete a separate corrective action report for each triggering event. </p>').appendTo('#divContent');
+            $("#HelpBoxdialog").dialog("open");
+        });
+        $("#SectionB2_Help").click(function (e) {
+            $("#HelpBoxdialog").dialog({
+                autoOpen: false,
+                title: "Section B.2 (CGP Part 5.4.2) Help"
+            });
+            $("#Helptext").text("");
+            $("#Helptext").text("Complete Section B no later than 7 calendar days after discovering the condition that triggered the corrective action.");
+            // $('<p>Complete Section B no later than 7 calendar days after discovering the condition that triggered the corrective action. </p>').appendTo('#divContent');
+            $("#HelpBoxdialog").dialog("open");
+        });
+        $("#SectionC_Help").click(function (e) {
+            $("#HelpBoxdialog").dialog({
+                autoOpen: false,
+                title: "Section C (CGP Part 5.4.3)  Help"
+            });
+            $("#Helptext").text("");
+            $("#Helptext").text("Each Corrective Action Report must be signed and certified by the Permittee. If the corrective actions are completed by a Subcontractor or Contractor, it is a best practice they also sign and certify the work completed in addition to the Permittee.");
+            //$('<p>Each Corrective Action Report must be signed and certified by the Permittee. If the corrective actions are completed by a Subcontractor or Contractor, it is a best practice they also sign and certify the work completed in addition to the Permittee. </p>').appendTo('#divContent');
+            $("#HelpBoxdialog").dialog("open");
+        });
+    });
+</script>
+
+<!-- Get Inspection Detail By Ajax -->
+@*<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            // url: '/CorrectiveAction/GetInpectionReportDetails/',
+            url: '@Url.Action("GetInpectionReportDetails", "CorrectiveAction")',
+            type: 'GET',
+            data: { Inspection_ID: 23438 },
+            //contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                $("#Inspection_ID").val(data.Inspection_ID);
+                $("label[for*='CompanyName']").text(data.CompanyName);
+                $("label[for*='ProjectName']").text(data.ProjectName);
+                $("label[for*='TimeDiscovered']").text(data.TimeDiscovered);
+                $("label[for*='CurrentDate']").text(data.CreatedDate);
+                //$("#CompanyName").val(data.CompanyName);
+                //$("#ProjectName").val(data.ProjectName);
+                //$("#CurrentDate").val(data.CreatedDate);
+                $("#ProblemDiscoveredDate").val(data.CreatedDate);
+                //$("#TimeDiscovered").val(data.TimeDiscovered);
+                $("label[for*='CreatedBy']").text('@User.UserName');
+                $("#CreatedBy").val('@User.User_ID');
+            },
+            error: function (error) {
+                alert('error');
+            }
+        });
+    });
+</script>*@
+<!--Help Box Popup dialoge Div -->
+<div class="container-fluid">
+    <div id="HelpBoxdialog" style="width: 100% !important; display:none;">
+        <div id="divContent" style="float:left; width:100%">
+            <p id="Helptext"></p>
+        </div>
+    </div>
+</div>
+
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-5">
+                @Html.ActionLink("Dashboard", "Index", "Dashboard", null, new { @class = "btn btn-custom btn-black margin-0 ViewDashboard" })
+            </div>
+            @* <div class="col-sm-1">
+                </div>*@ @*<div class="col-sm-4">
+                    @Html.ActionLink("Inspection Form", "Index", "InspectionForm", null, new { @class = "btn btn-black btn-custom margin-0 InspectionFormsettime" })
+                </div>*@
+            </div>
+        </div>
+    </div>
+    @using (Html.BeginForm("Create", "CorrectiveAction", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @*@Html.Hidden("hfDeletedRows")*@
+        
+         @Html.HiddenFor(model=>model.CorrectiveActionID)
+
+        <div class="panel-head">
+            @if(ViewBag.ReportTitle!=null)
+            {
+                @ViewBag.ReportTitle
+                @Html.HiddenFor(model => model.isCorrective)
+            }
+        </div>
+        <div>
+            @*@if (@ViewBag.message != null)
+                {
+                    REPRESNT STRING INTO HTML FORMAT USING BELOW LINE
+                    <h3> <font style="color: red;"> @Html.Raw(ViewBag.message)</font></h3>
+            }*@
+        </div>
+            @Html.HiddenFor(model => model.Inspection_ID)
+             @Html.HiddenFor(model => model.UploadData_ID)
+             @Html.HiddenFor(model => model.Client_ID)
+             @Html.HiddenFor(model => model.Location_ID)
+        <div id="accordion" class="panel-group" aria-multiselectable="true" role="tablist">
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            
+            <div class="panel panel-default">
+         
+                <div class="panel-heading" role="tab" id="General_Info_Heading">
+                    <div class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                           aria-controls="collapseOne" style="text-align: none; text-decoration: none;">
+                            Section A (CGP Part 5.4.1)
+                        </a>
+                        <a id="SectionA_Help">
+                            <img id="phaseopener" src="~/Images/QuetionMark.png" height="20px" width="20px"
+                                 alt="image not display" style="cursor: pointer" />
+
+                        </a>
+                        <div class="pull-right">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                               aria-controls="collapseOne">
+                                <i id="FirstcollapseArrow" class="glyphicon glyphicon-chevron-up">
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="General_Info_Heading">
+                    <div class="panel-body">
+                        <div class="Container">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <label class="col-md-4 col-sm-6 col-xs-12  sp-15bottom">
+                                        Company Name
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12  ">
+                                        @Html.DisplayFor(model => model.CompanyName, new { @class = "form-control", tabindex = "1" })
+                                        @*@Html.HiddenFor(model => model.generalInspectionModel.CustomerName)*@
+                                        @*@Html.HiddenFor(model => model.generalInspectionModel.ClientEmail)*@
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-12 ">
+                                    <label class="col-md-4 col-sm-6 col-xs-12 sp-15bottom">
+                                        Form Completed By
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                        @Html.DisplayName(User.UserName)
+                                        @*@Html.ValidationMessageFor(model => model.generalInspectionModel.location.Location_ID)*@
+                                        @Html.HiddenFor(model => model.CreatedBy, new { Value = User.User_ID })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <label class="col-md-4 col-sm-6 col-xs-12  sp-15bottom">
+                                        Project Name
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        @Html.DisplayFor(model => model.ProjectName, new { @class = "form-control", tabindex = "2" })
+                                        @*@Html.TextBoxFor(model => model.generalInspectionModel.Tracking_No, new { @class = "form-control", placeholder = "Enter Tracking No", @readonly = "readonly" })*@
+                                        @*@Html.ValidationMessageFor(model => model.generalInspectionModel.Tracking_No)*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <label class="col-md-4 col-sm-6 col-xs-12 sp-15bottom">
+                                        Today's Date
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-sm-12">
+                                        @Html.DisplayFor(model => model.CurrentDate, new { @class = "form-control", placeholder = "Enter Date", data_val = true })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <label class="col-md-4 col-sm-6 col-xs-12 sp-15bottom">
+                                        Date Problem First Discovered
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                        @Html.EditorFor(model => model.ProblemDiscoveredDate, new { @class = "form-control", placeholder = "Enter Date", data_val = true, tabindex = "3" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <label class="col-sm-4 sp-15bottom">
+                                        Time Discovered
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        @Html.DisplayFor(model => model.TimeDiscovered, new { @class = "form-control", tabindex = "4" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label class="col-md-4 sp-15bottom">
+                                        <i>What site conditions triggered the requirement to conduct a corrective action?</i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="checkbox">
+                                        @foreach (var item in e2rc.Models.Repository.CorrectiveActionRepository.Queryget())
+                                        {
+                                            <div class="col-md-12 col-sm-6 col-xs-12" style="margin-left:30px;">
+                                                <label>
+                                                    <input type="checkbox"
+                                                           name="lstTriggerCode"
+                                                           value="@item.Code_ID" /> @item.Description
+                                                    </label>
+                                                </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="InspectionOccuringYes">
+                                <div class="col-md-12">
+                                    <label>
+                                        Description of Issue:
+                                    </label>
+                                </div>
+                                <div class="col-md-12 sp-15bottom">
+                                    @Html.TextAreaFor(model => model.DescriptionIssue, new { @class = "form-control", tabindex = "5" })
+                                    @*<div class="field-validation-error-1">@Html.ValidationMessageFor(model => model.DescriptionIssue)</div>*@
+                                </div>
+                            </div>
+
+                            <div class="row" id="InspectionOccuringYes">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <label class="col-md-4 col-sm-6 col-xs-12 sp-15bottom">
+                                        Completion Deadline:
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 sp-15bottom">
+                                        @Html.EditorFor(model => model.CompletionDeadline, new { @class = "form-control", placeholder = "Enter Date" , data_val = true, tabindex = "6" })
+                                        @*@Html.TextBoxFor(model => model.CompletionDeadline, new { @class = "form-control", placeholder = "Enter Date"})*@
+                                    </div>
+                                </div>
+                                <div class="col-md-12 sp-15bottom">
+                                    @Html.TextAreaFor(model => model.CompletionDeadlineNote, new { @class = "form-control", tabindex = "7" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="Upload_Info_Heading">
+                    <div class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseUploadData" aria-expanded="true"
+                           aria-controls="collapseUploadData" style="text-align: none; text-decoration: none;">
+                            Section B.1 (CGP Part 5.4.2)
+                        </a>
+                        <a id="SectionB1_Help">
+                            <img id="phaseopener" src="~/Images/QuetionMark.png" height="20px" width="20px"
+                                 alt="image not display" style="cursor: pointer" />
+
+                        </a>
+                        <div class="pull-right">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseUploadData" aria-expanded="true"
+                               aria-controls="collapseUploadData">
+                                <i id="SecondcollapseArrow" class="glyphicon glyphicon-chevron-up">
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapseUploadData" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="Upload_Info_Heading">
+                    <div class="panel-body">
+                        <div class="">
+                            <div id="stromDetails" class="table-responsive">
+
+                                <table id="tblAddProblemInfo" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                            </th>
+                                            <th class=" col-md-4 active center">
+                                                Cause of Problem
+                                            </th>
+                                            <th class=" col-md-4 active">
+                                                How was this Determined?
+                                            </th>
+                                            <th class="col-md-4 active">
+                                                Date
+                                            </th>
+                                            <th>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+        Int16 cnt = 0;
+                                        }
+                                        <tr class="trUploaddata">
+                                            <td data-title=@(++cnt) class="activeheader">
+                                                <label class="count-display">
+                                                    1<br />
+                                                </label>
+                                                <input type="hidden" id="hfstID1" name="hfstID1" value="1" />
+                                                <br />
+                                            </td>
+                                            <td data-title="Cause of Problem">
+                                                @Html.TextBoxFor(model => model.Problem1.ProblemCause, new { @class = "form-control", placeholder = "Enter Cause of Problem  ", data_val = false, tabindex = "8" })
+                                            </td>
+                                            <td data-title="Problem Determined">
+                                                @Html.TextBoxFor(model => model.Problem1.ProblemDetermined, new { @class = "form-control", placeholder = "Enter How was Problem Determined ", data_val = false, tabindex = "9" })
+                                            </td>
+                                            <td data-title="Problem Date">
+                                                @Html.TextBoxFor(model => model.Problem1.ProblemDate, new { @class = "form-control storm-date", placeholder = "Select Problem Date ", data_val = false, value = false, tabindex = "10" })
+                                            </td>
+                                            <td>
+                                                <span class="glyphicon glyphicon-plus-sign AddNewUploadData" aria-hidden="true" style="cursor: pointer;">
+                                                </span><span id="AdddeleteUploadData1" class="glyphicon glyphicon-minus-sign removerow" style="cursor: pointer;"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">
+                                                <span class="glyphicon glyphicon-plus-sign AddNewUploadData testcenter" aria-hidden="true"
+                                                      style="cursor: pointer; float: right;"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="Upload_Info_Heading">
+                    <div class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseUploadData" aria-expanded="true"
+                           aria-controls="collapseUploadData" style="text-align: none; text-decoration: none;">
+                            Section B.2 (CGP Part 5.4.2)
+                        </a>
+                        <a id="SectionB2_Help">
+                            <img id="phaseopener" src="~/Images/QuetionMark.png" height="20px" width="20px"
+                                 alt="image not display" style="cursor: pointer" />
+
+                        </a>
+                        <div class="pull-right">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseUploadData" aria-expanded="true"
+                               aria-controls="collapseUploadData">
+                                <i id="SecondcollapseArrow" class="glyphicon glyphicon-chevron-up">
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapseUploadData" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="Upload_Info_Heading">
+                    <div class="panel-body">
+                        <div class="">
+                            <div class="row" id="InspectionOccuringYes">
+                                <div class="col-md-6">
+                                    <label>
+                                        Stormwater Control Modifications Implemented to Correct the Problem
+                                    </label>
+                                </div>
+                                @*<div class="col-md-2 col-sm-5 col-xs-12">
+                                    <div class="checkbox">
+                                        <label>
+                                            @Html.CheckBoxFor(model => model.SWPPPRequireYes, new { @class = "check_stormEvent", @checked = "checked", tabindex = "19" })Yes
+                                        </label>
+                                        <label>
+                                            @Html.CheckBoxFor(model => model.SWPPPRequireNo, new { @class = "check_stormEvent", tabindex = "20" })No
+                                        </label>
+                                    </div>
+                                </div>*@
+                            </div>
+                            <div id="stromDetails" class="table-responsive">
+                                <table id="tblAddStromEvents" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                            </th>
+                                            <th class=" col-md-4 active">
+                                                Stormwater Modifications Needed
+                                            </th>
+                                            <th class=" col-md-2 active">
+                                                Date Completed
+                                            </th>
+                                            <th class="col-md-2 active">
+                                                SWPPP Update Required?
+                                            </th>
+                                            <th class="col-md-4 active">
+                                                Notes
+                                            </th>
+                                            <th>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+        Int16 count = 0;
+                                        }
+                                        <tr class="trUploaddata">
+                                            <td data-title=@(++count) class="activeheader">
+                                                <label class="count-display">
+                                                    1<br />
+                                                </label>
+                                                <input type="hidden" id="hfstID1" name="hfstID1" value="1" />
+                                                <br />
+                                            </td>
+                                            <td data-title="StromModification">
+                                                @Html.TextBoxFor(model => model.StromControl1.StromModifiedText, new { @class = "form-control margin-tab", placeholder = "Enter Stormwater Modifications", data_val = false, tabindex = "11" })
+                                            </td>
+                                            <td data-title="StormCompletedDate">
+                                                @Html.TextBoxFor(model => model.StromControl1.CompletedDate, new { @class = "form-control storm-date", placeholder = "Select Complete Date ", data_val = false, value = false, tabindex = "12" })
+                                            </td>
+                                            <td data-title="SWPPP Update Date">
+                                                @*<div class="checkbox">
+                <label>
+                    @Html.CheckBoxFor(model => model.SWPPPRequireYes, new { @class = "check_stormEvent", @checked = "checked", tabindex = "19" })Yes
+                </label>
+                <label>
+                    @Html.CheckBoxFor(model => model.SWPPPRequireNo, new { @class = "check_stormEvent", tabindex = "20" })No
+                </label>
+            </div>*@
+
+                                                @Html.CheckBoxFor(model => model.StromControl1.SWPPPRequireYes, new { @class = "check_stormEvent", @style = "display:inline-block;margin-top:12px;margin-right:2px;", @checked = "checked", tabindex = "13", @Name = "StromControl1.SWPPPRequireYesNo"})Yes
+                                                @Html.CheckBoxFor(model => model.StromControl1.SWPPPRequireNo, new { @class = "check_stormEvent", @style = "display:inline-block;margin-top:12px;margin-right:2px;", tabindex = "14", @Name = "StromControl1.SWPPPRequireYesNo"})No
+
+                                                @Html.TextBoxFor(model => model.StromControl1.SWPPUpdateDate, new { @class = "form-control storm-date", placeholder = "Select SWPPP Update Date ", data_val = false, value = false, tabindex = "15" })
+                                            </td>
+                                            <td data-title="Notes">
+                                                @Html.TextBoxFor(model => model.StromControl1.Notes, new { @class = "form-control margin-tab", placeholder = "Enter Notes ", data_val = false, tabindex = "16" })
+                                            </td>
+                                            <td>
+                                                <span class="glyphicon glyphicon-plus-sign addstormevent" aria-hidden="true" style="cursor: pointer;">
+                                                </span><span id="Adddeletestormevent" class="glyphicon glyphicon-minus-sign removestormevent"
+                                                             style="cursor: pointer;"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6">
+                                                <span class="glyphicon glyphicon-plus-sign addstormevent testcenter" aria-hidden="true"
+                                                      style="cursor: pointer; float: right;"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div id="headingGeneralInsp" class="panel-heading" role="tab">
+                    <div class="panel-title">
+                        <a class="" aria-controls="collapseGeneralInsp" aria-expanded="false" href="#collapseGeneralInsp"
+                           data-parent="#accordion" data-toggle="collapse" style="text-decoration: none;">
+                            Section C (CGP Part 5.4.3)
+                        </a>
+                        <a id="SectionC_Help">
+                            <img id="phaseopener" src="~/Images/QuetionMark.png" height="20px" width="20px"
+                                 alt="image not display" style="cursor: pointer" />
+
+                        </a>
+                        <div class="pull-right">
+                            <a class="collapsed" aria-controls="collapseGeneralInsp" aria-expanded="false" href="#collapseGeneralInsp"
+                               data-parent="#accordion" data-toggle="collapse">
+                                <i id="ThirdcollapseArrow" class="glyphicon glyphicon-chevron-up">
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapseGeneralInsp" class="panel-collapse collapse in" role="tabpanel"
+                     aria-labelledby="headingGeneralInsp">
+                    <div class="panel-body">
+                        <div>
+                            <h3>
+                                Certification and Signature by Contractor
+                            </h3>
+                            <p>
+                                <i>
+                                    "I certify under penalty of law that this document and all attachments were prepared
+                                    under my direction or supervision in accordance with a system designed to assure
+                                    that qualified personnel properly gathered and evaluated the information submitted.
+                                    Based on my inquiry of the person or persons who manage the system, or those persons
+                                    directly responsible for gathering the information, the information submitted is,
+                                    to the best of my knowledge and belief, true, accurate, and complete. I am aware
+                                    that there are significant penalties for submitting false information, including
+                                    the possibility of fine and imprisonment for knowing violations."
+                                </i>
+                            </p>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-sm-9 sp-15bottom">
+                                    <b>
+                                        Signature of Contractor or Subcontractor :
+                                        <label id="lblInspectorName">
+
+                                        </label>
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <br />
+                                <div class="col-sm-9 sp-15bottom">
+                                    <b>Printed Name and Affiliation : </b>
+                                </div>
+                                <div class="col-sm-3">
+                                    <b>Date: </b>@DateTime.Now.ToShortDateString()
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <hr />
+                            </div>
+                        </div>
+                        <div>
+                            <h3>
+                                Certification and Signature Permittee or 'Duly Authorized Representative'
+                            </h3>
+                            <p>
+                                <i>
+                                    "I certify under penalty of law that this document and all attachments were prepared
+                                    under my direction or supervision in accordance with a system designed to assure
+                                    that qualified personnel properly gathered and evaluated the information submitted.
+                                    Based on my inquiry of the person or persons who manage the system, or those persons
+                                    directly responsible for gathering the information, the information submitted is,
+                                    to the best of my knowledge and belief, true, accurate, and complete. I am aware
+                                    that there are significant penalties for submitting false information, including
+                                    the possibility of fine and imprisonment for knowing violations."
+                                </i>
+                            </p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-sm-4">
+                                    <b>Signature of Permittee or 'Duly Authorized Representative' : </b>
+                                </div>
+                                @*<div class="col-sm-9 sp-15bottom">
+                                    </div>*@
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br />
+                            <div class="col-md-12">
+                                <div class="col-sm-9 sp-15bottom">
+                                    <b>Printed Name and Affiliation : </b>
+                                </div>
+                                <div class="col-sm-3">
+                                    <b>Date: </b> @DateTime.Now.ToShortDateString()
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <hr />
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-md-12">
+
+                                @*<button disabled="disabled" class="btn btn-primary">
+                                        Save Draft
+                                    </button>
+                                    <button disabled="disabled" class="btn btn-primary">
+                                        Save Final
+                                    </button>*@
+                                <button class="btn btn-primary" id="btnSaveFinal" style="float:right;margin-right:0px;" tabindex="18" >
+                                    Save Final
+                                </button>
+                                <button class="btn btn-primary" id="btnSaveDraft" style="float:right; margin-right:20px;" tabindex="17">
+                                    Save Draft
+                                </button>
+                                @Html.HiddenFor(model => model.IsComplete)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

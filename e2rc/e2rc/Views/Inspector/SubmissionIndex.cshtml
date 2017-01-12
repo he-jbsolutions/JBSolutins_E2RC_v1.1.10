@@ -1,0 +1,144 @@
+﻿
+@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<e2rc.Models.SubmissionModel>
+
+@{
+    ViewBag.Title = "Submission";
+}
+<script type="text/javascript" language="javascript">
+    $(function () {
+        $("#txtSearch").autocomplete({
+            source: '@Url.Action("GetProjectNameEdit")'
+        });
+    });
+</script>
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+                @Html.ActionLink("Dashboard", "Index", "Dashboard", null, new { @class = "btn btn-custom btn-black margin-0" })
+            </div>
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-4">
+               @* @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-black btn-custom margin-0" })*@
+            </div>
+        </div>
+        <div class="col-md-6">
+            @using (Html.BeginForm("SubmissionIndex", "Inspector", FormMethod.Get))
+            {
+                <div style="float: left; width: 85%;">
+                    @Html.TextBox("search", null, new { id = "txtSearch", @class = "form-control text-search", placeholder = "Search by Project Name", style = "height: 0% !important;" })
+                </div>
+                <div style="float: left; width: 15%;">
+                    <button class="btn btn-black btn-custom margin-0 form-control glyphicon glyphicon-search align-right  btn-search"
+                        style="height: 0% !important;">
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<link href="../../Content/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css" />
+<div class="panel-head">
+    Inspection Report
+</div>
+<div id="dialog-confirm">
+</div>
+<div class="panel panel-default" style="margin-bottom: 0% !important;">
+    <div class="panel-body padding-0">
+        <div class="table-responsive">
+
+   <table class="table table-bordered table-striped table-hover  margin-0 ">
+     <tr class="panel-title">
+                   
+                   @* <th class="header-color col-md-2 text-center">
+                        @Html.DisplayNameFor(model => model.First().FormName)
+                         @Html.ActionLink("Form Name", "SubmissionIndex", new { sortOrder = ViewBag.FormNameSortParm })  
+                    </th>*@
+                    <th class="header-color col-md-2">
+                     @Html.ActionLink("Company Name", "SubmissionIndex", new { sortOrder = ViewBag.CompanyNameSortParm })  
+                      @*  @Html.DisplayNameFor(model => model.First().InspectorName)*@
+                    </th>
+                    <th class="header-color col-md-2">
+                     @Html.ActionLink("Project Name", "SubmissionIndex", new { sortOrder = ViewBag.ProjectNameSortParm })  
+                    @*    @Html.DisplayNameFor(model => model.First().ProjectName)*@
+                    </th>
+                    <th class="header-color col-md-1">
+                     @Html.ActionLink("Location", "SubmissionIndex", new { sortOrder = ViewBag.locationSortParm })  
+                      @*  @Html.DisplayNameFor(model => model.First().location)*@
+                    </th>
+                    <th class="header-color col-md-2">
+                     @Html.ActionLink("Inspector Name", "SubmissionIndex", new { sortOrder = ViewBag.InspectorNameSortParm })  
+                      @*  @Html.DisplayNameFor(model => model.First().InspectorName)*@
+                    </th>
+                    <th class="header-color col-md-1">
+                     @Html.ActionLink("Date", "SubmissionIndex", new { sortOrder = ViewBag.DateSortParm })  
+                      @*  @Html.DisplayNameFor(model => model.First().Date)*@
+                    </th>
+                    <th class="header-color col-md-1" style="color:#199AD6"> Action</th>
+                </tr>
+                @if (Model != null)
+                {
+
+                  foreach (var item in Model)
+                  {
+                            <tr>                                
+                                @*<td>                                
+                                    @Html.DisplayFor(modelItem => item.FormName)
+                                </td>*@
+                                <td>
+                                 @Html.HiddenFor(modelItem => item.Inspection_ID)
+                                 @Html.DisplayFor(modelItem => item.CompanyName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProjectName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.location)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.InspectorName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Date)
+                                </td>
+                                <td style="text-align:center;">   
+                                    @Html.ActionLink("Edit", "Edit", item.path, new { Inspection_ID = item.Inspection_ID }, null)
+                                  @*  @Html.ActionLink("Edit", "Edit", "Inspection", new { Inspection_ID = item.Inspection_ID }, null)   *@                                  
+                                </td>
+                            </tr>
+                  }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6">
+                            No Submissions found to display.
+                        </td>
+                    </tr>
+                }
+
+</table>
+ </div>
+    </div>
+</div>
+@if (Model != null)
+{
+    <div class="panel-head padding-0" style="font-size: 13px !important;">
+        @Html.PagedListPager(Model, Page => Url.Action("SubmissionIndex", new
+     {
+         Page,
+         search = Request.QueryString["search"],
+         sortOrder = Request.QueryString["sortOrder"]
+     }), new PagedListRenderOptions()
+     {
+         Display = PagedListDisplayMode.IfNeeded,
+         DisplayPageCountAndCurrentLocation = true,
+         MaximumPageNumbersToDisplay = 10
+         
+     })
+    </div>
+}

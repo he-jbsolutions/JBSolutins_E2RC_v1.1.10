@@ -1,0 +1,29 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Mail Sent</title>
+</head>
+<body>
+     @{
+         if (ViewBag.IsInspectorMailSentSuccessfully != null && (bool)ViewBag.IsInspectorMailSentSuccessfully)
+        {
+        <div class="panel-head">
+           Thank you. Your request has been submitted to Inspector. We will follow-up with you to schedule the maintenance/corrective action activities.
+        </div>
+        }
+       @* else
+        {
+        <div class="panel-head">
+            Unable to send.
+        </div>
+        }*@
+    }
+</body>
+</html>
+

@@ -1,0 +1,382 @@
+﻿@model e2rc.Models.LocationModel
+@{
+    ViewBag.Title = "Edit Location";
+}
+<script type="text/javascript">
+    $(function () {
+        $(".btnbk").click(function () {
+            //            window.history.back()
+      window.location = "@Url.Action("Index", "Location")";
+        });
+    });  
+</script>
+<style type="text/css">
+    select.input-validation-error
+    {
+        border: 1px solid #FF0034;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (document.getElementById('F1ID').value == 0) {
+            document.getElementById("F1ID").style.display = 'none';
+            document.getElementById("F1").style.display = 'none';
+            document.getElementById('F2').style.display = 'block';
+            document.getElementById('F2ID').style.display = 'block';
+            document.getElementById('F2').style.display = 'block';
+        }
+        else {
+            document.getElementById("F1ID").style.display = 'block';
+            document.getElementById('F2').style.display = 'none';
+            document.getElementById('F2ID').style.display = 'none';
+            document.getElementById('F2').style.display = 'none';
+
+        }
+
+
+    });   
+</script>
+<script type="text/javascript">
+    var cnt = 1;
+    function AddStationRow() {
+        var tr = $('<tr>' +
+                  '<td data-title="txtStation"><input type="text" id="txtstation' + cnt + '" class = "text form-control sp-15bottom stationids" name="txt' + cnt + '" data_val ="true" placeholder = "F2(Station Based)" /></td>' +
+                  '<td><select  class = "form-control sp-15bottom itemids" id="itemID' + cnt + '"  name="itemID' + cnt + '" data_val="true"></select></td>' +
+                  '<td><select  class = "form-control sp-15bottom lmrids" id="LMRID' + cnt + '"  name="LMRID' + cnt + '" data_val="true"></select></td>' +
+                   '</tr>');
+        $("#itemID").children().each(function () {
+            $(tr).find('#itemID' + cnt).append($("<option></option>").attr("value", $(this).val()).text($(this).text()));
+        });
+        $("#LMRID").children().each(function () {
+            $(tr).find('#LMRID' + cnt).append($("<option></option>").attr("value", $(this).val()).text($(this).text()));
+        });
+        $("#tblstation").append(tr);
+        cnt++;
+    }   
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {
+            var stationIDs = ''; var itemids = "";
+            $("#tblstation tr").each(function () {
+                stationIDs += $(this).find("input:text").val() + "," + $(this).find("select:eq(0)").val() + "," + $(this).find("select:eq(1)").val() + " ";
+            });
+            stationIDs = stationIDs.trim().replace(/ /g, "`");
+            $("#F2ID").val('');
+            $("#F2ID").val(stationIDs);
+            return true;
+        });
+    });
+
+</script>
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+                @*<div class="btn btn-black btn-custom" style="width: 100%;">*@
+                @Html.ActionLink("Back", "Index", "Location", new { Location_ID = Model.Location_ID, user_id = Request.QueryString["user_id"] }, new { @class = "btn btn-black btn-custom" })</div>
+            @* </div>*@
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-4">
+                @Html.ActionLink("Edit", "Edit", "Location", new { Location_ID = Model.Location_ID }, new { @class = "btn btn-black btn-custom" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            @if (ViewBag.IsLocationEdited ?? false)
+            {
+                <font style="color: #468847;">Location / project has been updated successfully.</font>
+            }
+            else if (!(ViewBag.IsLocationEdited ?? true))
+            {
+                <font style="color: #468847;">Unable to update Location / project.</font>
+            }
+        </div>
+    </div>
+</div>
+<div class="panel-head">
+    Project Profile
+</div>
+@using (Html.BeginForm("Edit", "Location", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()  
+    <div id="accordion" class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title" style="font-weight: bold;">
+                    Location / Project
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    @Html.LabelFor(model => model.Name)</label>
+                                <div class="col-sm-7">
+                                    @Html.DisplayFor(model => model.Name, new { @class = "form-control sp-15bottom", placeholder = "Enter Project Name" })
+                                    @Html.HiddenFor(model => model.Location_ID)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Address Line 1</label>
+                                <div class="col-sm-7">
+                                    @Html.DisplayFor(model => model.MailingAddress, new { @class = "form-control sp-15bottom", placeholder = "Enter Address Line 1" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Address Line 2</label>
+                                <div class="col-sm-7">
+                                    @Html.DisplayFor(model => model.MailingAddress2, new { @class = "form-control sp-15bottom", placeholder = "Enter Address Line 2" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    City</label>
+                                <div class="col-sm-7">
+                                    @Html.DisplayFor(model => model.City, new { @class = "form-control sp-15bottom", placeholder = "Enter City" })
+                                    @Html.ValidationMessageFor(model => model.City)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    State</label>
+                                <div class="col-sm-7">
+                                    @Html.DisplayFor(model => model.State.Name, new SelectList(Model.States, "State_ID", "Name"))
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Zip Code</label>
+                                <div class="col-sm-7">
+                                    @Html.DisplayFor(model => model.ZipCode, new { @class = "form-control sp-15bottom", placeholder = "Zip Code" })
+                                    @Html.ValidationMessageFor(model => model.ZipCode)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Project Type</label>
+                                <div class="col-sm-7">
+                                    @Html.DisplayFor(model => model.ProjectType, new SelectList(new e2rc.Models.LocationModel().ProjectTypes, "ProjectType_ID", "ProjectType",Model.ProjectTypes))
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Inspection Frequency</label>
+                                <div class="col-sm-7">
+                                    @Html.DisplayFor(model => model.InspectionFreq)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                         <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    NPDES Tracking Number</label>
+                                <div class="col-sm-7">
+                                    @Html.DisplayFor(model => model.TrackingNumber, new { @class = "form-control sp-15bottom", placeholder = "Enter NPDES Tracking Number" })
+                                    @Html.ValidationMessageFor(model => model.TrackingNumber)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Maintainance/Action Needed by</label>
+                                <div class="col-sm-7">
+                                    @Html.DisplayFor(model => model.MaintainAction)
+                                    @Html.ValidationMessageFor(model => model.MaintainAction)
+                                </div>
+                            </div>
+                             </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="col-sm-5 sp-15bottom">
+                                        Inspection Report Recipient</label>
+                                    <div class="col-sm-7">
+                                         @Html.TextBoxFor(model => model.InspectionReportEmails, new { @class = "form-control sp-15bottom", @disabled = "disabled" }) 
+                                         @Html.HiddenFor(model => model.InspectionReportEmails)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="col-sm-5 sp-15bottom">
+                                        Work Order Recipient</label>
+                                    <div class="col-sm-7">
+                                      
+                                          @Html.TextBoxFor(model => model.WorkOrdersEmails, new { @class = "form-control sp-15bottom", @disabled = "disabled" }) 
+                                           @Html.HiddenFor(model => model.WorkOrdersEmails)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="col-sm-5 sp-15bottom">
+                                        3-Day Notice Recipient</label>
+                                    <div class="col-sm-7">
+                                      
+                                          @Html.TextBoxFor(model => model.Threedaynoticeemails, new { @class = "form-control sp-15bottom", @disabled = "disabled" }) 
+                                           @Html.HiddenFor(model => model.Threedaynoticeemails)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="col-sm-5 sp-15bottom">
+                                        5-Day Notice Recipient</label>
+                                    <div class="col-sm-7">
+                                       
+                                          @Html.TextBoxFor(model => model.Fivedaynoticeemails, new { @class = "form-control sp-15bottom", @disabled = "disabled" }) 
+                                           @Html.HiddenFor(model => model.Fivedaynoticeemails)
+                                    </div>
+                                </div>
+                            </div>
+                            
+                      
+                        <div class="row">
+                        <div class="col-md-6">
+                                    <label class="col-sm-5 sp-15bottom">
+                                        7-Day Notice Recipient</label>
+                                    <div class="col-sm-7">
+                                       
+                                          @Html.TextBoxFor(model => model.Sevendaynoticeemails, new { @class = "form-control sp-15bottom", @disabled = "disabled" }) 
+                                           @Html.HiddenFor(model => model.Sevendaynoticeemails)
+                                    </div>
+                           </div>
+                            <div class="col-md-6">
+                                <label class="col-sm-5 sp-15bottom">
+                                    Company Name</label>
+                                <div class="col-sm-7">
+                                    @Html.DisplayFor(model => model.CompanyName)
+                                    @Html.ValidationMessageFor(model => model.Client_ID)
+                                </div>
+                            </div>                            
+                        </div>
+                        <div class="row">                           
+                            <div class="col-md-6">
+                                <div class="col-sm-4 sp-15bottom">                                
+                                    <label class="checkbox-inline">
+                                        @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-inline ", @disabled = "disabled"})Project Active 
+                                    </label>                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="display: none">
+                                <div class="col-sm-5 sp-15bottom">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.IsRequired, new { @class = "col-sm-3 sp-15bottom" })
+                                        IsRequired
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        @if (string.IsNullOrEmpty(Model.F2_ID))
+                        {
+                            <div class="row">
+                                <div class="col-md-6" id="F1">
+                                    <div class="col-sm-5 sp-15bottom">
+                                        @Html.CheckBox("F1 (Non Station Based)", new { @class = "col-sm-3 sp-15bottom chknonStation", @id = "nonStation", @checked = "checked" })F1
+                                        (Non Station Based)
+                                    </div>
+                                    @*<div class="col-sm-3">
+                                    @Html.DisplayFor(model => model.F1_ID, new { @class = "form-control sp-15bottom", placeholder = "F1(Non Station Based)", @id = "F1ID" })
+                                    @* @Html.ValidationMessageFor(model => model.F1_ID)
+                                </div>*@
+                                </div>
+                            </div>
+                        }
+                        @if (Model.F2_ID != "")
+                        {
+                            <div class="row">
+                                <div class="col-md-12" id="F2">
+                                    <div class="col-sm-3 sp-15bottom">
+                                        @Html.CheckBox("F2 (Station Based)", new { @class = "col-sm-3 sp-15bottom chkStation", @id = "Station", @checked = "checked", @readonly = "readonly" })F2
+                                        (Station Based)
+                                    </div>
+                                    <div class="col-md-6 col-sm-5">
+                                        @Html.HiddenFor(model => model.F2_ID, new { @class = "form-control sp-15bottom", placeholder = "F2(Station Based)", @id = "F2ID", @readonly = "readonly" })
+                                        <table id="tblstation" class="table table-bordered table-striped">
+                                            @{ 
+                            Int16 count = 0;
+                            foreach (var trf2id in Model.F2_ID.Split('`'))
+                            {
+                                count++;
+                                           
+                                                <tr>
+                                                    @if (!string.IsNullOrEmpty(trf2id) && trf2id.Split(',').Length > 0)
+                                                    {
+                                                        <td class=" col-md-6 active center">
+                                                            @Html.TextBox("txtstation" + count, trf2id.Split(',')[0], new { @class = "form-control sp-15bottom stationids", placeholder = "F2(Station Based)", @id = "F2ID", data_val = false, value = false, disabled = "disabled" })
+                                                            @* @Html.TextBoxFor(model => model.F2_ID, new { @class = "form-control sp-15bottom stationids", placeholder = "F2(Station Based)", @id = "F2ID", @Style = "display:none", data_val = false, value = false })*@
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class=" col-md-6 active center">
+                                                            @Html.TextBox("txtstation" + count, new { @class = "form-control sp-15bottom stationids", placeholder = "F2(Station Based)", @id = "F2ID", @Style = "display:none", data_val = false, value = false, disabled = "disabled" })
+                                                        </td>
+                                                    }
+                                                    @if (!string.IsNullOrEmpty(trf2id) && trf2id.Split(',').Length > 1)
+                                                    {
+                                                        <td class=" col-md-4 active center">
+                                                            @Html.DropDownList("ddlItemID" + count, new SelectList(new e2rc.Models.UploadDataModel().C1items, "Item_ID", "Name", trf2id.Split(',')[1]), "Select Item", new { @class = "form-control itemids", @id = "itemID", data_val = false, disabled = "disabled" })
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class=" col-md-4 active center">
+                                                            @Html.DropDownList("ddlItemID" + count, new SelectList(new e2rc.Models.UploadDataModel().C1items, "Item_ID", "Name"), "Select Item", new { @class = "form-control itemids", data_val = false, value = false, disabled = "disabled", @Style = "display:none", @id = "itemID" })
+                                                        </td>
+                                                    }
+                                                    @if (!string.IsNullOrEmpty(trf2id) && trf2id.Split(',').Length > 2)
+                                                    {
+                                                        <td class=" col-md-4 active center">
+                                                            @Html.DropDownList("ddllmrID" + count, new SelectList(new e2rc.Models.LocationModel().LMRs, "Value", "Text", trf2id.Split(',')[2]), "Select Item", new { @class = "form-control lmrids", @id = "LMRID", data_val = false, disabled = "disabled" })
+                                                            @*  @Html.DropDownListFor(model => model.Item_ID, new SelectList(new e2rc.Models.UploadDataModel().C1items, "Item_ID", "Name"), "Select Item", new { @class = "form-control itemids", data_val = true, @Style = "display:none", @id = "itemID" })*@
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class=" col-md-4 active center">
+                                                            @Html.DropDownList("ddllmrID" + count, new SelectList(new e2rc.Models.LocationModel().LMRs, "Value", "Text"), "Select", new { @class = "form-control lmrids", data_val = false, value = false, disabled = "disabled", @Style = "display:none", @id = "LMRID" })
+                                                            @*  @Html.DropDownListFor(model => model.Item_ID, new SelectList(new e2rc.Models.UploadDataModel().C1items, "Item_ID", "Name"), "Select Item", new { @class = "form-control itemids", data_val = true, @Style = "display:none", @id = "itemID" })*@
+                                                        </td>
+                                                    }
+                                                     </tr> 
+                             }
+                                               
+                            }
+                                           
+                                        </table>
+                                    </div>
+                                    @* <div class="col-sm-2 sp-15bottom">
+                                    <input type="button" id="btnAdd" class="btn  btn-primary" value="Add Station ID"
+                                        onclick="javascript:AddStationRow()" />
+                                </div>*@
+                                    <div class="col-lg-12 sp-15bottom " id="holder" style="max-height: 140px; overflow-y: auto">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+@* <div class="row">
+                            <div class="col-md-12 ">
+                                <button id="btnSubmit" class="btn  btn-primary" value="Submit">
+                                    Save</button>
+                            </div>
+                        </div>*@
+                        <div class="row">
+                            @Html.ValidationSummary(true)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

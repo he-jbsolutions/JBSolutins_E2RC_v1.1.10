@@ -1,0 +1,159 @@
+﻿@model e2rc.Models.FranchiseModel
+@{
+    ViewBag.Title = "Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .button {
+        width: 150px;
+        height: 100px;
+        display: inline-block;
+        font-family: Arial, "Helvetica", sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+        text-shadow: 1px 1px 0px #07526e;
+        padding-top: 40px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 30px;
+        position: relative;
+        cursor: pointer;
+        border: none;
+        background: #109bce;
+        text-decoration: none;
+        background-image: linear-gradient(bottom, rgb(14,137,182) 0%, rgb(22,179,236) 100%);
+        border-radius: 100%;
+        box-shadow: inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #07526e, 0px 10px 5px #999;
+    }
+
+        .button:active {
+            top: 3px;
+            box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #07526e, 0px 5px 3px #999;
+        }
+
+        .button:before {
+            font-family: 'socialfont';
+            font-size: 50px;
+            line-height: 1em;
+            font-weight: normal;
+            color: #fff;
+            width: 85px;
+            height: 90px;
+            display: block;
+            position: absolute;
+            padding-top: 10px;
+            top: 10px;
+            text-shadow: 1px 1px 2px #07526e;
+        }
+
+        .button:active:before {
+            top: 7px;
+            font-size: 50px;
+            text-shadow: 0px 3px 0px #07526e, 0px 5px 1px #07526e /*, 3px 0px 1px #07526e, 3px 3px 1px #07526e,
+     -2px 0px 1px #68cff2*/;
+        }
+
+        .button:hover {
+            color: #109bce;
+            background: #e2f8ff;
+        }
+
+    a {
+        text-decoration: none !important;
+    }
+</style>
+<script>
+    var IsFormFilled = false;
+    $(function () {
+        $(".btnDashboardbk").click(function () {
+
+            $("input:text:not(.date),select").each(function () {
+                if ($(this).val().trim() != "" && $(this).val().trim().length > 0) {
+                    IsFormFilled = true;
+                }
+
+            });
+            if (IsFormFilled) {
+                if (confirm("The account information is incomplete or has not been saved.Select 'OK' to proceed or 'Cancel' to complete and save the account information")) {
+                    window.location = "@Url.Action("Index","Dashboard")";
+                }
+                else {
+                    IsFormFilled = false;
+                }
+            } else {
+                window.location = "@Url.Action("Index","Dashboard")";
+            }
+        });
+    });
+</script>
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+                <div class="btn btn-black btn-custom  btnDashboardbk" style="width:100%;"> Dashboard</div>
+            </div>
+            <div class="col-sm-1">
+            </div>
+            @*<div class="col-sm-4">
+                   @* @Html.ActionLink("View Franchises", "Index", "Franchise", null, new { @class = "btn btn-custom btn-black " })
+                    <div class="btn btn-black btn-custom btnbk" style="width: 100%;">
+                        View Franchises</div>
+                </div>*@
+        </div>
+    </div>
+</div>
+    <div class="panel-head">
+        Franchise Company Account
+    </div>
+
+    <div id="accordion" class="panel-group" aria-multiselectable="true" role="tablist">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                @* <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                            aria-controls="collapseOne" style="text-align: none;">Company Details</a>
+                        <div class="pull-right">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                aria-controls="collapseOne"><i id="FirstcollapseArrow" class="glyphicon glyphicon-chevron-up">
+                                </i></a>
+                        </div>
+                    </h4>*@
+                <div class="panel-title">
+
+
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <div class="">
+                            <div class="row">
+                                <div class="col-sm-9 " style="width:900px;">
+                                    @Html.ActionLink("View Profile", "Details", "Franchise", new { Franchise_ID = Model.Franchise_ID }, new { @class = "button" }) &nbsp; &nbsp; &nbsp;
+                                    @Html.ActionLink("Edit Profile", "Edit", "Franchise", new { Franchise_ID = Model.Franchise_ID }, new { @class = "button" })  &nbsp; &nbsp; &nbsp;
+                                    @Html.ActionLink("Customize", "LogoUpdate", "Franchise", new { Franchise_ID = Model.Franchise_ID }, new { @class = "button" }) &nbsp; &nbsp; &nbsp;
+                                    @*@Html.ActionLink("Billing", "Account", "Franchise", new { Franchise_ID = Model.Franchise_ID }, new { @class = "button" }) &nbsp; &nbsp; &nbsp;
+                                        @Html.ActionLink("Subscription", "Account", "Franchise", new { Franchise_ID = Model.Franchise_ID }, new { @class = "button" })*@
+                                    <a class="button" href="#" onclick="javascript: Development()" id="none">Billing</a>&nbsp; &nbsp; &nbsp;
+                                    <a class="button" href="#" onclick="javascript: Development1()" id="none1">Subscription</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function Development() {
+            alert('Under Development ! ')
+        }
+        function Development1() {
+            alert('Under Development ! ')
+        }
+    </script>

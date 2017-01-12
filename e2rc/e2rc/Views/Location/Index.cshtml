@@ -1,0 +1,252 @@
+﻿@using PagedList.Mvc
+@using PagedList
+
+@model IPagedList<e2rc.Models.LocationModel>
+@{
+    ViewBag.Title = "Location";
+}
+
+<style type="text/css">
+    .ui-widget-header .ui-icon
+    {
+        background-image: none !important;
+    }
+    .ui-icon
+    {
+        background-image: none !important;
+    }
+     .status
+    {
+        font-size:13px!important;
+        font-weight:normal!important;
+        float:right!important;
+    }
+    .container 
+    {
+        padding-left:0px!important;
+        padding-right:0px!important;
+    }
+    .col-sm-4
+    {
+         padding-left:0px!important;
+        padding-right:0px!important;
+    }
+    .panel-title 
+{
+    font-size:14px !important;
+}
+.table th {
+   text-align: center !important;
+}   
+</style>
+<script type="text/javascript">   
+    // auto search by franchise name
+    $(function () {
+        $("#txtSearch").autocomplete({
+            source: '@Url.Action("GetLocationName")'
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        ($('#Activate').attr('checked', true));
+    });
+
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        $(".Update").click(function () {
+            var chkLocation_IDs = [], unchkLocation_IDs = [];
+            $(".rowstatus").each(function () {
+                if ($(this).is(':checked')) {
+                    var UpdateTR = $(this).parent().parent();
+                    chkLocation_IDs.push(parseInt($(UpdateTR).find("input[type=hidden]:first").val()));
+                }
+                else {
+                    var UpdateTR = $(this).parent().parent();
+                    unchkLocation_IDs.push(parseInt($(UpdateTR).find("input[type=hidden]:first").val()));
+                }
+            });
+
+            $.ajax({
+                url: '/Location/UpdateLocationStatusList/',
+                type: 'POST',
+                data: JSON.stringify({ chkedLocation_ID: chkLocation_IDs, unchkLocation_ID: unchkLocation_IDs }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    alert("Location Updated Sucessfully ")
+                    window.location.reload(true);
+                },
+                error: function (data) {
+                    alert(data)
+                }
+            });
+
+
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('#Activate').click(function () {
+            if ($(this).is(':checked')) {
+                $(".rowstatus").each(function () {
+                    $(this).prop("checked", true);
+                });
+            }
+            else {
+                $(".rowstatus").each(function () {
+                    $(this).prop("checked", false);
+                });
+            }
+        });
+    });
+    </script>
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+                @Html.ActionLink("Dashboard", "Index", "Dashboard", null, new { @class = "btn btn-custom btn-black margin-0" })
+            </div>
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-4">
+                @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-black btn-custom margin-0" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            @using (Html.BeginForm("Index", "Location", FormMethod.Get))
+            {
+                <div style="float: left; width: 85%;">
+                    @Html.TextBox("search", null, new { id = "txtSearch", @class = "form-control text-search", placeholder = "Search by Project Name", style = "height: 0% !important;" })
+                </div>
+                <div style="float: left; width: 15%;">
+                    <button class="btn btn-black btn-custom margin-0 form-control glyphicon glyphicon-search align-right btn-search"
+                        style="height: 0% !important;">
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="panel-head"> 
+      <table>
+<tr >
+   <td style="width:83%;">
+   Project Details 
+    </td>
+    <td>
+   <table style="float:right!important;">
+   <tr>
+   <td>
+        @Html.ActionLink("Active", "Index", "Location", new { view = "Active", user_id = Request.QueryString["user_id"] }, new { @class = "btn btn-custom btn-black margin-0 status", @style = "margin:5px!important;" })
+        </td> 
+    <td>
+         @Html.ActionLink("Inactive", "Index", "Location", new { view = "InActive", user_id = Request.QueryString["user_id"] }, new { @class = "btn btn-custom btn-black margin-0 status" })
+    </td>   
+   </tr>
+   </table>
+   </td>  
+    </tr>
+   </table>
+</div>
+<div id="dialog-confirm">
+</div>
+<div class="panel panel-default" style="margin-bottom: 0% !important;">
+    <div class="panel-body padding-0">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover margin-0 ">
+                <tr class="panel-title">
+                    <th class="header-color col-md-2">
+                        @Html.DisplayNameFor(model => model.First().Name)
+                    </th>
+                    <th class="header-color col-md-4">
+                       Address
+                    </th>
+                    @*<th class="header-color col-md-2">
+                      @Html.DisplayNameFor(model => model.First().State.State_ID)                     
+                    </th>
+                    <th class="header-color col-md-2">
+                        @Html.DisplayNameFor(model => model.First().City)
+                    </th>                  
+                    <th class="header-color col-md-1">
+                        @Html.DisplayNameFor(model => model.First().ZipCode)
+                    </th> *@                     
+                    <th class="header-color col-md-2">
+                        @Html.DisplayNameFor(model => model.First().CompanyName)
+                    </th>
+                    <th class="header-color col-md-2">
+                        Action
+                    </th>
+                    <th class="header-color col-md-2 col-sm-1 col-xs-1" style="color:#199AD6">
+                        Status @Html.CheckBox("Activate All", new { @class = "sp-15bottom status", @id = "Activate" })
+                    </th>
+                </tr>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                          @Html.HiddenFor(modelItem => item.Location_ID)
+                        </td> 
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MailingAddress), @Html.DisplayFor(modelItem => item.City), @Html.DisplayFor(model => item.State.Name), @Html.DisplayFor(modelItem => item.ZipCode)
+                        </td>
+                        @*<td>
+                         @Html.DisplayFor(model=>item.State.Name)
+                        </td>                      
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZipCode)
+                        </td>   *@                        
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CompanyName)
+                        </td>                     
+                        <td>
+                            @Html.ActionLink("View", "Details", "Location", new { Location_ID = item.Location_ID, user_id = Request.QueryString["user_id"] }, null) 
+                           @* |<a href="#" onclick="ConfirmDeletion('Are you sure want to delete this Location?',
+                                                                 'Delete Location ?','/Location/Delete',
+                                                                  'Location_ID',@item.Location_ID,'unable to delete the Location.'
+                                                                  ,'Location has been deleted successfully.',
+                                                                  '../Location/index');" >Delete</a>*@
+                        </td>
+                         <td> @Html.CheckBoxFor(modelItem => item.IsActive, new { @class = "sp-15bottom rowstatus" }) </td> 
+                    </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6">
+                            No project found to display.
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+@if (Model != null)
+{
+    <div class="panel-head padding-0" style="font-size: 13px !important;")>
+     <div style="float:right;padding-right:1%;"><button class="Update btn btn-custom btn-black">Update</button></div>
+     @Html.PagedListPager(Model, Page => Url.Action("Index", new
+{
+    Page,
+    search = Request.QueryString["search"],
+    user_id=Request.QueryString["user_id"],
+    view=Request.QueryString["view"]
+}), new PagedListRenderOptions()
+{
+    Display = PagedListDisplayMode.IfNeeded,
+    DisplayPageCountAndCurrentLocation = true,
+    MaximumPageNumbersToDisplay = 10
+})
+    </div>
+}

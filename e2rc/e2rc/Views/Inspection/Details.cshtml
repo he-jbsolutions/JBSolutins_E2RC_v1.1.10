@@ -1,0 +1,1284 @@
+﻿@model e2rc.Models.InspectionModel
+@{
+    ViewBag.Title = "Details";
+}
+<script type="text/javascript">
+    $(function () {
+        $(".btnbk").click(function () {
+            window.history.back()
+        });
+    });  
+</script>
+
+@*<script type="text/javascript">
+    $(document).ready(function () {
+
+        if ($('#generalInspectionModel_Inspection_Type').val() == 'Rain Event') {
+            $('#rainfall').show();
+        }
+        else {
+            $('#rainfall').hide();
+        }
+    });
+    </script>*@
+
+
+
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+             <div class = "btn btn-black btn-custom  btnbk" style="width:100%;"> Back</div>
+            </div>
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-4">
+                @* @Html.ActionLink("View Submissions", "Index", "Submission", null, new { @class = "btn btn-black btn-custom" })*@
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel-head">
+   Inspection Report
+</div>
+<div id="accordion" class="panel-group" aria-multiselectable="true" role="tablist">
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="General_Info_Heading">
+            <div class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                    aria-controls="collapseOne" style="text-align: none; text-decoration:none;">General Information</a>
+            </div>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="General_Info_Heading">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <label class="col-sm-6  sp-15bottom res1">
+                            Company Name</label>
+                        <div class="col-sm-6 res2 sp-15bottom">
+                            @Html.DisplayFor(model => model.generalInspectionModel.Client.CompanyName)
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <label class="col-sm-6 sp-15bottom res1">
+                            Project Name</label>
+                        <div class="col-sm-6 sp-15bottom sp-15bottom res2">
+                            @Html.DisplayFor(m => m.generalInspectionModel.location.Name)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <label class="col-sm-6  sp-15bottom res1">
+                            CGP/NPDES Tracking No.</label>
+                        <div class="col-sm-6 sp-15bottom res2">
+                            @Html.DisplayFor(model => model.generalInspectionModel.Tracking_No)
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <label class="col-sm-6 sp-15bottom res1">
+                            Location</label>
+                        <div class="col-sm-6 sp-15bottom res2">
+                            @Html.DisplayFor(model => model.generalInspectionModel.locationName)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <label class="col-sm-6 sp-15bottom res1">
+                            Date of Inspection</label>
+                        <div class="col-sm-6 sp-15bottom res2">
+                            @Html.DisplayFor(model => model.generalInspectionModel.Date)
+                        </div>
+                    </div>
+                    <div class="col-md-6">                   
+                        <label class="col-sm-3 sp-15bottom res1">
+                            Start Time</label>
+                        <div class="col-sm-1 sp-15bottom ">
+                            @Html.DisplayFor(model => model.generalInspectionModel.StartTime, new { @class = "form-control", placeholder = "Enter Start Time" })
+                        </div>
+                        <div class="col-sm-2">
+                            @Html.DisplayFor(model => model.generalInspectionModel.StartTime_AmPm)
+                        </div>
+                        <label  class="col-sm-3 sp-15bottom res1">
+                            End Time</label>
+                        <div class="col-sm-1">
+                            @Html.DisplayFor(model => model.generalInspectionModel.EndTime, new { @class = "form-control", placeholder = "Enter End Time" })
+                        </div>
+                        <div class="col-sm-2 res3">
+                          @Html.DisplayFor(model => model.generalInspectionModel.EndTime_AmPm)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <label class="col-sm-6 sp-15bottom res1">
+                            Inspector's Name</label>
+                        <div class="col-sm-6 sp-15bottom res2">
+                            @Html.DisplayFor(m => m.generalInspectionModel.inspector.Name)
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <label class="col-sm-6 sp-15bottom res1">
+                            Inspector's Title(s)</label>
+                        <div class="col-sm-6 sp-15bottom res2">
+                            @Html.DisplayFor(model => model.generalInspectionModel.Inspector_Title)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <label class="col-sm-6 sp-15bottom res1">
+                            Inspector's Contact Information</label>
+                        <div class="col-sm-6 sp-15bottom res2">
+                            @Html.DisplayFor(model => model.generalInspectionModel.Inspector_Contact)
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <label class="col-sm-6 sp-15bottom res1">
+                            Inspector's Qualifications</label>
+                        <div class="col-sm-6 sp-15bottom res2">
+                            @Html.DisplayFor(model => model.generalInspectionModel.Inspector_Qualification)
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding-left: 15px;">
+                    <label class="col-md-3 sp-15bottom res1">
+                        Describe phase of construction</label>
+                    <div class="checkbox col-md-6 pad">
+                        <label>
+                            @Html.DisplayFor(model => model.generalInspectionModel.PhaseClear, new { @class = "checkbox-inline check_phase", @checked = "checked" })Clear
+                            and Grub
+                        </label>
+                        <label>
+                            @Html.DisplayFor(model => model.generalInspectionModel.PhaseExcavations, new { @class = "checkbox-inline check_phase" })Excavation
+                        </label>
+                        <label>
+                            @Html.DisplayFor(model => model.generalInspectionModel.PhaseBuilding, new { @class = "checkbox-inline check_phase" })Building
+                            (vertical)
+                        </label>
+                        <label>
+                            @Html.DisplayFor(model => model.generalInspectionModel.PhaseRoughGrading, new { @class = "checkbox-inline check_phase" })Rough
+                            Grading
+                        </label>
+                        <label>
+                            @Html.DisplayFor(model => model.generalInspectionModel.PhaseInfrastructure, new { @class = "checkbox-inline check_phase" })Infrastructure
+                        </label>
+                        <label>
+                            @Html.DisplayFor(model => model.generalInspectionModel.PhaseFinalGrading, new { @class = "checkbox-inline check_phase" })Final
+                            Grading
+                        </label>
+                        <label>
+                            @Html.DisplayFor(model => model.generalInspectionModel.PhaseFinalStabilization, new { @class = "checkbox-inline check_phase" })Final
+                            Stabilization
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="col-sm-6 sp-15bottom res1">
+                            <label>
+                                Type of Inspection</label>
+                        </div>
+                        <div class="col-sm-6 sp-15bottom res2">
+                            @Html.DisplayFor(m => m.generalInspectionModel.Inspection_Type)
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="col-sm-6 sp-15bottom res1">
+                            <label>
+                                Site Classification
+                            </label>
+                        </div>
+                        @if (Model.generalInspectionModel.CodeId == 3)
+                        {
+                        <div class="col-sm-6 sp-15bottom res2">
+                            <label style="background-color: #FF2400">@Html.DisplayFor(m => m.generalInspectionModel.Description) </label>
+                        </div>
+                        }
+                        else if (Model.generalInspectionModel.CodeId == 2)
+                        {
+                        <div class="col-sm-6 sp-15bottom res2">
+                            <label style="background-color: #FFC000">@Html.DisplayFor(m => m.generalInspectionModel.Description) </label>
+                        </div>
+                        }
+                        else if (Model.generalInspectionModel.CodeId == 1)
+                        {
+                        <div class="col-sm-6 sp-15bottom res2">
+                            <label style="background-color: #00DA00">@Html.DisplayFor(m => m.generalInspectionModel.Description) </label>
+                        </div>
+                        }
+                        else if (Model.generalInspectionModel.CodeId == 0)
+                        {
+                            <div class="col-sm-6 sp-15bottom res2">
+                                @Html.DisplayFor(m => m.generalInspectionModel.Description)
+                            </div>
+                        }
+
+                  </div>
+                </div>   
+                @if (Model.generalInspectionModel.Inspection_Type == "Rain Event")
+                {            
+                <div class="row" style="padding-left: 14px;" id="rainfall">
+                    <div class="col-md-4 sp-15bottom">
+                        <label>
+                            <i>If .25" Rain Event how was rainfall amount determined?</i></label>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="checkbox col-sm-4  sp-15bottom res2">
+                            <label>
+                                @Html.DisplayFor(model => model.generalInspectionModel.RainEvent, new { @class = "check_RainEvent", @checked = "checked" })Rain
+                                Gauge</label>
+                            <label>
+                                @Html.DisplayFor(model => model.generalInspectionModel.RainEventOther, new { @class = "check_RainEvent" })Other
+                            </label>
+                        </div>
+                        <div class="col-sm-4">
+                            @Html.DisplayFor(model => model.generalInspectionModel.RainEventOthervalue, new { @class = "form-control", placeholder = "Enter Rain Event " })</div>
+                        <div class="col-sm-4">
+                            @Html.DisplayFor(model => model.generalInspectionModel.RainEventValue)
+                        </div>
+                    </div>
+                </div> 
+                }
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="Weather_Info_Heading">
+            <div class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseWeather" aria-expanded="true"
+                    aria-controls="collapseWeather" style="text-align: none;text-decoration:none;">Weather Information</a>
+            </div>
+        </div>
+        <div id="collapseWeather" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="Weather_Info_Heading">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <label style="padding-left: 10px;">
+                            Has a storm event occurred since the last inspection?</label>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="checkbox">
+                            <label>
+                                @Html.DisplayFor(model => model.weatherInspectionModel.StromEventYes, new { @class = "check_stormEvent", @checked = "checked" })Yes
+                            </label>
+                            <label>@Html.DisplayFor(model => model.weatherInspectionModel.StromEventNo, new { @class = "check_stormEvent" })No
+                            </label>
+                        </div>
+                    </div>
+                    @if (Model.weatherInspectionModel.StromEventYes)
+                    {
+                    <div class="col-md-5">
+                        <label class="col-sm-4">
+                            <b>If yes, provide:</b></label>
+                        <div class="col-sm-1">
+                        </div>
+                        <div class="col-sm-7">
+                            @Html.DisplayFor(model => model.weatherInspectionModel.StromEventYesValue, new { @class = "form-control", placeholder = "Enter storm event " })
+                        </div>
+                    </div>
+                    }
+                </div>
+                @if(Model.weatherInspectionModel.StromEventYes==true)
+                {
+                <div id="stromDetails" class="table-responsive">
+                    <table id="tblAddStromEvents" class="table table-bordered table-striped tbl_Margin-0">
+                         <thead>
+                                    <tr>     <th></th>                                 
+                                        <th class=" col-md-4 active center">
+                                            Storm Start Date & Time
+                                        </th>
+                                        <th class=" col-md-4 active">
+                                            Estimated Storm Duration(hrs)
+                                        </th>
+                                        <th class="col-md-4 active">
+                                            Approximate Amount of Precipitation (in)
+                                        </th> 
+                                                                          
+                                    </tr>
+                                </thead>
+                         <tbody>
+                       @{
+    Int16 cnt = 0;
+    long ParentstId = 0;
+    var ParentStormDetailsList = Model.weatherInspectionModel.StormDetailsModelList.FindAll(parentItem => parentItem.ParentStorm_ID == null || parentItem.ParentStorm_ID == 0);
+
+    foreach (var ParentItem in ParentStormDetailsList)
+    {
+        
+                           <tr id="@ParentItem.ParentstID" class="trUploaddata">
+                                             <td  data-title= @(++cnt) class="activeheader">
+                                                <label class="count-display">
+                                                    @(cnt)</label>
+                                                <br />
+                                                @{ParentstId = ParentItem.Storm_ID;}
+                                            </td>
+                                            <td data-title="Storm Start Date & Time">  
+                                                @Html.DisplayFor(model => ParentItem.StormDate)
+                                                </td>
+                                            <td data-title="Estimated Storm Duration(hrs)">@Html.DisplayFor(model =>ParentItem.StormDuration)
+                                            </td>
+                                            <td data-title="Approximate Amount of Precipitation (in)">@Html.DisplayFor(model => ParentItem.Amount)
+                                            </td>
+                                           
+
+                           </tr>                           
+        foreach (var childItem in Model.weatherInspectionModel.StormDetailsModelList.FindAll(childItem => childItem.ParentStorm_ID == ParentItem.Storm_ID))
+        {
+             
+                            <tr  id="@childItem.Storm_ID" class="trUploaddata">
+                                            <td class="activeheader">
+                                                <label class="count-display">
+                                                </label>
+                                                <br /> 
+                                            </td>
+                                            <td data-title="Storm Start Date & Time">                                               
+                                                @Html.DisplayFor(model => childItem.StormDate)
+                                            </td>
+                                             <td data-title="Estimated Storm Duration(hrs)">                                               
+                                                @Html.DisplayFor(model => childItem.StormDuration)
+                                            </td>
+                                             <td data-title="Approximate Amount of Precipitation (in)">                                               
+                                                @Html.DisplayFor(model => childItem.Amount)
+                                            </td>                                             
+                         </tr>
+        }
+
+    }
+}           
+                      
+                         </tbody>
+                    </table>
+                </div>
+                }
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="col-sm-7  sp-15bottom">
+                            Weather at time of this inspection?</label>
+                        <div class="col-sm-5 sp-15bottom">
+                            @Html.DisplayFor(m => m.weatherInspectionModel.Weather_Time)
+                        </div>
+                    </div>
+                    <div class="col-md-5 " style="padding:0px !important;">
+                        <label class="col-md-5 sp-15bottom" style="margin-left:16Px;">
+                            Temperature <span>&#8457;</span> :</label>                      
+                            @Html.DisplayFor(model => model.weatherInspectionModel.Temperature)
+                      
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 sp-15bottom">
+                        <label style="padding-left: 15px;">
+                            Have any discharges occurred since the last inspection?</label>
+                    </div>
+                    <div class="col-md-2" style="padding-left: 26px;">
+                        <div class="checkbox">
+                            <label>@Html.DisplayFor(model => model.weatherInspectionModel.LastInspectionYes, new { @class = "check_discharges", @checked = "checked" })Yes
+                            </label>
+                            <label>@Html.DisplayFor(model => model.weatherInspectionModel.LastInspectionNo, new { @class = "check_discharges" })No
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="padding-left: 26px;">
+                        <label>
+                            Are any occuring now?</label>
+                    </div>
+                    <div class="col-md-2" style="padding-left: 26px;">
+                        <div class="checkbox">
+                            <label>@Html.DisplayFor(model => model.weatherInspectionModel.InspectionOccuringYes, new { @class = "check_occuring", @checked = "checked" })Yes
+                            </label>
+                            <label>@Html.DisplayFor(model => model.weatherInspectionModel.InspectionOccuringNo, new { @class = "check_occuring" })No
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                @if (Model.weatherInspectionModel.InspectionOccuringYes==true)
+                {
+                <div class="row">
+                    <div class="col-md-12">
+                        <label style="padding-left: 15px;">
+                            If Yes describe:</label>
+                    </div>
+                    <div class="col-md-12 sp-15bottom" style="padding-left: 30px;">
+                        @Html.DisplayFor(model => model.weatherInspectionModel.InspectionOccuringYesValue, new { @class = "form-control" })
+                    </div>
+                </div>
+                }
+                <div class="row">
+                    <div class="col-md-12 sp-15bottom">
+                        <label class="col-sm-5">
+                            Are any portions of your site unsafe to inspect?</label>
+                        <div class="col-sm-7" style="padding-left: 12px;">
+                            <div class="checkbox">
+                                <label>
+                                    @Html.DisplayFor(model => model.weatherInspectionModel.UnsafeInspectionYes, new { @class = "check_unsafe", @checked = "checked" })Yes
+                                </label>
+                                <label>
+                                    @Html.DisplayFor(model => model.weatherInspectionModel.UnsafeInspectionNo, new { @class = "check_unsafe" })No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 @if (Model.weatherInspectionModel.UnsafeInspectionYes == true)
+                 {
+                <div class="row">
+                    <div class="col-md-12">
+                        <label style="padding-left: 15px;">
+                            If Yes explain:</label>
+                    </div>
+                    <div class="col-md-12 sp-15bottom" style="padding-left: 30px;">
+                        @Html.DisplayFor(model => model.weatherInspectionModel.UnsafeInspectionValue, new { @class = "form-control" })
+                    </div>
+                </div>
+                 }
+                
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="Upload_Info_Heading">
+            <div class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseUploadData" aria-expanded="true"
+                    aria-controls="collapseUploadData" style="text-align: none;text-decoration:none;">Pollution Prevention, Sediment and Erosion Control BMP’s</a>
+            </div>
+        </div>
+        <div id="collapseUploadData" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="Upload_Info_Heading">
+            <div class="panel-body">
+              <div class="">
+                    <div id="Details-tables">
+                        <table id="tblAddNewInfo" class="table table-bordered ">
+                               <thead>
+                    <tr>
+                        <th>
+                        </th>
+                        <th class=" col-md-2 active">
+                            S&E/P2 Controls
+                        </th>
+                        <th class=" col-md-1 active">
+                            Maintenance Needed
+                        </th>
+                        <th class="col-md-2 active">
+                            Corrective Action
+                        </th>                       
+                        <th class="col-sm-1 active">
+                            Location
+                        </th>
+                        <th class="col-sm-1 active">
+                            Quantity
+                        </th>
+                        <th class="col-md-1 active">
+                            Unit of Measure
+                        </th>                      
+                        <th class="col-md-3 active">
+                            Photo
+                        </th>
+                        <th class="col-md-3 active">
+                            Status
+                        </th>
+                    </tr>
+                </thead>
+                             <tbody>
+                                    @{
+    Int16 count = 0;
+    long ParentId = 0;
+    Int16 ChildCount = 0;
+    var ParentUploadDataList = Model.weatherInspectionModel.UploadDataModelList.FindAll(parentItem => parentItem.ParentUploadData_ID == null || parentItem.ParentUploadData_ID == 0);
+
+    foreach (var ParentItem in ParentUploadDataList)
+    {
+                                        <tr id="trUploaddata1">
+                                            <td  data-title= @(++count) class="activeheader">
+                                                <label class="count-display">
+                                                    @(count)</label>
+                                                <br />
+                                                @{ParentId = ParentItem.UploadData_ID;}
+                                            </td>
+                                            <td data-title="S&E/P2 Controls">
+                                                @Html.HiddenFor(model => ParentItem.UploadData_ID)
+                                                @Html.DisplayFor(model => ParentItem.itemC1.Name)
+                                            </td>
+                                            <td data-title="Maintenance Needed">
+                                                @Html.DisplayFor(model => ParentItem.itemC2.Name)
+                                            </td>
+                                            <td data-title="Action required.">
+                                                @Html.DisplayFor(model => ParentItem.itemC3.Name)
+                                            </td>                                          
+                                            <td data-title="Location">@Html.DisplayFor(model => ParentItem.Location)
+                                            </td>
+                                            <td data-title="Quantity">@Html.DisplayFor(model => ParentItem.PPPLength)
+                                            </td>
+                                            <td data-title="Unit of Measure">@Html.DisplayFor(model => ParentItem.UOM.UOM)
+                                            </td>                                           
+                                            <td data-title="Photo">
+                                                @if (!string.IsNullOrEmpty(ParentItem.UploadImagePath))
+                                                {
+                                                    
+                                                   @* @Html.ActionLink(ParentItem.ImageName, ParentItem.UploadImagePath)*@
+                                                     @Html.ActionLink("Yes", ParentItem.UploadImagePath)
+                                                    @Html.HiddenFor(model => ParentItem.UploadImagePath)
+                                                    @Html.HiddenFor(model => ParentItem.ImageName)
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(m => ParentItem.PostedFile, new { type = "file" })
+                                                    @Html.ValidationMessageFor(m => ParentItem.FileName) 
+                                                }
+                                            </td>  
+                                             <td data-title="Status">@Html.DisplayFor(model => ParentItem.Status)
+                                            </td>                                    
+                                        </tr>
+                                                foreach (var childItem in Model.weatherInspectionModel.UploadDataModelList.FindAll(childItem => childItem.ParentUploadData_ID == ParentItem.UploadData_ID))
+                                                {                                                  
+                                                    
+                                        <tr id="trUploaddata1">
+                                            <td class="activeheader">
+                                                <label class="count-display">
+                                                </label>
+                                                <br />
+                                                @{ParentId = childItem.UploadData_ID;}
+                                            </td>
+                                            <td data-title="S&E/P2 Controls">
+                                                @Html.HiddenFor(model => childItem.UploadData_ID)
+                                                @Html.DisplayFor(model => childItem.itemC1.Name)
+                                            </td>
+                                            <td data-title="Maintenance Needed">
+                                                @Html.DisplayFor(model => childItem.itemC2.Name)
+                                            </td>
+                                            <td data-title="Action required.">
+                                                @Html.DisplayFor(model => childItem.itemC3.Name)
+                                            </td>                                          
+                                            <td data-title="Location">@Html.DisplayFor(model => childItem.Location)
+                                            </td>
+                                            <td data-title="Quantity">@Html.DisplayFor(model => childItem.PPPLength)
+                                            </td>
+                                            <td data-title="Unit of Measure">@Html.DisplayFor(model => childItem.UOM.UOM)
+                                            </td>                                          
+                                            <td data-title="Photo">
+                                                @if (!string.IsNullOrEmpty(childItem.UploadImagePath))
+                                                {
+                                                    @Html.ActionLink("Yes", childItem.UploadImagePath)
+                                                    @Html.HiddenFor(model => childItem.UploadImagePath)
+                                                    @Html.HiddenFor(model => childItem.ImageName)
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(m => childItem.PostedFile, new { type = "file" })
+                                                    @Html.ValidationMessageFor(m => childItem.FileName) 
+                                                }
+                                            </td>  
+                                             <td data-title="Status">@Html.DisplayFor(model => childItem.Status)
+                                            </td>                                 
+                                        </tr>                                                    
+                                                }
+    }
+                                    }
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="Site_Info_Heading">
+            <div class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                    aria-controls="collapseOne" style="text-align: none; text-decoration:none; ">General Site Inspection Items
+                </a>
+            </div>
+        </div>
+       <div id="collapseGeneralInsp" class="panel-collapse collapse in" role="tabpanel"
+            aria-labelledby="headingGeneralInsp">
+            <div class="panel-body">
+                <div id="SiteInspectionDetails-tables">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                </th>
+                                <th class="col-md-4 active">
+                                </th>
+                                <th class="col-md-2 active">
+                                   
+                                </th>
+                                <th class="col-md-2 active">
+                                    Action Required?
+                                </th>
+                                <th class="col-md-4 active">
+                                    Notes
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{count = 0;
+                            }
+                            <tr>
+                                <td data-title="" class="activeheaderDetails">
+                                     <label class="count-display">1</label>
+                                </td>
+                                <td data-title="Item 1">
+                                    @Html.DisplayFor(model => model.SiteInspection1.Question)
+                                </td>
+                                <td data-title="Area Inspected?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection1.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection1.AreaInspectedNo)No
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection1.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection1.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection1.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection1.Notes)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="activeheaderDetails">
+                                    <label class="count-display">2<br /></label>
+                                </td>
+                                <td data-title="Item 2">
+                                    @Html.DisplayFor(model => model.SiteInspection2.Question)
+                                </td>
+                                <td data-title="Area Inspected?"> 
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection2.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection2.AreaInspectedNo)No
+                                        </label>
+                                         <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection2.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection2.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection2.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection2.Notes)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="activeheaderDetails"> 
+                                  <label class="count-display">3<br /></label>
+                                </td>
+                                <td data-title="Item 3">
+                                    @Html.DisplayFor(model => model.SiteInspection3.Question)
+                                </td>
+                                <td data-title="Area Inspected?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection3.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection3.AreaInspectedNo)No
+                                        </label>
+                                         <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection3.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection3.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection3.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection3.Notes)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="activeheaderDetails">
+                                    <label class="count-display">4<br /></label>
+                                </td>
+                                <td data-title="Item 4">
+                                    @Html.DisplayFor(model => model.SiteInspection4.Question)
+                                </td>
+                                <td data-title="Area Inspected?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection4.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection4.AreaInspectedNo)No
+                                        </label>
+                                         <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection4.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection4.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection4.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection4.Notes)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="activeheaderDetails">
+                                     <label class="count-display">5<br /></label>
+                                </td>
+                                <td data-title="Item 5">
+                                    @Html.DisplayFor(model => model.SiteInspection5.Question)
+                                </td>
+                                <td data-title="Area Inspected?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection5.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection5.AreaInspectedNo)No
+                                        </label>
+                                         <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection5.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection5.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection5.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection5.Notes)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="activeheaderDetails">
+                                     <label class="count-display">6<br /></label>
+                                </td>
+                                <td data-title="Item 6">
+                                    @Html.DisplayFor(model => model.SiteInspection6.Question)
+                                </td>
+                                <td data-title="Area Inspected?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection6.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection6.AreaInspectedNo)No
+                                        </label>
+                                         <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection6.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection6.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection6.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection6.Notes)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="activeheaderDetails">
+                                     <label class="count-display">7<br /></label>
+                                </td>
+                                <td data-title="Item 7">
+                                    @Html.DisplayFor(model => model.SiteInspection7.Question)
+                                </td>
+                                <td data-title="Area Inspected?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection7.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection7.AreaInspectedNo)No
+                                        </label>
+                                         <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection7.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection7.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection7.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection7.Notes)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="activeheaderDetails">
+                                     <label class="count-display">8<br /></label>
+                                </td>
+                                <td data-title="Item 8">
+                                    @Html.DisplayFor(model => model.SiteInspection8.Question)
+                                </td>
+                                <td data-title="Area Inspected?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection8.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection8.AreaInspectedNo)No
+                                        </label>
+                                         <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection8.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection8.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection8.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection8.Notes)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="activeheaderDetails">
+                                     <label class="count-display">9<br /></label>
+                                </td>
+                                <td data-title="Item 9">
+                                    @Html.DisplayFor(model => model.SiteInspection9.Question)
+                                </td>
+                                <td data-title="Area Inspected?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection9.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection9.AreaInspectedNo)No
+                                        </label>
+                                         <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection9.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection9.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection9.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection9.Notes)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="activeheaderDetails">
+                                     <label class="count-display">10<br /></label>
+                                </td>
+                                <td data-title="Item 10">
+                                    @Html.DisplayFor(model => model.SiteInspection10.Question)
+                                </td>
+                                <td data-title="Area Inspected?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection10.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection10.AreaInspectedNo)No
+                                        </label>
+                                         <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection10.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection10.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection10.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection10.Notes)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="activeheaderDetails">
+                                    <label class="count-display">11<br /></label>
+                                </td>
+                                <td data-title="Item 11">
+                                    @Html.DisplayFor(model => model.SiteInspection11.Question)
+                                </td>
+                                <td data-title="Area Inspected?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection11.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection11.AreaInspectedNo)No
+                                        </label>
+                                         <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection11.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection11.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection11.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection11.Notes)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="activeheaderDetails">
+                                     <label class="count-display">12<br /></label>
+                                </td>
+                                <td data-title="Item 12">
+                                    @Html.DisplayFor(model => model.SiteInspection12.Question)
+                                </td>
+                                <td data-title="Area Inspected?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection12.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection12.AreaInspectedNo)No
+                                        </label>
+                                         <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection12.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection12.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection12.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection12.Notes)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="activeheaderDetails">
+                                     <label class="count-display">13<br /></label>
+                                </td>
+                                <td data-title="Item 13">
+                                    @Html.DisplayFor(model => model.SiteInspection13.Question)
+                                </td>
+                                <td data-title="Area Inspected?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection13.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection13.AreaInspectedNo)No
+                                        </label>
+                                         <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection13.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection13.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection13.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection13.Notes)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="activeheaderDetails">
+                                     <label class="count-display">14<br /></label>
+                                </td>
+                                <td data-title="Item 14">
+                                    @Html.DisplayFor(model => model.SiteInspection14.Question)
+                                </td>
+                                <td data-title="Area Inspected?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection14.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection14.AreaInspectedNo)No
+                                        </label>
+                                         <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection14.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection14.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection14.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection14.Notes)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="activeheaderDetails">
+                                     <label class="count-display">15<br /></label>
+                                </td>
+                                <td data-title="Item 15">
+                                    @Html.DisplayFor(model => model.SiteInspection15.Question)
+                                </td>
+                                <td data-title="Area Inspected?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection15.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection15.AreaInspectedNo)No
+                                        </label>
+                                         <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection15.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection15.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection15.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection15.Notes)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="activeheaderDetails">
+                                     <label class="count-display">16<br /></label>
+                                </td>
+                                <td data-title="Item 16">
+                                    @Html.DisplayFor(model => model.SiteInspection16.Question)
+                                </td>
+                                <td data-title="Area Inspected?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection16.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection16.AreaInspectedNo)No
+                                        </label>
+                                         <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection16.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection16.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection16.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection16.Notes)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="activeheaderDetails">
+                                     <label class="count-display">17<br /></label>
+                                </td>
+                                <td data-title="Item 17">
+                                    @Html.DisplayFor(model => model.SiteInspection17.Question)
+                                </td>
+                                <td data-title="Area Inspected?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection17.AreaInspectedYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection17.AreaInspectedNo)No
+                                        </label>
+                                         <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection17.AreaInspectedNA)NA
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Action Required?">
+                                    <div class="row checkbox text-center">
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection17.ActionRequiredYes)Yes
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.DisplayFor(model => model.SiteInspection17.ActionRequiredNo)No
+                                        </label>
+                                    </div>
+                                </td>
+                                <td data-title="Notes">
+                                    @Html.DisplayFor(model => model.SiteInspection17.Notes)
+                                </td>
+                            </tr>                           
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <h3>
+                        Certification and Signature by Inspector</h3>
+                    <p>
+                        <i>"I certify under penalty of law that this document and all attachments were prepared
+                            under my direction or supervision in accordance with a system designed to assure
+                            that qualified personnel properly gathered and evaluated the information submitted.
+                            Based on my inquiry of the person or persons who manage the system, or those persons
+                            directly responsible for gathering the information, the information submitted is,
+                            to the best of my knowledge and belief, true, accurate, and complete. I am aware
+                            that there are significant penalties for submitting false information, including
+                            the possibility of fine and imprisonment for knowing violations."</i></p>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-sm-9 sp-15bottom">
+                            <b>Inspected By :@Html.DisplayFor(m => m.generalInspectionModel.inspector.Name)</b></div>
+                        <div class="col-sm-3">
+                           <b>Date : </b> @Html.DisplayFor(model => model.generalInspectionModel.ModifiedDate)</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <br />
+                    <div class="col-md-12">
+                         <b>Signature and Affiliation : </b>
+                         &nbsp;&nbsp;<img src="@Model.generalInspectionModel.UploadSignPath" alt="Sign not display" style="height:50px;width:100px"  />
+                         </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr />
+                    </div>
+                </div>
+                <div>
+                    <h3>
+                        Certification and Signature by Contractor</h3>
+                    <p>
+                        <i>"I certify under penalty of law that this document and all attachments were prepared
+                            under my direction or supervision in accordance with a system designed to assure
+                            that qualified personnel properly gathered and evaluated the information submitted.
+                            Based on my inquiry of the person or persons who manage the system, or those persons
+                            directly responsible for gathering the information, the information submitted is,
+                            to the best of my knowledge and belief, true, accurate, and complete. I am aware
+                            that there are significant penalties for submitting false information, including
+                            the possibility of fine and imprisonment for knowing violations."</i></p>
+                </div>
+                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-sm-9 sp-15bottom">
+                            <b style="font-size:14px;">Print Name and Title : @Html.DisplayFor(m => m.ReviewerName),  @Html.DisplayFor(m => m.ReviewerTitle) </b>
+                        </div>
+                        <div class="col-sm-3">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <br />
+                    <div class="col-md-12">
+                        <div class="col-sm-9 sp-15bottom">
+                            <b>Signature : @Html.DisplayFor(m =>m.ReviewerName)</b>
+                        </div>
+                         @if(Convert.ToDateTime(Model.ReviewerOpenDateTime)!= Convert.ToDateTime("2001-01-01 19:43:33.190"))
+                        {
+                        <div class="col-sm-3">
+                            <b>Date :  @Html.DisplayFor(m => m.ReviewerOpenDateTime) </b>
+                        </div>
+                        }
+                        else
+                        {
+                            <div class="col-sm-3">
+                            <b>Date :  </b>
+                        </div>
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

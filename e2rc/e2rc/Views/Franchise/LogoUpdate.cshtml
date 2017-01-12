@@ -1,0 +1,218 @@
+﻿@model e2rc.Models.FranchiseModel
+@{
+    ViewBag.Title = "LogoUpdate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#btshow").click(function () {
+            if (document.getElementById("PostedFile1").style.visibility == 'visible') {
+                alert(document.getElementById('PostedFile1').files[0].size);
+            }
+            document.getElementById("PostedFile1").style.visibility = 'visible';
+            return false;
+        });
+        $("#btnSubmit").click(function () {
+            //Get reference of FileUpload.
+            if (document.getElementById("PostedFile1").style.visibility == 'visible') {
+                //if (document.getElementById("Role_Role_ID").value == 2) {
+                if (document.getElementById('PostedFile1').files[0].size > 50000) {
+                    alert('Please upload logo with maximum size 50kb.');
+                    return false;
+                }
+                //else {
+                //    Upload();
+                //}
+                return true;
+            }
+        });
+    });
+
+    function Upload() {
+        //Get reference of FileUpload.
+        var fileUpload = document.getElementById("PostedFile1");
+
+        //Check whether the file is valid Image.
+        //Check whether HTML5 is supported.
+        if (typeof (fileUpload.files) != "undefined") {
+            //Initiate the FileReader object.
+            var reader = new FileReader();
+            //Read the contents of Image File.
+            reader.readAsDataURL(fileUpload.files[0]);
+            reader.onload = function (e) {
+                //Initiate the JavaScript Image object.
+                var image = new Image();
+                //Set the Base64 string return from FileReader as source.
+                image.src = e.target.result;
+
+                //Validate the File Height and Width.
+                var returnData = image.onload = function () {
+                    var height = this.height;
+                    if (height > 200) {
+                        alert("height must not exceed 200px.");
+                        return false;
+                    }
+                    else {
+                        //document.getElementById("frmLogoUpdate").submit();
+                        $('#frmLogoUpdate').submit();
+                    }
+                };
+                return returnData;
+            }
+        }
+        else {
+            alert("This browser does not support HTML5.");
+            return false;
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    var IsFormFilled = false;
+    var sUserRole = '@User.Role';
+    $(function () {
+        $(".btnbk").click(function () {
+            var result = '@ViewBag.IsFranchiseEdited';
+            if (result == false) {
+                $("input:text:not(.date)").each(function () {
+
+                    if ($(this).val().trim() != "" && $(this).val().trim().length > 0) {
+                        IsFormFilled = true;
+                    }
+
+                });
+                @*if (IsFormFilled) {
+                    if (confirm("The account information is incomplete or has not been saved.Select 'OK' to proceed or 'Cancel' to complete and save the account information")) {
+                        if (sUserRole == "Super Admin") {
+                            window.location = "@Url.Action("Index","Franchise")";
+                        }
+                        else {
+                            window.location = "@Url.Action("Account", "Franchise", new { Franchise_ID = e2rc.Models.Repository.FranchiseRepository.FranchiseID(User.User_ID) })";
+                        }
+                    }
+                    else {
+                        IsFormFilled = false;
+                    }
+                } else {
+                    if (sUserRole == "Super Admin") {
+                        window.location = "@Url.Action("Index","Franchise")";
+                    }
+                    else {
+                        window.location = "@Url.Action("Account", "Franchise", new { Franchise_ID = e2rc.Models.Repository.FranchiseRepository.FranchiseID(User.User_ID) })";
+                    }
+                    //window.location = "@Url.Action("Index","Franchise")";
+                }
+
+            }
+            else {
+                if (sUserRole == "Super Admin") {
+                    window.location = "@Url.Action("Index","Franchise")";
+                }
+                else {
+                    window.location = "@Url.Action("Index", "Franchise", new { Franchise_ID = e2rc.Models.Repository.FranchiseRepository.FranchiseID(User.User_ID) })";
+                }
+                window.location = "@Url.Action("Index","Franchise")";
+            }*@
+            }
+        });
+    });
+</script>
+
+<div class="navbar" style="margin-bottom: 0% !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-sm-4">
+                @*<div class="btn btn-black btn-custom  btnbk" style="width:100%;"> Back</div>*@
+                <a class="btn btn-black btn-custom  btnbk" style="width:100%;" href="@Url.Action("Account", "Franchise", new { Franchise_ID = e2rc.Models.Repository.FranchiseRepository.FranchiseID(User.User_ID) })">
+                     Back
+                </a>
+            </div>
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-4">
+                @*  @Html.ActionLink("View Franchise", "Index", "Franchise", null, new { @class = "btn btn-black btn-custom" })*@
+                @* <div class="btn btn-black btn-custom btnbk" style="width: 100%;">
+                    View Franchises</div>*@
+            </div>
+        </div>
+        <div class="col-md-6">
+            @if (ViewBag.IsFranchiseEdited ?? false)
+            {
+                <font style="color: #468847;">Franchise @ViewBag.FranchiseName logo has been updated successfully.</font>
+            }
+            else if (!(ViewBag.IsFranchiseEdited ?? true))
+            {
+                <font style="color: #468847;">Unable to update franchise logo.</font>
+            }
+        </div>
+    </div>
+</div>
+<div class="panel-head">
+    Edit Franchise Company Logo
+</div>
+@using (Html.BeginForm("LogoUpdate", "Franchise", FormMethod.Post, new { id = "frmLogoUpdate", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div id="accordion" class="panel-group" aria-multiselectable="true" role="tablist">
+        <div class="panel panel-default">
+            <div class="panel-heading sign">
+                <div class="panel-title sign">
+                    <b>Logo Details</b>
+                </div>
+            </div>
+            <div id="collapsesignature">
+                <div class="panel-body">
+                    <div class="row sign">
+                        <div class="col-md-6">
+                            <label class="col-sm-3 sp-15bottom">
+                                Logo <span style="color:Red"></span>
+                            </label>
+                            <div class="col-sm-9">
+                                @if (Session["CompanyLogoPath"] != null)
+                                {
+                                    <div class="logo1" style="margin-top:0px; margin-left: 0px;">
+                                        <a href="#" class="text-center">
+                                            <img src="@Session["CompanyLogoPath"].ToString()" alt="logo" />
+                                        </a>
+                                    </div>
+                                }
+                                @*@Html.DisplayFor(model => model.slogoName)*@
+                                @Html.HiddenFor(m => m.Franchise_ID)
+                                @Html.HiddenFor(m => m.FraCompName)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="button" id="btshow" value="New Logo" class="btn btn-primary col-sm-1" />
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.PostedFile, new { type = "file", @id = "PostedFile1", @Style = "visibility:hidden" })
+                                @if (ViewBag.ErrorMsg != null)
+                                {
+                                    <span style="color: Red">@ViewBag.ErrorMsg</span>
+                                }
+                                @*   @Html.ValidationMessageFor(m => m.PostedFile, string.Empty, new { @style = "margin-top:2% !important;" })*@
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <input type="submit" id="btnSubmit" class="btn  btn-primary" value="Save" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        @Html.ValidationSummary(true)
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
