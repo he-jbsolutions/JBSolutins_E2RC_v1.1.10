@@ -1,0 +1,155 @@
+﻿
+@charset "utf-8";
+/*Strip the ul of padding and list styling*/
+#id1 ul {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	position: absolute;
+	z-index:9999;
+}
+#id1 ul li ul:hover
+{
+    display:block;
+}
+
+/*Create a horizontal list with spacing*/
+ #id1 li {
+	display:inline-block;
+	float: left;
+	margin-right: 1px;
+}
+/*Style for menu links*/
+ #id1 li a {
+	display:block;
+	min-width:240px;
+	height: 46px;
+	text-align: center;
+	line-height: 50px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #fff;
+	background: #199ad6;
+	text-decoration: none;
+}
+
+/*Hover state for top level links*/
+#id1 li:hover a {
+	background: #444444;
+}
+
+/*Style for dropdown links*/
+ li:hover ul a {
+	background: #f3f3f3;
+	color: #2f3036;
+	height: 40px;
+	line-height: 40px;
+}
+
+/*Hover state for dropdown links*/
+ #id1 li:hover ul a:hover {
+	background: #199ad6;
+	color: #fff;
+}
+/*Hide dropdown links until they are needed*/
+ li ul {
+	display: none;
+}
+
+
+/*Make dropdown links vertical*/
+#id1  li  ul  li {
+	display: block;
+	float: none;
+}
+
+/*Prevent text wrapping*/
+#id1 li ul  li a {
+	width: auto;
+	min-width: 500px;
+	padding: 0 20px;
+}
+
+/*Display the dropdown on hover*/
+ ul li a:hover + .hi, .hi:hover {
+	display: block;
+}
+
+
+@media screen and (max-width : 768px){
+	/*Make dropdown links appear inline*/
+	
+	#id1 ul {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	position: relative !important;
+	z-index:9999;
+}
+	
+   ul {
+		position: absolute;
+		display: none;
+	}
+	/*Create vertical spacing*/
+   	li {
+		margin-bottom: 1px;
+	}
+	/*Make all menu links full width*/
+   	ul li, li a {
+		width: 100%;
+	}
+	/*Display 'show menu' link*/
+   .show-menu {
+		display:block !important;
+	}
+}
+
+@media screen and  (max-device-width: 1000px) {
+
+	/*Make dropdown links appear inline*/
+	
+	#id1 ul {	
+	position:relative;
+	z-index:9999;
+}
+ 
+	/*Create vertical spacing*/
+	#id1 li {
+		margin-bottom: 1px;
+	}
+	/*Make all menu links full width*/
+	#id1 ul li,#id1 li a {
+		width: 100%;
+	}
+	/*Display 'show menu' link*/
+	 .show-menu {
+		display:block !important;
+	}
+}
+
+@media screen and  (min-device-width: 1000px) 
+{
+    
+}
+
+/*Style 'show menu' label button and hide it by default*/
+.show-menu {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-decoration: none;
+	color: #fff;
+	background: #199ad6;
+	text-align: center;
+	padding: 10px 0;
+	display: none;
+	width:100%;
+}
+
+/*Hide checkbox*/
+input[type=checkbox] #show-menu{
+    display: none;
+}
+
+/*Show menu when invisible checkbox is checked*/
+input[type=checkbox]:checked ~ .menu{
+    display: block;
+}

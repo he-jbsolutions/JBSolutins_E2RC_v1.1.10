@@ -1,0 +1,138 @@
+.form-wrapper{
+	background:url(../../images/login-shadow.png) bottom center no-repeat;
+	padding-bottom:40px;	
+}
+.form-horizontal {
+  max-width: 678px;
+  padding: 20px 20px 0px 20px;
+  margin: 0 auto;
+  background:#fff;
+  border:1px solid #ccc;
+  border-radius:10px;
+  box-shadow:0px 0px 5px #ccc;
+}  
+.form-horizontal .form-horizontal-heading{
+	background:#199ad6;	
+	margin: -20px;
+	border-radius: 10px 10px 0px 0px;
+	text-align:center;
+	color:#fff;
+	padding:15px 0px;
+	text-transform:uppercase;
+	font-size:20px;
+	font-weight:700;
+}
+.form-horizontal .form-horizontal-heading,
+.form-horizontal .checkbox {
+  margin-bottom: 10px;
+}
+.form-horizontal .checkbox {
+  font-weight: normal;
+}
+.form-horizontal .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-horizontal .form-control:focus {
+  z-index: 2;
+}
+.form-horizontal input[type="email"] {
+  margin-bottom: -1px;
+}
+.form-horizontal input[type="password"] {
+  margin-bottom: 10px;
+
+}
+.form-content{
+	width:90%;	
+	margin:0px auto;
+	padding:30px 0px;
+}
+.uname{
+	margin-bottom:30px;	
+}
+
+.form-horizontal .btn{
+	background: #2aafe5; /* Old browsers */
+background: -moz-linear-gradient(top,  #2aafe5 0%, #138ed6 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2aafe5), color-stop(100%,#138ed6)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #2aafe5 0%,#138ed6 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #2aafe5 0%,#138ed6 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #2aafe5 0%,#138ed6 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #2aafe5 0%,#138ed6 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2aafe5', endColorstr='#138ed6',GradientType=0 ); /* IE6-9 */
+padding:10px 30px;
+text-transform:uppercase;
+font-size:14px;
+font-weight:bold;
+color:#fff;
+	
+}
+
+.fa{
+	margin:0px 10px 0px 0px;	
+}
+
+.email1{
+	padding: 9px 6px 9px 40px!important;
+}
+.passwordfield{
+	padding: 9px 6px 9px 40px!important;
+}
+.form-horizontal .controls {
+	position: relative;
+	margin-bottom: 10px;
+}
+.form-horizontal span {
+position: absolute;
+top: 13px;
+left: 16px;
+font-size: 16px;
+color: rgba(0,0,0,0.3);
+z-index:9999;
+}
+.control-group{
+	clear:both;
+	overflow:hidden;	
+}
+.form-horizontal .radio{
+	padding-left:0px;	
+}
+.form-horizontal .control-label{
+	padding-top:10px!important;	
+}
+
+@media (max-width:768px){
+
+.form-horizontal span {
+position: absolute;
+top: 48px;
+left: 30px;
+font-size: 16px;
+color: rgba(0,0,0,0.3);
+z-index: 9999;
+}
+}
+ 
+.form-horizontal .col-sm-3, .form-horizontal .col-sm-9{
+	padding:0px 15px;	
+}
+
+.btn-logout { background-color: #595758;
+    border: 0 none;
+    color: #fff;
+    float: right;
+    font-size: 12px;
+    margin-right: 14px;
+    padding: 4px 15px;
+    border-radius: 5px;
+    }
+    
+
+
+

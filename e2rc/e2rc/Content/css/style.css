@@ -1,0 +1,930 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+body {
+	font-family: 'Open Sans';
+	background: url(../../images/bg.jpg) top center no-repeat;
+    background-attachment:fixed;
+}
+.content {
+	margin-bottom: 20px;
+}
+.paddingLF0 {
+	padding-left:0px;
+	padding-right:0px;
+}
+
+.panel-group {
+	border-radius: 0;
+	margin: 0px;
+}
+.panel-head {
+	background-color: #199ad6!important;
+	font-size: 20px;
+	color: #fff;
+	padding: 10px;
+	font-weight: bold;
+	text-align: center;
+}
+.logo {
+	padding: 20px;
+	text-align: center;
+}
+.logo1 
+{
+    float: left;
+    margin-top: 100px;
+    margin-left: 25px;
+}
+.logo1 img
+{
+    height : 75px;
+}
+
+.panel-heading {
+	background-color: #e2f8ff!important;
+}
+.panel-heading a {
+	font-size: 16px;
+	font-weight: bold;
+	color: #333333;
+}
+.panel-body label {
+	font-size: 13px;
+	font-weight: normal;
+}
+.panel-inner {
+	padding: 15px;
+}
+
+.panel-group .panel+.panel {
+	margin-top: 0px!important;
+}
+.panel-group .panel {
+	border-radius: 0px;
+}
+input, textarea, .uneditable-input, select {
+	width: 100%;
+}
+.panel-info {
+	margin-bottom: 15px!important;
+}
+ @media screen and (max-width: 768px) {
+.container {
+	width: 100%;
+}
+}
+.btn-primary {
+	background: #2aa9dd; /* Old browsers */
+	background: -moz-linear-gradient(top, #2aa9dd 0%, #1185ca 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2aa9dd), color-stop(100%, #1185ca)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #2aa9dd 0%, #1185ca 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #2aa9dd 0%, #1185ca 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #2aa9dd 0%, #1185ca 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #2aa9dd 0%, #1185ca 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2aa9dd', endColorstr='#1185ca', GradientType=0 ); /* IE6-9 */
+	border-color: #357ebd;
+}
+.btn-primary:hover{
+	background: #1185ca; /* Old browsers */
+	background: -moz-linear-gradient(top, #1185ca 0%, #2aa9dd 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #1185ca), color-stop(100%, #2aa9dd)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #1185ca 0%, #2aa9dd 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #1185ca 0%, #2aa9dd 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #1185ca 0%, #2aa9dd 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #1185ca 0%, #2aa9dd 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1185ca', endColorstr='#2aa9dd', GradientType=0 ); /* IE6-9 */
+	border-color: #357ebd;
+}
+.table thead tr th {
+	border-bottom: none;
+}
+.radio, .checkbox {
+	margin-top: 0px;
+}
+.btn {
+	padding: 6px 20px;
+}
+.dashboardbtn {
+	padding: 1px 17px;
+	background:#4EB1DF;
+}
+.panel .panel-info {
+	background: #f2f2f2;
+	border: 1px solid #ccc;
+}
+.col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9 {
+	/*padding: 0px;*/
+}
+
+.bg-blue  
+{
+    background-color:#63baff;
+    /* Safari 4-5, Chrome 1-9 */ background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#199BFF), to(#cbe8f3)); 
+    /* Safari 5.1, Chrome 10+ */ background: -webkit-linear-gradient(top, #199BFF, #cbe8f3); 
+    /* Firefox 3.6+ */ background: -moz-linear-gradient(top, #199BFF, #cbe8f3);
+    /* IE 10 */ background: -ms-linear-gradient(top, #199BFF, #cbe8f3); 
+    /* Opera 11.10+ */ background: -o-linear-gradient(top, #199BFF, #cbe8f3);
+ }
+
+.bg-gray  
+{
+    background-color:gray;
+    /* Safari 4-5, Chrome 1-9 */ background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#595758), to(#bcbbbc)); 
+    /* Safari 5.1, Chrome 10+ */ background: -webkit-linear-gradient(top, #595758, #bcbbbc); 
+    /* Firefox 3.6+ */ background: -moz-linear-gradient(top, #595758, #bcbbbc);
+    /* IE 10 */ background: -ms-linear-gradient(top, #595758, #bcbbbc); 
+    /* Opera 11.10+ */ background: -o-linear-gradient(top, #595758, #bcbbbc);
+} 
+
+.bg-green { background-color:#00a489;}
+
+.email-heading { font-size: 13px;
+color: #FFF;
+width: 100%;
+margin:3px 0 auto;
+text-align: center;
+display: inline-block;
+padding: 6px 27px 37px 22px;
+
+}
+.email-heading input { border-radius:0; border:none;}
+
+.height-164px { height:164px;}
+.height-170px { height:170px;}
+.height-313px { height:313px;}
+.height-Auto { height:Auto;}
+.height-141px { height:141px;}
+
+a.email-heading:hover { text-decoration:none;}
+
+.bg-green1 { background-color:#36b5a0; border-radius:0px; border:1px solid #36b5a0;}
+
+.bg-green2 { background-color:#2cb1ba; border-radius:0px; border:1px solid #36b5a0;}
+
+.bg-grey {  background-color:#595758; }
+
+.bg-green1:hover { background-color:#36b5a0;}
+
+.bg-orange { background-color:#f57b4c;}
+
+.margin-bottom { margin:0px 0px 10px 0px ;}
+
+.metro {
+height: 141px;
+
+}
+.input-group-btn .fa{color:#fff;}
+
+.social-link { 
+color: #fff;
+display:block;
+text-decoration: none;
+max-width:60px;
+margin:0 auto;
+
+}
+.padding-top-28 { padding-top:28px;}
+.padding-top-10 { padding-top:10px;}
+.social-link .fa { font-size:88px;}
+
+.social-link  span{padding: 0 2px; font-size:16px;
+}
+.login-wrapper1 { max-width:270px;
+margin:0 auto; }
+
+.tbl-width {
+    margin: 0 auto;
+    max-width: 967px;
+}
+
+.login-wrapper1 .fa { font-size:88px; color:#FFF; margin-top: 10px;}
+
+.login-wrapper1 span { font-size:16px; color:#FFF; margin-top: 42px;
+display: block;}
+.img-100 { width:100%;}
+/* info and errors */
+.message-info {
+    border: 1px solid;
+    clear: both;
+    padding: 10px 20px;
+}
+.message-error {
+    clear: both;
+    color: #ff0000;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+}
+.message-success {
+    color: #7ac0da;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+} 
+ .error {
+    color: #ff0000;
+}
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #ff0000;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #ff0000;
+   
+    font-size: 1.1em;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/*================Franchise create=======================*/
+.sp-15bottom {
+  margin-bottom: 10px;
+}
+ /* styles for validation helpers */
+.field-validation-error {
+    color: #ff0000;
+    margin-bottom:4%;
+    margin-top:-3%;
+    float:left;
+}
+.field-validation-error-1 .field-validation-error {
+    margin-top: 0%;
+    margin-bottom:2px;
+} 
+
+.ui-resizable1 {
+   left: 23% !important;
+ }
+
+ @media (max-width:768px)
+ {
+    .field-validation-error {   
+    margin-bottom:3%;
+    margin-top:-2%;
+    float:right;
+   }
+   .ui-resizable1 {
+        left: 14% !important;
+        width:72%  !important;
+   }
+ }
+ @media (max-width:330px)
+ {
+    .field-validation-error {  
+    margin-bottom:3%;
+    margin-top:-5%;
+    float:right;
+}
+ }
+ 
+/* ===============DashBoard Media Query===============*/
+  
+ @media (max-width:768px)  
+ {
+   .tab-less{width:100%;}     
+}
+ @media (min-width:768px)  
+ {
+  .img-heightPic {height:141px; }     
+}
+@media (min-width:768px)  
+ {
+  .img-height100 {height:100%; }     
+}
+
+/*========View Franchise=============*/
+ 
+ .padding-0
+ {
+     padding:0% !important;
+ } 
+ .margin-0
+ {
+     margin:0% !important;
+ } 
+ .header-color
+ {
+     background-color: #e2f8ff !important;
+ }
+ 
+ .btn-custom { background-color: hsl(0, 0%, 27%) !important; 
+               background-repeat: repeat-x; 
+               filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#878787", endColorstr="#444444"); 
+               background-image: -khtml-gradient(linear, left top, left bottom, from(#878787), to(#444444));
+                background-image: -moz-linear-gradient(top, #878787, #444444); 
+                background-image: -ms-linear-gradient(top, #878787, #444444); 
+                background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #878787), color-stop(100%, #444444)); 
+                background-image: -webkit-linear-gradient(top, #878787, #444444); 
+                background-image: -o-linear-gradient(top, #878787, #444444);
+                 background-image: linear-gradient(#878787, #444444); 
+                 border-color: #444444 #444444 hsl(0, 0%, 20.5%); 
+                 color: #fff !important; 
+                 text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.42); 
+                 -webkit-font-smoothing: antialiased; }
+ 
+ .btn-black {	 
+	width:100%;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td,
+tr.found{
+    background-color:#f9f9f9;
+}
+
+ 
+
+/* Autocomplete and delete confirm dialog box css */
+  .ui-widget-header
+    {
+        border: none !important;
+        background: url('../Content/images/bgHeader.png') !important;
+        color:#FFFFFF !important;
+    }
+    .ui-state-default, .ui-widget-content .ui-state-default, .ui-state-default
+    {
+        background: url('../Content/images/bgHeader.png') !important;
+        color: White !important;
+    }
+    .ui-state-hover, .ui-state-focus
+    {
+        background: url('../Content/images/bgHeader.png') !important;
+        color: White;
+        border-color: White !important;
+    }
+    .ui-widget-content
+    {
+        background: white !important;
+    }
+    .ui-dialog-titlebar-close
+    {
+        background: url('../Content/images/closed-whiite.png') no-repeat !important;
+        height: 15px !important;
+        width: 15px !important;
+    }
+    .ui-dialog-buttonset
+    {
+        float: none !important;
+        text-align: center !important;
+    }
+    .ui-dialog-buttonpane
+    {
+        padding: 0% !important;
+    }         
+    .padding-none
+    {
+        padding:0px !important;
+    }   
+    
+    .btn-search
+    {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      height: 30px !important;
+      margin: 0 !important;
+    }
+    .text-search
+    {
+      border-bottom-right-radius: 0px !important;
+      border-top-right-radius: 0px !important;      
+    }
+    
+    
+ @media (min-width:990px)  
+ {
+   .pad
+   {
+       padding-left:0px !important;
+   } 
+ }
+ 
+ .radio-inline + .radio-inline, .checkbox-inline + .checkbox-inline 
+ {
+     margin-left:0px !important;
+ } 
+ .container-fluid 
+ {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 50px !important;
+    padding-right: 50px !important;
+ }
+ 
+ .radio input[type="radio"], .checkbox input[type="checkbox"] {
+    float: left;
+    margin-left: -15px !important;
+}
+
+.radio-inline, .checkbox-inline 
+{
+    padding-left:15px !important;
+}
+ @media only screen and (max-width: 997px)
+ {
+   #option
+   {
+       right:1% !important;
+   }
+ }
+  @media only screen and (max-width: 1100px)
+ {
+   #option
+   {
+       right:2% !important;
+   }
+ }
+
+ /*==========UploadData Css============ */
+ @media only screen and (max-width: 800px)
+ {
+     
+
+
+#option
+   {
+       right:1% !important;
+   }
+#no-more-tables table, 
+	#no-more-tables thead, 
+	#no-more-tables tbody, 
+	#no-more-tables th, 
+	#no-more-tables td, 
+	#no-more-tables tr { 
+		display: block; 
+	}
+ 
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#no-more-tables thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	#no-more-tables tr { border: 1px solid #ccc; }
+ 
+	#no-more-tables td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+		 
+	}
+ 
+	#no-more-tables td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		/*white-space: nowrap;*/
+		text-align:left;
+		font-weight: bold;
+		white-space:normal;
+	}
+ 
+	/*
+	Label the data
+	*/
+	#no-more-tables td:before { content: attr(data-title); }
+
+    #no-more-tables thead tr th{
+	 width:50%;	
+    }
+   .activeheader
+   {
+       background-color:#e9e9e9 !important;
+       
+   }   
+    .margin-tab
+    {
+        margin-bottom:0px !important;
+    }
+    .text-center
+    {
+        text-align:left !important;
+        margin-left:3px !important;
+    }
+     .testcenter
+    {
+         float:none !important;
+    }
+}
+
+
+/*==========stromDetails Css============ */
+ @media only screen and (max-width: 800px){
+#stromDetails table, 
+	#stromDetails thead, 
+	#stromDetails tbody, 
+	#stromDetails th, 
+	#stromDetails td, 
+	#stromDetails tr { 
+		display: block; 
+	}
+ 
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#stromDetails thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	#stromDetails tr { border: 1px solid #ccc; }
+ 
+	#stromDetails td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+		 
+	}
+ 
+	#stromDetails td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		/*white-space: nowrap;*/
+		text-align:left;
+		font-weight: bold;
+		white-space:normal;
+	}
+ 
+	/*
+	Label the data
+	*/
+	#stromDetails td:before { content: attr(data-title); }
+
+    #stromDetails thead tr th{
+	 width:50%;	
+    }
+   .activeheader
+   {
+       background-color:#e9e9e9 !important;
+       
+   }   
+    .margin-tab
+    {
+        margin-bottom:0px !important;
+    }
+    .text-center
+    {
+        text-align:left !important;
+        margin-left:3px !important;
+    }
+    .testcenter
+    {
+         float:none !important;
+    }
+    
+     .testcenter
+    {
+         float:none !important;
+    }
+}
+
+
+/*==========General Site Inspection Css============ */
+
+ @media only screen and (max-width: 800px){
+#SiteInspection-tables table, 
+	#SiteInspection-tables thead, 
+	#SiteInspection-tables tbody, 
+	#SiteInspection-tables th, 
+	#SiteInspection-tables td, 
+	#SiteInspection-tables tr { 
+		display: block; 
+	}
+ 
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#SiteInspection-tables thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	#SiteInspection-tables tr { border: 1px solid #ccc; }
+ 
+	#SiteInspection-tables td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+	}
+ 
+	#SiteInspection-tables td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		/*white-space: nowrap;*/
+		text-align:left;
+		font-weight: bold;
+		white-space:normal;
+	}
+ 
+	/*
+	Label the data
+	*/
+	#SiteInspection-tables td:before { content: attr(data-title); }
+
+    #SiteInspection-tables thead tr th{
+	 width:50%;	
+    }
+   .activeheader
+   {
+       background-color:#e9e9e9 !important;
+       
+   }   
+    .margin-tab
+    {
+        margin-bottom:0px !important;
+    }
+    .text-center
+    {
+        text-align:left !important;
+        margin-left:3px !important;
+    }
+    .count-display
+    {
+        display:none !important;
+        
+    }
+}
+
+/*==============For details page css===========*/
+/*==========General Site Inspection Css============ */
+
+ @media only screen and (max-width: 800px){
+#SiteInspectionDetails-tables table, 
+	#SiteInspectionDetails-tables thead, 
+	#SiteInspectionDetails-tables tbody, 
+	#SiteInspectionDetails-tables th, 
+	#SiteInspectionDetails-tables td, 
+	#SiteInspectionDetails-tables tr { 
+		display: block; 
+	}
+ 
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#SiteInspectionDetails-tables thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	#SiteInspectionDetails-tables tr { border: 1px solid #ccc; }
+ 
+	#SiteInspectionDetails-tables td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+		min-height:45px;
+	}
+ 
+	#SiteInspectionDetails-tables td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		/*white-space: nowrap;*/
+		text-align:left;
+		font-weight: bold;
+		white-space:normal;
+	}
+ 
+	/*
+	Label the data
+	*/
+	#SiteInspectionDetails-tables td:before { content: attr(data-title); }
+
+    #SiteInspectionDetails-tables thead tr th{
+	 width:50%;	
+    }
+   .activeheaderDetails
+   {
+       background-color:#e9e9e9 !important;
+       height:15px !important;
+       
+   }   
+    .margin-tab
+    {
+        margin-bottom:0px !important;
+    }
+    .text-center
+    {
+        text-align:left !important;
+        margin-left:3px !important;
+    }
+    .count-display
+    {
+        display:none !important;
+        
+    }
+}
+
+ 
+ /*==========Storm Event Css============ */
+ 
+ @media only screen and (max-width: 767px){
+    #stromDetails table, 
+	#stromDetails thead, 
+	#stromDetails tbody, 
+	#stromDetails th, 
+	#stromDetails td, 
+	#stromDetails tr { 
+		display: block; 
+	}
+    #stromDetails tr { border: 1px solid #ccc; }
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#stromDetails thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	#stromDetails tr { border: 1px solid #ccc; }
+ 
+	#stromDetails td { 
+		/* Behave  like a "row" */
+		border: none;
+		/*border-bottom: 1px solid #eee;*/ 
+		position: relative;
+		/*padding-left: 50%;*/ 
+		white-space: normal;
+		text-align:left;
+	}
+ 
+	#stromDetails td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		/*white-space: nowrap;*/
+		text-align:left;
+		font-weight: bold;
+		white-space:normal;
+	}
+ 
+	/*
+	Label the data
+	*/
+	#stromDetails td:before { content: attr(data-title); }
+
+    #stromDetails thead tr th{
+	 width:50%;	
+    }
+   .activeheader
+   {
+       background-color:#e9e9e9 !important;
+       
+   }   
+    .margin-tab
+    {
+        margin-bottom:0px !important;
+    }
+    .text-center
+    {
+        text-align:left !important;
+        margin-left:3px !important;
+    }
+    .displaynone
+    {
+        display:none !important;        
+    }
+    
+}
+
+ 
+  /*==========UploadData Css============ */
+ @media only screen and (max-width: 800px){
+#Details-tables table, 
+	#Details-tables thead, 
+	#Details-tables tbody, 
+	#Details-tables th, 
+	#Details-tables td, 
+	#Details-tables tr { 
+		display: block; 
+	}
+ 
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#Details-tables thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	#Details-tables tr { border: 1px solid #ccc; }
+ 
+	#Details-tables td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+		min-height:45px;
+	}
+ 
+	#Details-tables td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		/*white-space: nowrap;*/
+		text-align:left;
+		font-weight: bold;
+		white-space:normal;
+		 
+	}
+ 
+	/*
+	Label the data
+	*/
+	#Details-tables td:before { content: attr(data-title); }
+
+    #Details-tables thead tr th{
+	 width:50%;	
+    }
+   .activeheader
+   {
+       background-color:#e9e9e9 !important;
+       
+   }   
+    .margin-tab
+    {
+        margin-bottom:0px !important;
+    }
+    .text-center
+    {
+        text-align:left !important;
+        margin-left:3px !important;
+    }
+}
+
+@media (min-width:480px) and (max-width:1000px)
+{
+    .res1
+    {
+        display:inline-block;
+        width:50%;
+    }
+    .res2
+    {
+        display:inline;
+        width:50%;
+    }
+    .res3
+    {
+        display:inline;
+        width:25%;
+    }
+    .padding0per
+    {
+        padding:0%;
+    }
+    .col-sm-2
+    {
+        /*float:none !important;*/
+    }
+}
